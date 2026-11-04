@@ -57,11 +57,6 @@ export function DetailsForm({ reportId, vehicle, defaults }: { reportId: string;
             <input id="mileage" inputMode="numeric" placeholder="118 000" value={form.mileage} onChange={set("mileage")} className={fieldCls} required />
             <span className={help}>Celui du compteur, ou celui de l&apos;annonce si vous êtes acheteur.</span>
           </div>
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="listingUrl" className={labelCls}>Lien de l&apos;annonce <span className="font-normal text-muted">(facultatif)</span></label>
-            <input id="listingUrl" type="url" inputMode="url" placeholder="https://www.leboncoin.fr/…" value={form.listingUrl} onChange={set("listingUrl")} className={fieldCls} />
-            <span className={help}>Caristo compare le prix et le kilométrage annoncés aux données réelles.</span>
-          </div>
         </div>
       </fieldset>
 

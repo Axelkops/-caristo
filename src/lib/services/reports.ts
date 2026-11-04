@@ -82,7 +82,7 @@ export async function saveDetails(reportId: string, d: DetailsInput): Promise<{ 
     const formula = d.formulaNumber ? parseFormulaNumber(d.formulaNumber) : null;
     const date = d.firstRegDate ? parseDate(d.firstRegDate) : null;
     const holder = (d.holderName ?? "").trim();
-    if (d.formulaNumber && !formula) throw new UserError("Numéro de formule invalide : 4 chiffres, 2 lettres, 5 chiffres (ex. 2021AB12345).");
+    if (d.formulaNumber && !formula) throw new UserError("Numéro de formule invalide : il commence par l’année (4 chiffres), puis 2 lettres et des chiffres (ex. 2021AB12345).");
     if (d.firstRegDate && !date) throw new UserError("Date de première immatriculation invalide (JJ/MM/AAAA).");
     update.formulaNumber = formula ?? null;
     update.firstRegDate = date ?? null;

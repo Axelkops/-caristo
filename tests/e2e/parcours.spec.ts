@@ -14,7 +14,6 @@ async function goToReport(page: Page, plate: string, opts: { withCarteGrise?: bo
     await page.getByLabel("Nom du titulaire").fill("Dupont Jean");
     await page.getByLabel("Date de 1re immatriculation").fill("12/03/2019");
   }
-  if (opts.listing) await page.getByLabel(/Lien de l'annonce/).fill("https://www.leboncoin.fr/voitures/123456.htm");
   await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
   if (opts.pack && opts.pack !== "single") await page.getByText(opts.pack === "pack3" ? "Pack 3 rapports" : "Pack 10 rapports").click();
   await page.getByRole("button", { name: /Payer/ }).click();
@@ -66,9 +65,9 @@ test("VIN : onglet, validation et identification mondiale", async ({ page }) => 
 });
 
 test("parcours complet : rapport, PDF, partage", async ({ page, request }) => {
-  await goToReport(page, "AB-123-CD", { withCarteGrise: true, listing: true });
+  await goToReport(page, "AB-123-CD", { withCarteGrise: true });
   // contenu
-  for (const h of ["Vue d'ensemble", "Pannes connues du modèle", "Entretien à prévoir", "Historique officiel", "Rappels constructeur", "Cote et prix", "Annonce"]) {
+  for (const h of ["Vue d'ensemble", "Pannes connues du modèle", "Entretien à prévoir", "Historique officiel", "Rappels constructeur", "Cote et prix"]) {
     await expect(page.getByRole("heading", { name: h, exact: true })).toBeVisible();
   }
   await expect(page.getByText(/Indice de confiance/)).toBeVisible();

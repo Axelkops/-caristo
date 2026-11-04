@@ -96,7 +96,8 @@ export function vinCheckDigit(vin: string): boolean | null {
 /** Numéro de formule d'une carte grise française : AAAA + 2 lettres + 5 chiffres (ex. 2021AB12345). */
 export function parseFormulaNumber(raw: string): string | null {
   const v = raw.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
-  return /^(19|20)\d{2}[A-Z]{2}\d{5}$/.test(v) ? v : null;
+  // 4 chiffres (année), 2 lettres, puis 5 chiffres (quelques cartes grises en affichent jusqu'à 8)
+  return /^(19|20)\d{2}[A-Z]{2}\d{5,8}$/.test(v) ? v : null;
 }
 
 /** Date au format JJ/MM/AAAA ou AAAA-MM-JJ → AAAA-MM-JJ, ou null. */
