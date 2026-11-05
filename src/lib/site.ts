@@ -14,7 +14,6 @@ export const COMPANY = {
   name: "Digikom Group",
   form: "entreprise unipersonnelle à responsabilité limitée (EURL)",
   formShort: "EURL",
-  capital: "1 €",
   rcs: "RCS de Vannes",
   siren: "932 297 526",
   vat: "FR22932297526",

@@ -9,7 +9,7 @@ export default function Mentions() {
       <h2>Éditeur du site</h2>
       <ul>
         <li><strong>Service</strong> : {SITE.name}, site {SITE.domain}</li>
-        <li><strong>Société</strong> : {COMPANY.name}, {COMPANY.form}, au capital de {COMPANY.capital}</li>
+        <li><strong>Société</strong> : {COMPANY.name}, {COMPANY.form}</li>
         <li><strong>Immatriculation</strong> : {COMPANY.rcs} n° {COMPANY.siren}</li>
         <li><strong>N° de TVA intracommunautaire</strong> : {COMPANY.vat}</li>
         <li><strong>Siège</strong> : {COMPANY.city} ; l&apos;adresse postale complète est communiquée sur simple demande par e-mail</li>

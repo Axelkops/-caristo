@@ -8,7 +8,7 @@ const TOC = [
   ["1", "Éditeur et champ d'application"], ["2", "Définitions"], ["3", "Le service"], ["4", "Espace « Mes rapports »"], ["5", "Commande"],
   ["6", "Prix"], ["7", "Paiement"], ["8", "Packs de rapports"], ["9", "Livraison et accès au rapport"], ["10", "Droit de rétractation"],
   ["11", "Rapport impossible à produire"], ["12", "Nature des informations et limites"], ["13", "Obligations de l'utilisateur"], ["14", "Responsabilité"],
-  ["15", "Propriété intellectuelle"], ["16", "Données personnelles"], ["17", "Suspension et résiliation"], ["18", "Modification des conditions"], ["19", "Droit applicable, réclamations et médiation"],
+  ["15", "Propriété intellectuelle"], ["16", "Données personnelles"], ["17", "Suspension et résiliation"], ["18", "Modification des conditions"], ["19", "Droit applicable et réclamations"],
 ].map(([n, l]) => ({ id: `cgv-${n}`, label: `${n}. ${l}` }));
 
 export default function CGV() {
@@ -92,7 +92,7 @@ export default function CGV() {
       <p>{SITE.name} peut modifier les présentes conditions. La version applicable à une commande est celle en vigueur au moment du paiement ; elle est datée en haut de cette page.</p>
 
       <h2 id="cgv-19">19. Droit applicable, réclamations et médiation</h2>
-      <p>Les présentes conditions sont soumises au droit français. Toute réclamation est à adresser en priorité à {mail} : {COMPANY.name} s&apos;engage à répondre sous 30 jours. Conformément aux articles L611-1 et suivants du Code de la consommation, le consommateur peut, après cette démarche, recourir gratuitement à un médiateur de la consommation ; les coordonnées du médiateur sont communiquées sur demande et publiées sur cette page dès leur désignation. À défaut de résolution amiable, les tribunaux français sont compétents ; pour un utilisateur professionnel, compétence est attribuée aux tribunaux du ressort du siège de {COMPANY.name}.</p>
+      <p>Les présentes conditions sont soumises au droit français. Toute réclamation est à adresser en priorité à {mail} : {COMPANY.name} s&apos;engage à répondre sous 30 jours. À défaut de résolution amiable, les tribunaux français sont compétents ; pour un utilisateur professionnel, compétence est attribuée aux tribunaux du ressort du siège de {COMPANY.name}.</p>
 
       <h2 id="cgv-annexe">Annexe : modèle de formulaire de rétractation (packs)</h2>
       <p>À l&apos;attention de {COMPANY.name} ({SITE.name}), {SITE.contactEmail} : je vous notifie ma rétractation du contrat portant sur l&apos;achat du pack ci-dessous. Adresse e-mail de l&apos;achat : ………… Date de l&apos;achat : ………… Nom : ………… Date : …………</p>
