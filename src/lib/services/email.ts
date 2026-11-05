@@ -2,15 +2,31 @@ import type { Vehicle } from "../engine/types";
 
 import { siteUrl } from "./payments";
 
-/** Envoie un e-mail texte via Resend. Sans clé configurée, l'e-mail est affiché dans les journaux. Retourne true si réellement envoyé. */
+/**
+ * Envoie un e-mail texte. Deux modes, choisis par les variables d'environnement :
+ *  - SMTP (SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS) : ex. la boîte Hostinger contact@rapportcaristo.com ;
+ *  - Resend (RESEND_API_KEY) : service d'envoi dédié.
+ * Sans configuration, l'e-mail est affiché dans les journaux. Retourne true si réellement envoyé.
+ */
 export async function sendEmail(args: { to: string; subject: string; text: string }): Promise<boolean> {
+  const from = process.env.EMAIL_FROM ?? "Caristo <contact@rapportcaristo.com>";
+  if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    const nodemailer = (await import("nodemailer")).default;
+    const port = Number(process.env.SMTP_PORT ?? 465);
+    const transport = nodemailer.createTransport({ host: process.env.SMTP_HOST, port, secure: port === 465, auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }, connectionTimeout: 10000 });
+    await transport.sendMail({ from, to: args.to, subject: args.subject, text: args.text, replyTo: process.env.SMTP_USER });
+    return true;
+  }
   const key = process.env.RESEND_API_KEY;
-  if (!key) { console.log(`[email → ${args.to}] ${args.subject}\n${args.text}`); return false; }
-  const { Resend } = await import("resend");
-  const resend = new Resend(key);
-  const res = await resend.emails.send({ from: process.env.EMAIL_FROM ?? "Caristo <onboarding@resend.dev>", to: args.to, subject: args.subject, text: args.text });
-  if (res.error) throw new Error(`Envoi e-mail impossible : ${res.error.message}`);
-  return true;
+  if (key) {
+    const { Resend } = await import("resend");
+    const resend = new Resend(key);
+    const res = await resend.emails.send({ from, to: args.to, subject: args.subject, text: args.text });
+    if (res.error) throw new Error(`Envoi e-mail impossible : ${res.error.message}`);
+    return true;
+  }
+  console.log(`[email → ${args.to}] ${args.subject}\n${args.text}`);
+  return false;
 }
 
 export async function sendReportReadyEmail(args: { to: string; reportId: string; shareToken: string; reference: string; vehicle: Vehicle; packRemaining?: number }): Promise<void> {

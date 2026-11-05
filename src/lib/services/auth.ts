@@ -40,7 +40,13 @@ export async function requestLoginCode(rawEmail: string): Promise<{ sent: true; 
 
   const code = String(randomInt(0, 1_000_000)).padStart(6, "0");
   await db.insert(schema.loginCodes).values({ id: id(), email, codeHash: hashCode(email, code), expiresAt: new Date(Date.now() + CODE_TTL_MS) });
-  const delivered = await sendLoginCodeEmail({ to: email, code });
+  let delivered = false;
+  try {
+    delivered = await sendLoginCodeEmail({ to: email, code });
+  } catch (e) {
+    console.error("Envoi du code de connexion impossible :", e);
+    throw new UserError("L'envoi de l'e-mail a échoué. Réessayez dans un instant ; si le problème persiste, écrivez-nous.", 502);
+  }
   return { sent: true, devCode: isDemo() && !delivered ? code : undefined, emailConfigured: delivered };
 }
 
