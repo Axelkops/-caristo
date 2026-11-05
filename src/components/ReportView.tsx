@@ -8,6 +8,7 @@ import { ShareBox } from "./ShareBox";
  * Un seul élément fort : le cadran de risque en tête. Le reste est calme et lisible.
  */
 
+const plural = (n: number, one: string, many?: string) => `${n} ${n > 1 ? (many ?? one + "s") : one}`;
 const euros = (n?: number) => (n === undefined ? "" : `${n.toLocaleString("fr-FR")} €`);
 const range = (a?: number, b?: number) => (a === undefined && b === undefined ? "" : a === b ? euros(a) : `${(a ?? 0).toLocaleString("fr-FR")} – ${(b ?? 0).toLocaleString("fr-FR")} €`);
 
@@ -90,10 +91,10 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
   const openRecalls = r.recalls.filter((x) => x.status === "open");
 
   const lights: { label: string; value: string; tone: Tone; sub?: string }[] = [
-    { label: "Kilométrage", value: r.mileageCheck.consistent === false ? "Incohérent" : r.mileageCheck.consistent ? "Cohérent" : "Non vérifiable", tone: r.mileageCheck.consistent === false ? "bad" : r.mileageCheck.consistent ? "ok" : "neutral", sub: readings.length ? `${readings.length} relevés officiels` : r.mileage ? `${fmtKm(r.mileage)} saisis` : undefined },
+    { label: "Kilométrage", value: r.mileageCheck.consistent === false ? "Incohérent" : r.mileageCheck.consistent ? "Cohérent" : "Non vérifiable", tone: r.mileageCheck.consistent === false ? "bad" : r.mileageCheck.consistent ? "ok" : "neutral", sub: readings.length ? plural(readings.length, "relevé officiel", "relevés officiels") : r.mileage ? `${fmtKm(r.mileage)} saisis` : undefined },
     { label: "Gage, opposition, vol", value: !h.available ? "Non vérifié" : h.stolen ? "Déclaré volé" : h.opposition ? "Opposition" : h.pledge ? "Gage inscrit" : "Rien à signaler", tone: !h.available ? "neutral" : h.stolen || h.opposition ? "bad" : h.pledge ? "warn" : "ok" },
-    { label: "Sinistres", value: !h.available ? "Non vérifié" : h.claims.length || h.damagedProcedure ? `${h.claims.length || 1} enregistré(s)` : "Aucun enregistré", tone: !h.available ? "neutral" : h.claims.length || h.damagedProcedure ? "warn" : "ok" },
-    { label: "Pannes connues", value: inZoneHigh.length ? `${inZoneHigh.length} à vérifier en priorité` : inZone.length ? `${inZone.length} points à contrôler` : "Rien de notable", tone: inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok" },
+    { label: "Sinistres", value: !h.available ? "Non vérifié" : h.claims.length || h.damagedProcedure ? plural(h.claims.length || 1, "enregistré") : "Aucun enregistré", tone: !h.available ? "neutral" : h.claims.length || h.damagedProcedure ? "warn" : "ok" },
+    { label: "Pannes connues", value: inZoneHigh.length ? `${inZoneHigh.length} à vérifier en priorité` : inZone.length ? `${plural(inZone.length, "point")} à contrôler` : "Rien de notable", tone: inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok" },
     { label: "Origine", value: v.imported ? "Importé" : v.country === "FR" ? "France depuis l'origine" : `Immatriculé : ${v.country}`, tone: v.imported ? "warn" : "ok", sub: v.imported && v.firstRegistrationInCountry ? `En France depuis ${fmtDateFr(v.firstRegistrationInCountry)}` : undefined },
     { label: "Prix et cote", value: r.valuation?.verdict === "au_dessus" ? `${euros(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Annonce : ${euros(r.valuation.askingPrice)}` : "Cote estimée" },
   ];
@@ -154,7 +155,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
         <div className="max-w-[1200px] mx-auto flex flex-col gap-6">
 
           {/* ===== Pannes connues ===== */}
-          <Panel id="pannes" title="Pannes connues du modèle" sub="Faiblesses fréquentes sur ce modèle, pas un diagnostic de ce véhicule : à contrôler sur place." tone={inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok"} badge={<Tag tone={inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok"}>{inZoneHigh.length ? `${inZoneHigh.length} à vérifier en priorité` : `${r.knownIssues.length} points`}</Tag>}>
+          <Panel id="pannes" title="Pannes connues du modèle" sub="Faiblesses fréquentes sur ce modèle, pas un diagnostic de ce véhicule : à contrôler sur place." tone={inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok"} badge={<Tag tone={inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok"}>{inZoneHigh.length ? `${inZoneHigh.length} à vérifier en priorité` : plural(r.knownIssues.length, "point")}</Tag>}>
             {r.knownIssues.length === 0 ? <p className="m-0 text-[15px] text-[#AEB6C4]">Aucune faiblesse particulière répertoriée pour ce modèle.</p> : (
               <div className="flex flex-col divide-y divide-white/10 rounded-2xl overflow-hidden" style={INSET}>
                 {r.knownIssues.map((i) => {
@@ -284,7 +285,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
           </Panel>
 
           {/* ===== Rappels ===== */}
-          <Panel id="rappels" title="Rappels constructeur" tone={openRecalls.length ? "warn" : "ok"} badge={<Tag tone={openRecalls.length ? "warn" : "ok"}>{openRecalls.length ? `${openRecalls.length} à faire` : r.recalls.length ? `${r.recalls.length} trouvés` : "Aucun rappel trouvé"}</Tag>}>
+          <Panel id="rappels" title="Rappels constructeur" tone={openRecalls.length ? "warn" : "ok"} badge={<Tag tone={openRecalls.length ? "warn" : "ok"}>{openRecalls.length ? `${openRecalls.length} à faire` : r.recalls.length ? plural(r.recalls.length, "trouvé") : "Aucun rappel trouvé"}</Tag>}>
             {r.recalls.length ? <ul className="m-0 p-0 list-none flex flex-col gap-2.5">{r.recalls.map((x, i) => <li key={i} className="flex justify-between gap-3 items-start rounded-xl px-4 py-3" style={INSET}><div className="flex flex-col gap-0.5"><span className="font-semibold">{x.title}</span>{x.description && <span className="text-[13px] text-[#AEB6C4]">{x.description}</span>}<span className="text-[12px] text-[#8E9AAF]">{fmtDateFr(x.date)}{x.reference ? `, ${x.reference}` : ""}</span></div><Tag tone={x.status === "done" ? "ok" : x.status === "open" ? "warn" : "neutral"}>{x.status === "done" ? "Fait" : x.status === "open" ? "À faire" : "À vérifier"}</Tag></li>)}</ul> : <p className="m-0 text-[15px] text-[#AEB6C4]">Aucun rappel constructeur trouvé pour ce modèle.</p>}
             <p className="m-0 text-[13px] text-[#8E9AAF]">Un rappel est gratuit en concession. Vérifiez avec le VIN qu&apos;il a bien été fait.</p>
           </Panel>

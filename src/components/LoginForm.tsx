@@ -32,7 +32,7 @@ export function LoginForm({ next = "/mes-rapports", initialEmail = "" }: { next?
       const json = await post("/api/auth/request-code", { email });
       setStep("code");
       setCode("");
-      setInfo(json.devCode ? `Mode démonstration : votre code est ${json.devCode}.` : `Code envoyé à ${email.trim().toLowerCase()}. Pensez à vérifier les spams.`);
+      setInfo(json.devCode ? `Mode démonstration : votre code est ${json.devCode}.` : json.emailConfigured === false ? "Phase de test : l'envoi d'e-mails n'est pas encore activé sur ce site." : `Code envoyé à ${email.trim().toLowerCase()}. Pensez à vérifier les spams.`);
       setTimeout(() => codeRef.current?.focus(), 50);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Connexion impossible. Réessayez.");

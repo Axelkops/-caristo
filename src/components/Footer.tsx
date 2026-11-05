@@ -16,6 +16,7 @@ export function Footer() {
             <Link href="/#pannes" className="no-underline text-muteddark hover:text-white">Pannes connues</Link>
             <Link href="/#entretien" className="no-underline text-muteddark hover:text-white">Entretien</Link>
             <Link href="/#tarifs" className="no-underline text-muteddark hover:text-white">Tarifs</Link>
+            <Link href="/mes-rapports" className="no-underline text-muteddark hover:text-white">Mes rapports</Link>
           </div>
           <div className="flex flex-col gap-2.5 text-sm">
             <span className="text-white font-semibold">Légal</span>
@@ -25,7 +26,7 @@ export function Footer() {
           </div>
           <div className="flex flex-col gap-2.5 text-sm">
             <span className="text-white font-semibold">Contact</span>
-            <span className="select-all">{process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@caristo.fr"}</span>
+            <span className="select-all">{process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@rapportcaristo.com"}</span>
             <span>Réponse sous 24 h ouvrées</span>
           </div>
         </div>

@@ -147,7 +147,7 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
           {loading && <span className="spinner" aria-hidden="true" />}
           {usePack ? "Utiliser un crédit et lancer le rapport" : `Payer ${formatEuros(OFFERS[form.offer].priceCents)} et lancer le rapport`}
         </button>
-        <span className="text-xs text-muted">Paiement sécurisé. Remboursement automatique si aucune donnée n&apos;est trouvée.</span>
+        <span className="text-xs text-muted">Paiement sécurisé. Remboursé si le rapport ne peut pas être produit.</span>
       </div>
     </form>
   );

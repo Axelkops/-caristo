@@ -30,7 +30,7 @@ export function hashCode(email: string, code: string): string {
 }
 
 /** Étape 1 : envoie un code. En mode démo (sans e-mail réel), le code est renvoyé pour les tests. */
-export async function requestLoginCode(rawEmail: string): Promise<{ sent: true; devCode?: string }> {
+export async function requestLoginCode(rawEmail: string): Promise<{ sent: true; devCode?: string; emailConfigured: boolean }> {
   const email = normalizeEmail(rawEmail);
   const db = await getDb();
   // anti-abus : pas plus d'un code par minute et 6 par heure pour une même adresse
@@ -41,7 +41,7 @@ export async function requestLoginCode(rawEmail: string): Promise<{ sent: true; 
   const code = String(randomInt(0, 1_000_000)).padStart(6, "0");
   await db.insert(schema.loginCodes).values({ id: id(), email, codeHash: hashCode(email, code), expiresAt: new Date(Date.now() + CODE_TTL_MS) });
   const delivered = await sendLoginCodeEmail({ to: email, code });
-  return { sent: true, devCode: isDemo() && !delivered ? code : undefined };
+  return { sent: true, devCode: isDemo() && !delivered ? code : undefined, emailConfigured: delivered };
 }
 
 /** Étape 2 : vérifie le code et ouvre la session (pose le cookie). */

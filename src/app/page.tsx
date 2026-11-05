@@ -23,7 +23,7 @@ const CONTENT = [
   { d: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>', t: "Rappels constructeur", s: "Les rappels du modèle, à faire vérifier gratuitement en concession." },
 ];
 
-const FEATURES = ["Historique, kilométrage, sinistres", "Pannes connues du modèle", "Cote du marché", "Échéancier d'entretien 12, 24, 36 mois", "Rappels constructeur", "Remboursé si vide"];
+const FEATURES = ["Historique, kilométrage, sinistres", "Pannes connues du modèle", "Cote du marché", "Échéancier d'entretien 12, 24, 36 mois", "Rappels constructeur", "Espace Mes rapports"];
 
 export default function Home() {
   return (
@@ -66,8 +66,8 @@ export default function Home() {
               {[
                 ["Électrique", "Batterie, garantie, rappels logiciels.", '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'],
                 ["Hybride", "Batterie haute tension, double motorisation.", '<path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>'],
-                ["Collection", "Authenticité, numéros concordants.", '<path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.3 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/>'],
-                ["Utilitaire", "Charge utile, usage professionnel.", '<rect x="2" y="7" width="13" height="10" rx="1.5"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/>'],
+                ["Collection", "Anciennes immatriculations reconnues, cote adaptée.", '<path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.3 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/>'],
+                ["Utilitaire", "Fourgons et camionnettes : pannes et entretien adaptés.", '<rect x="2" y="7" width="13" height="10" rx="1.5"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/>'],
               ].map(([t, s, d]) => (
                 <div key={t} className="bg-white border border-line rounded-[18px] p-5 flex flex-col gap-3">
                   <span className="w-11 h-11 rounded-xl bg-ground flex items-center justify-center"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A1E3F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: d }} /></span>
@@ -170,7 +170,7 @@ export default function Home() {
             <PriceCard offer="pack3" highlight items={["Tout le rapport unique, ×3", "Rapports rangés dans votre espace", "Crédits utilisés automatiquement", "Valable 12 mois"]} />
             <PriceCard offer="pack10" items={["Tout le pack 3, ×10", "Pour les gros acheteurs et les pros", "Valable 24 mois"]} />
           </div>
-          <p className="m-0 text-[13px] text-[#7C8798] text-center">Paiement sécurisé par carte, Apple Pay ou Google Pay. Remboursement automatique si aucune donnée n&apos;est trouvée.</p>
+          <p className="m-0 text-[13px] text-[#7C8798] text-center">Paiement sécurisé par carte, Apple Pay ou Google Pay. Remboursé si le rapport ne peut pas être produit.</p>
         </div>
       </section>
 
@@ -182,10 +182,11 @@ export default function Home() {
             {[
               ["De quoi ai-je besoin pour faire un rapport ?", "La plaque, le kilométrage et trois informations de la carte grise : le numéro de formule, le nom du titulaire et la date de première immatriculation. Si vous êtes acheteur, demandez une photo de la carte grise au vendeur."],
               ["Comment savez-vous quoi vérifier sur ce véhicule précisément ?", "La plaque nous donne le modèle et le moteur exacts. Nous croisons avec le kilométrage, l'âge et notre base de pannes connues par modèle."],
-              ["Que se passe-t-il si aucune donnée n'est trouvée ?", "Vous êtes remboursé automatiquement."],
+              ["Que se passe-t-il si le rapport ne peut pas être produit ?", "Le véhicule est identifié avant le paiement, donc c'est rare. Si malgré tout aucune source ne répond, vous êtes remboursé sous 5 jours ouvrés."],
+              ["Comment retrouver mes rapports plus tard ?", "Dans « Mes rapports » : saisissez l'adresse e-mail utilisée lors de l'achat, vous recevez un code à 6 chiffres, et vous retrouvez tous vos rapports, vos PDF et vos packs. Pas de mot de passe à retenir."],
               ["Le rapport garantit-il que le véhicule est sain ?", "Non. Il vous dit ce qui est enregistré sur ce véhicule et quoi vérifier sur place. Il ne remplace pas un essai ni un passage en garage."],
               ["Et pour un véhicule immatriculé hors de France ?", "Le rapport contient la fiche technique, les pannes connues, la cote et l'échéancier. L'historique officiel (contrôles techniques, sinistres, gage) n'existe que pour les véhicules immatriculés en France : le rapport l'indique clairement."],
-              ["Mes données personnelles sont-elles conservées ?", "Seulement votre e-mail et l'immatriculation, le temps de la livraison et du suivi du rapport, conformément au RGPD."],
+              ["Mes données personnelles sont-elles conservées ?", "Votre e-mail, l'immatriculation et le rapport sont conservés 12 mois pour votre espace « Mes rapports ». Les informations de la carte grise sont effacées 30 jours après la production du rapport. Conformément au RGPD, vous pouvez demander leur suppression à tout moment."],
             ].map(([q, a], i) => (
               <details key={q} open={i === 0} className="bg-white border border-line rounded-2xl px-6 py-5">
                 <summary className="font-semibold flex justify-between items-center gap-3">{q}<svg aria-hidden="true" className="chev shrink-0 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg></summary>
@@ -217,7 +218,7 @@ function HeroExample() {
       <span className="absolute -top-3 right-5 bg-accent text-ink text-[11px] font-bold tracking-wider uppercase px-3 py-1.5 rounded-full led">Exemple de rapport</span>
       <div className="flex justify-between items-start gap-3">
         <div className="flex flex-col gap-1"><span className="display text-[21px] font-bold">Peugeot 3008 1.5 BlueHDi</span><span className="text-[13px] text-muteddark">AB-123-CD · 2019 · 118 000 km · Diesel · Boîte auto</span></div>
-        <div className="flex flex-col items-center gap-1"><span className="w-14 h-14 rounded-full border-[5px] border-emerald-500 flex items-center justify-center display text-[22px] font-bold text-emerald-400" style={{ boxShadow: "0 0 18px rgba(16,185,129,0.4)" }}>B</span><span className="text-[11px] font-semibold text-emerald-400">Risque faible</span></div>
+        <div className="flex flex-col items-center gap-1"><span className="w-16 h-16 rounded-full border-[5px] border-emerald-500 flex items-center justify-center display text-[17px] font-bold text-emerald-400" style={{ boxShadow: "0 0 18px rgba(16,185,129,0.4)" }}>88 %</span><span className="text-[11px] font-semibold text-emerald-400">Risque faible</span></div>
       </div>
       <div className="grid grid-cols-4 gap-2">
         {[["Kilométrage", "Cohérent", "text-emerald-400"], ["Sinistres", "Aucun", "text-emerald-400"], ["Gage / vol", "Aucun", "text-emerald-400"], ["Origine", "Importée", "text-amber-300"]].map(([a, b, c]) => (
@@ -235,7 +236,7 @@ function HeroExample() {
         <div className="flex items-center gap-2.5 bg-white/5 rounded-[10px] px-3 py-2"><span className="dot bg-amber-400" /><span className="text-[13px] flex-1">Vanne antipollution</span><span className="text-xs text-muteddark">350 – 600 €</span></div>
       </div>
       <div className="grid grid-cols-2 gap-2">
-        <div className="bg-accent/10 border border-accent/30 rounded-xl px-3 py-2.5 flex flex-col gap-0.5"><span className="text-[10px] text-accentsoft uppercase tracking-wider">Cote du marché</span><span className="text-[15px] font-bold">16 200 – 17 400 €</span><span className="text-[11px] text-amber-300">Annonce : 17 900 €, au-dessus</span></div>
+        <div className="bg-accent/10 border border-accent/30 rounded-xl px-3 py-2.5 flex flex-col gap-0.5"><span className="text-[10px] text-accentsoft uppercase tracking-wider">Cote du marché</span><span className="text-[15px] font-bold">16 200 – 17 400 €</span><span className="text-[11px] text-muteddark">Cote moyenne 16 800 €</span></div>
         <div className="bg-accent/10 border border-accent/30 rounded-xl px-3 py-2.5 flex flex-col gap-0.5"><span className="text-[10px] text-accentsoft uppercase tracking-wider">Entretien 12 mois</span><span className="text-[15px] font-bold">≈ 400 – 550 €</span><span className="text-[11px] text-muteddark">Vidange, filtres, contrôle</span></div>
       </div>
     </div>

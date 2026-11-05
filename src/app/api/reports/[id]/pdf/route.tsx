@@ -4,7 +4,8 @@ import { Document, Page, Text, View, StyleSheet, renderToBuffer } from "@react-p
 import { getReport, UserError } from "@/lib/services/reports";
 import type { ReportData } from "@/lib/engine/types";
 import { handleError } from "@/lib/http";
-import { fmtKm } from "@/lib/engine/maintenance";
+import { fmtKm as fmtKm0 } from "@/lib/engine/maintenance";
+import { FUEL_LABEL, GEARBOX_LABEL } from "@/components/VehicleCard";
 
 export const runtime = "nodejs";
 
@@ -22,12 +23,15 @@ const s = StyleSheet.create({
   th: { fontFamily: "Helvetica-Bold", fontSize: 8, color: "#6B7280" },
   bad: { color: "#7F1D1D" }, warn: { color: "#92400E" }, ok: { color: "#065F46" },
   box: { borderWidth: 0.5, borderColor: "#E5E7EB", borderRadius: 6, padding: 8, marginBottom: 6 },
-  score: { width: 44, height: 44, borderRadius: 22, borderWidth: 4, alignItems: "center", justifyContent: "center", marginLeft: "auto" },
+  score: { width: 54, height: 54, borderRadius: 27, borderWidth: 4, alignItems: "center", justifyContent: "center", marginLeft: "auto" },
 });
 
+/** Helvetica (PDF) ne connaît ni l'espace fine insécable ni « ≈ » : on les remplace. */
+const clean = (t: string) => t.replace(/[\u202F\u00A0]/g, " ").replace(/≈/g, "env.");
+const fmtKm = (n: number) => clean(fmtKm0(n));
 const fd = (iso?: string) => (iso ? iso.split("-").reverse().join("/") : "");
-const eur = (n?: number) => (n === undefined ? "" : `${n.toLocaleString("fr-FR")} €`);
-const range = (a?: number, b?: number) => (a === undefined && b === undefined ? "" : `${(a ?? 0).toLocaleString("fr-FR")} – ${(b ?? 0).toLocaleString("fr-FR")} €`);
+const eur = (n?: number) => (n === undefined ? "" : clean(`${n.toLocaleString("fr-FR")} €`));
+const range = (a?: number, b?: number) => (a === undefined && b === undefined ? "" : clean(`${(a ?? 0).toLocaleString("fr-FR")} – ${(b ?? 0).toLocaleString("fr-FR")} €`));
 
 function Pdf({ r }: { r: ReportData }) {
   const v = r.vehicle, h = r.history;
@@ -40,22 +44,22 @@ function Pdf({ r }: { r: ReportData }) {
             <View style={{ flex: 1 }}>
               <Text style={{ fontSize: 8, color: "#93C5FD", marginBottom: 4 }}>RAPPORT {r.reference} · ÉMIS LE {new Date(r.issuedAt).toLocaleDateString("fr-FR")}</Text>
               <Text style={s.h1}>{v.make} {v.model} {v.version ?? ""}</Text>
-              <Text style={{ fontSize: 9, color: "#AEB6C4" }}>{[v.plate, v.fuel, v.gearbox !== "inconnue" ? v.gearbox : "", v.powerHp ? `${v.powerHp} ch` : "", v.firstRegistration ? `1re immat. ${fd(v.firstRegistration)}` : "", r.mileage ? fmtKm(r.mileage) : ""].filter(Boolean).join(" · ")}</Text>
+              <Text style={{ fontSize: 9, color: "#AEB6C4" }}>{[v.plate, FUEL_LABEL[v.fuel], GEARBOX_LABEL[v.gearbox], v.powerHp ? `${v.powerHp} ch` : "", v.firstRegistration ? `1re immat. ${fd(v.firstRegistration)}` : "", r.mileage ? fmtKm(r.mileage) : ""].filter(Boolean).join(" · ")}</Text>
             </View>
-            <View style={[s.score, { borderColor: ring }]}><Text style={{ fontSize: 18, fontFamily: "Helvetica-Bold", color: "#FFFFFF" }}>{r.scorePercent} %</Text></View>
+            <View style={[s.score, { borderColor: ring }]}><Text style={{ fontSize: 15, fontFamily: "Helvetica-Bold", color: "#FFFFFF" }}>{r.scorePercent}%</Text></View>
           </View>
-          <Text style={{ fontSize: 10, marginTop: 8, fontFamily: "Helvetica-Bold" }}>{r.scoreLabel}</Text>
-          <Text style={{ fontSize: 9, color: "#AEB6C4" }}>{r.scoreReasons.join(" ")}</Text>
+          <Text style={{ fontSize: 10, marginTop: 8, fontFamily: "Helvetica-Bold" }}>Indice de confiance {r.scorePercent} % · {r.scoreLabel}</Text>
+          <Text style={{ fontSize: 9, color: "#AEB6C4" }}>{clean(r.scoreReasons.join(" "))}</Text>
         </View>
 
         <Text style={s.h2}>Synthèse</Text>
         <View style={s.row}>
           <View style={s.cell}><Text style={s.label}>Kilométrage</Text><Text style={s.value}>{r.mileageCheck.consistent === false ? "Incohérent" : r.mileageCheck.consistent ? "Cohérent" : "Non vérifiable"}</Text></View>
           <View style={s.cell}><Text style={s.label}>Administratif</Text><Text style={s.value}>{!h.available ? "Non disponible" : h.stolen ? "Déclaré volé" : h.pledge || h.opposition ? "Gage / opposition" : "Libre"}</Text></View>
-          <View style={s.cell}><Text style={s.label}>Sinistres</Text><Text style={s.value}>{!h.available ? "Non disponible" : h.claims.length || h.damagedProcedure ? `${h.claims.length || 1} enregistré(s)` : "Aucun"}</Text></View>
+          <View style={s.cell}><Text style={s.label}>Sinistres</Text><Text style={s.value}>{!h.available ? "Non disponible" : h.claims.length || h.damagedProcedure ? `${h.claims.length || 1} enregistré${(h.claims.length || 1) > 1 ? "s" : ""}` : "Aucun"}</Text></View>
           <View style={s.cell}><Text style={s.label}>Origine</Text><Text style={s.value}>{v.imported ? "Importé" : v.country === "FR" ? "France" : v.country}</Text></View>
         </View>
-        <Text style={{ marginTop: 4 }}>{r.mileageCheck.comment}</Text>
+        <Text style={{ marginTop: 4 }}>{clean(r.mileageCheck.comment)}</Text>
 
         {h.available && h.inspections.length > 0 && (
           <>
@@ -73,32 +77,30 @@ function Pdf({ r }: { r: ReportData }) {
         {r.knownIssues.map((i) => (
           <View key={i.id} style={s.box} wrap={false}>
             <View style={{ flexDirection: "row" }}><Text style={[{ fontFamily: "Helvetica-Bold", flex: 1 }, i.severity === "high" && i.inZone ? s.bad : {}]}>{i.title}</Text><Text style={[s.small, i.severity === "high" && i.inZone ? s.bad : {}]}>{i.severity === "high" && i.inZone ? "À vérifier en priorité" : i.inZone ? "Fréquent à ce stade" : "Pas encore concerné"}</Text></View>
-            <Text style={{ marginTop: 2 }}>{i.description}</Text>
-            <Text style={s.small}>Coût : {i.costMin || i.costMax ? range(i.costMin, i.costMax) : "variable"} · Geste : {i.whatToCheck}</Text>
+            <Text style={{ marginTop: 2 }}>{clean(i.description)}</Text>
+            <Text style={s.small}>{i.costMin || i.costMax ? `Réparation : ${range(i.costMin, i.costMax)}` : "Vérification sans frais"} · Quoi vérifier : {clean(i.whatToCheck)}</Text>
           </View>
         ))}
       </Page>
 
       <Page size="A4" style={s.page}>
         <Text style={s.h2}>Échéancier d&apos;entretien</Text>
-        <View style={s.row}>{r.maintenance.horizons.map((hz) => <View key={hz.key} style={s.cell}><Text style={s.label}>{hz.key === "now" ? "Maintenant" : `${hz.key} mois · ≈ ${fmtKm(hz.projectedKm)}`}</Text><Text style={s.value}>{hz.items.length ? `≈ ${range(hz.costMin, hz.costMax)}` : "—"}</Text><Text style={s.small}>{hz.items.join(", ")}</Text></View>)}</View>
-        <View style={s.tr}><Text style={[s.th, { flex: 2 }]}>Intervention</Text><Text style={[s.th, { flex: 2 }]}>Préconisation</Text><Text style={[s.th, { flex: 2 }]}>Dernière fois</Text><Text style={[s.th, { flex: 2 }]}>Prochaine échéance</Text><Text style={[s.th, { flex: 1 }]}>Statut</Text></View>
+        <View style={s.row}>{r.maintenance.horizons.map((hz) => <View key={hz.key} style={s.cell}><Text style={s.label}>{hz.key === "now" ? "Maintenant" : `${hz.key} mois, env. ${fmtKm(hz.projectedKm)}`}</Text><Text style={s.value}>{hz.items.length ? `env. ${range(hz.costMin, hz.costMax)}` : "—"}</Text><Text style={s.small}>{hz.items.join(", ")}</Text></View>)}</View>
+        <View style={s.tr}><Text style={[s.th, { flex: 2 }]}>Intervention</Text><Text style={[s.th, { flex: 2 }]}>Préconisation</Text><Text style={[s.th, { flex: 2 }]}>Prochaine échéance</Text><Text style={[s.th, { flex: 1 }]}>Coût estimé</Text></View>
         {r.maintenance.items.map((m) => (
-          <View key={m.label} style={s.tr}><Text style={{ flex: 2, fontFamily: "Helvetica-Bold" }}>{m.label}</Text><Text style={{ flex: 2 }}>{m.rule}</Text><Text style={{ flex: 2 }}>{m.lastDoneLabel ?? "—"}</Text><Text style={{ flex: 2 }}>{m.horizon === "now" ? "Maintenant" : [m.dueKm ? fmtKm(m.dueKm) : "", m.dueDate ? fd(m.dueDate) : ""].filter(Boolean).join(" · ") || "—"}</Text><Text style={[{ flex: 1 }, m.status === "todo" ? s.bad : m.status === "check" ? s.warn : s.ok]}>{{ todo: "À faire", check: "À vérifier", ok: "OK", later: "Plus tard" }[m.status]}</Text></View>
+          <View key={m.label} style={s.tr}><Text style={{ flex: 2, fontFamily: "Helvetica-Bold" }}>{m.label}</Text><Text style={{ flex: 2 }}>{clean(m.rule)}</Text><Text style={{ flex: 2 }}>{m.horizon === "now" ? "Maintenant" : [m.dueKm ? fmtKm(m.dueKm) : "", m.dueDate ? fd(m.dueDate) : ""].filter(Boolean).join(", ") || "—"}</Text><Text style={{ flex: 1 }}>{range(m.costMin, m.costMax)}</Text></View>
         ))}
-        <Text style={s.small}>{r.maintenance.note}</Text>
+        <Text style={s.small}>{clean(r.maintenance.note)}</Text>
 
-        {r.valuation && (<><Text style={s.h2}>Cote et prix</Text><Text>Fourchette estimée : {range(r.valuation.low, r.valuation.high)}{r.valuation.askingPrice ? ` · Prix demandé : ${eur(r.valuation.askingPrice)} (${r.valuation.verdict === "au_dessus" ? `${eur(r.valuation.deltaToHigh)} au-dessus` : r.valuation.verdict === "sous_la_cote" ? "sous la cote" : "dans la cote"})` : ""}</Text><Text style={s.small}>{r.valuation.basis}</Text></>)}
+        {r.valuation && (<><Text style={s.h2}>Cote et prix</Text><Text>Fourchette estimée : {range(r.valuation.low, r.valuation.high)}{r.valuation.askingPrice ? ` · Prix demandé : ${eur(r.valuation.askingPrice)} (${r.valuation.verdict === "au_dessus" ? `${eur(r.valuation.deltaToHigh)} au-dessus` : r.valuation.verdict === "sous_la_cote" ? "sous la cote" : "dans la cote"})` : ""}</Text><Text style={s.small}>{clean(r.valuation.basis)}</Text></>)}
 
         <Text style={s.h2}>Rappels constructeur</Text>
         {r.recalls.length === 0 ? <Text>Aucun rappel trouvé pour ce modèle.</Text> : r.recalls.map((x, i) => <Text key={i}>• {fd(x.date)} · {x.title} ({x.status === "done" ? "fait" : x.status === "open" ? "à faire" : "à vérifier"})</Text>)}
 
-        {r.listing.claims.length > 0 && (<><Text style={s.h2}>Annonce</Text>{r.listing.claims.map((c, i) => <Text key={i} style={c.status === "warning" ? s.warn : {}}>• {c.text}{c.detail ? ` — ${c.detail}` : ""}</Text>)}</>)}
 
 
-        <Text style={s.h2}>Données du rapport</Text>
-        {r.sources.map((x) => <Text key={x.label} style={s.small}>• {x.label} : {x.status === "ok" ? "a répondu" : x.status === "partial" ? "partiel" : "non disponible"}{x.detail ? ` (${x.detail})` : ""}</Text>)}
-        {r.limits.map((l) => <Text key={l} style={s.small}>• {l}</Text>)}
+        <Text style={s.h2}>À savoir</Text>
+        {r.limits.map((l) => <Text key={l} style={s.small}>• {clean(l)}</Text>)}
         <Text style={[s.small, { marginTop: 8 }]}>Ce rapport restitue les données enregistrées sur ce véhicule à la date d&apos;émission. Il ne constitue ni une expertise ni une garantie sur l&apos;état mécanique. Caristo · Édité par Digikom Group.</Text>
       </Page>
     </Document>

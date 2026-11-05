@@ -6,14 +6,19 @@ export function siteUrl(origin?: string): string {
   return (process.env.SITE_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? origin ?? "http://localhost:3000").replace(/\/$/, "");
 }
 
-/** Crée une session de paiement et renvoie l'URL où envoyer le client. En démo : page de paiement simulée (chemin relatif). */
+/** Paiement simulé : en mode démonstration, ou tant que Stripe n'est pas configuré (phase de test). */
+export function paymentsSimulated(): boolean {
+  return isDemo() || !process.env.STRIPE_SECRET_KEY;
+}
+
+/** Crée une session de paiement et renvoie l'URL où envoyer le client. Paiement simulé : page dédiée (chemin relatif). */
 export async function createCheckout(reportId: string, offer: Offer, email: string, origin?: string): Promise<{ url: string; sessionId: string | null }> {
-  if (isDemo() || !process.env.STRIPE_SECRET_KEY) {
+  if (paymentsSimulated()) {
     return { url: `/paiement/demo?report=${reportId}`, sessionId: null };
   }
   const base = siteUrl(origin);
   const Stripe = (await import("stripe")).default;
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const priceId = { single: process.env.STRIPE_PRICE_SINGLE, pack3: process.env.STRIPE_PRICE_PACK3, pack10: process.env.STRIPE_PRICE_PACK10 }[offer];
   const o = OFFERS[offer];
   const session = await stripe.checkout.sessions.create({
