@@ -147,7 +147,7 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
           {loading && <span className="spinner" aria-hidden="true" />}
           {usePack ? "Utiliser un crédit et lancer le rapport" : `Payer ${formatEuros(OFFERS[form.offer].priceCents)} et lancer le rapport`}
         </button>
-        <span className="text-xs text-muted">Paiement sécurisé. Remboursé si le rapport ne peut pas être produit.</span>
+        <span className="text-xs text-muted max-w-[46ch]">Paiement sécurisé. Remboursé si le rapport ne peut pas être produit. En validant, vous acceptez les <Link href="/cgv" className="text-navy">conditions générales</Link> et demandez la production immédiate du rapport.</span>
       </div>
     </form>
   );

@@ -21,6 +21,7 @@ export default async function DemoPayment({ searchParams }: { searchParams: Prom
         <div className="flex justify-between items-center border border-line rounded-xl px-4 py-3"><span className="font-medium">Caristo · {o.label}</span><span className="display text-xl font-bold">{formatEuros(o.priceCents)}</span></div>
         <p className="m-0 text-sm text-muted">Le paiement par carte n&apos;est pas encore activé : cet écran le remplace le temps des tests. Rien ne vous sera facturé.</p>
         <DemoPayButton reportId={report} />
+        <p className="m-0 text-xs text-muted">En validant, vous acceptez les <a href="/cgv">conditions générales</a> et demandez la production immédiate du rapport.</p>
       </div>
     </div>
   );
