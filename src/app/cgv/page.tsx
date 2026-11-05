@@ -91,7 +91,7 @@ export default function CGV() {
       <h2 id="cgv-18">18. Modification des conditions</h2>
       <p>{SITE.name} peut modifier les présentes conditions. La version applicable à une commande est celle en vigueur au moment du paiement ; elle est datée en haut de cette page.</p>
 
-      <h2 id="cgv-19">19. Droit applicable, réclamations et médiation</h2>
+      <h2 id="cgv-19">19. Droit applicable et réclamations</h2>
       <p>Les présentes conditions sont soumises au droit français. Toute réclamation est à adresser en priorité à {mail} : {COMPANY.name} s&apos;engage à répondre sous 30 jours. À défaut de résolution amiable, les tribunaux français sont compétents ; pour un utilisateur professionnel, compétence est attribuée aux tribunaux du ressort du siège de {COMPANY.name}.</p>
 
       <h2 id="cgv-annexe">Annexe : modèle de formulaire de rétractation (packs)</h2>
