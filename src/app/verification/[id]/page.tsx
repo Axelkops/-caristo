@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getReport } from "@/lib/services/reports";
+import { getSessionEmail, getUsablePacks } from "@/lib/services/auth";
 import type { Vehicle } from "@/lib/engine/types";
 import { VehicleCard } from "@/components/VehicleCard";
 import { DetailsForm } from "@/components/DetailsForm";
@@ -17,6 +18,8 @@ export default async function VerificationPage({ params, searchParams }: { param
   if (!r || !r.vehicle) notFound();
   if (["paid", "generating", "ready"].includes(r.status)) redirect(`/rapport/${id}`);
   const vehicle = r.vehicle as Vehicle;
+  const email = await getSessionEmail();
+  const account = email ? { email, pack: (await getUsablePacks(email))[0] ?? null } : null;
   return (
     <>
       <div className="bg-ink text-white px-4 sm:px-6 py-5"><div className="max-w-[1100px] mx-auto flex items-center justify-between gap-4 flex-wrap"><Steps current={2} /><Link href="/" className="text-sm text-muteddark no-underline">Ce n&apos;est pas le bon véhicule ?</Link></div></div>
@@ -24,7 +27,7 @@ export default async function VerificationPage({ params, searchParams }: { param
         {cancel && <p className="m-0 bg-warnbg text-warntext rounded-xl px-4 py-3 text-sm">Paiement annulé. Vous pouvez reprendre quand vous voulez : rien n&apos;a été débité.</p>}
         <VehicleCard vehicle={vehicle} badge="Véhicule identifié" />
         <div className="bg-white border border-line rounded-[20px] p-6 sm:p-8">
-          <DetailsForm reportId={id} vehicle={vehicle} defaults={{ mileage: r.mileage, email: r.email, offer: r.offer }} />
+          <DetailsForm reportId={id} vehicle={vehicle} defaults={{ mileage: r.mileage, email: r.email, offer: r.offer }} account={account} />
         </div>
       </div>
     </>

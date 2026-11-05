@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { NavAccount } from "./NavAccount";
 
 export function Nav() {
   return (
@@ -11,6 +12,7 @@ export function Nav() {
           <Link href="/#pannes" className="text-muteddark hover:text-white no-underline hidden sm:inline">Pannes connues</Link>
           <Link href="/#entretien" className="text-muteddark hover:text-white no-underline hidden sm:inline">Entretien</Link>
           <Link href="/#tarifs" className="text-muteddark hover:text-white no-underline">Tarifs</Link>
+          <NavAccount />
           <Link href="/#top" className="bg-accent text-ink px-4 py-2.5 rounded-[10px] font-semibold led no-underline">Vérifier un véhicule</Link>
         </div>
       </nav>

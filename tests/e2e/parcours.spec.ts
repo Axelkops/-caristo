@@ -2,7 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 
 const alert = (page: Page) => page.locator('[role="alert"]:not(#__next-route-announcer__)');
 
-async function goToReport(page: Page, plate: string, opts: { withCarteGrise?: boolean; listing?: boolean; pack?: "single" | "pack3" | "pack10" } = {}) {
+async function goToReport(page: Page, plate: string, opts: { withCarteGrise?: boolean; listing?: boolean; pack?: "single" | "pack3" | "pack10"; email?: string } = {}) {
   await page.goto("/");
   await page.getByLabel("Plaque d'immatriculation").fill(plate);
   await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
@@ -14,7 +14,7 @@ async function goToReport(page: Page, plate: string, opts: { withCarteGrise?: bo
     await page.getByLabel("Nom du titulaire").fill("Dupont Jean");
     await page.getByLabel("Date de 1re immatriculation").fill("12/03/2019");
   }
-  await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
+  await page.getByLabel("Votre e-mail *").fill(opts.email ?? "test@exemple.fr");
   if (opts.pack && opts.pack !== "single") await page.getByText(opts.pack === "pack3" ? "Pack 3 rapports" : "Pack 10 rapports").click();
   await page.getByRole("button", { name: /Payer/ }).click();
   await expect(page).toHaveURL(/\/paiement\/demo/, { timeout: 15000 });
@@ -95,40 +95,77 @@ test("sans carte grise : rapport produit, historique signalé indisponible", asy
   await expect(page.getByRole("heading", { name: "Pannes connues du modèle", exact: true })).toBeVisible();
 });
 
-test("pack 3 : code affiché et réutilisable sans repayer, puis épuisé", async ({ page }) => {
-  await goToReport(page, "EF-789-GH", { pack: "pack3" });
+async function login(page: Page, email: string) {
+  await page.goto("/connexion");
+  await page.getByLabel("Votre e-mail").fill(email);
+  await page.getByRole("button", { name: "Recevoir mon code" }).click();
+  const info = await page.getByText(/Mode démonstration : votre code est/).innerText({ timeout: 15000 });
+  const code = info.match(/(\d{6})/)![1];
+  await page.getByLabel("Code à 6 chiffres").fill(code);
+  await page.getByRole("button", { name: "Me connecter" }).click();
+  await expect(page).toHaveURL(/\/mes-rapports/, { timeout: 15000 });
+}
+
+test("connexion par code : espace Mes rapports, erreurs et déconnexion", async ({ page }, testInfo) => {
+  const email = `login-${testInfo.project.name}-${Date.now()}@exemple.fr`;
+  await goToReport(page, "WX-444-YZ", { email });
+  // mauvaise adresse → espace vide ; bon code → le rapport est listé
+  await page.goto("/connexion");
+  await page.getByLabel("Votre e-mail").fill("pas-un-email");
+  await page.getByRole("button", { name: "Recevoir mon code" }).click();
+  await expect(alert(page)).toContainText("invalide");
+  await page.getByLabel("Votre e-mail").fill(email);
+  await page.getByRole("button", { name: "Recevoir mon code" }).click();
+  await expect(page.getByText(/Mode démonstration/)).toBeVisible({ timeout: 15000 });
+  await page.getByLabel("Code à 6 chiffres").fill("000000");
+  await page.getByRole("button", { name: "Me connecter" }).click();
+  await expect(alert(page)).toContainText(/incorrect|Code/);
+  const info = await page.getByText(/Mode démonstration : votre code est/).innerText();
+  await page.getByLabel("Code à 6 chiffres").fill(info.match(/(\d{6})/)![1]);
+  await page.getByRole("button", { name: "Me connecter" }).click();
+  await expect(page).toHaveURL(/\/mes-rapports/, { timeout: 15000 });
+  await expect(page.getByText(`Connecté avec ${email}`)).toBeVisible();
+  await expect(page.getByTestId("report-row").first()).toContainText("WX-444-YZ");
+  await expect(page.getByRole("link", { name: "Mes rapports" }).first()).toBeVisible();
+  // la page de connexion redirige quand on est déjà connecté
+  await page.goto("/connexion");
+  await expect(page).toHaveURL(/\/mes-rapports/);
+  await page.getByRole("button", { name: "Se déconnecter" }).click();
+  await expect(page).toHaveURL(/\/$/, { timeout: 15000 });
+  await page.goto("/mes-rapports");
+  await expect(page).toHaveURL(/\/connexion/);
+});
+
+test("pack 3 : crédits utilisés automatiquement depuis le compte, puis épuisés", async ({ page }, testInfo) => {
+  const email = `pack-${testInfo.project.name}-${Date.now()}@exemple.fr`;
+  await goToReport(page, "EF-789-GH", { pack: "pack3", email });
   await expect(page.getByTestId("pack-box")).toContainText("2 rapports restants");
-  const code = (await page.getByTestId("pack-code").innerText()).trim();
-  expect(code).toMatch(/^[A-Z0-9]{10}$/);
-  // 2e rapport avec le code : pas de paiement
+  await login(page, email);
+  await expect(page.getByTestId("pack-card").first()).toContainText("2");
+  // 2e et 3e rapport : connecté, le crédit est utilisé sans paiement
   for (const plate of ["JK-111-LM", "MN-222-PQ"]) {
     await page.goto("/");
     await page.getByLabel("Plaque d'immatriculation").fill(plate);
     await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
     await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
+    await expect(page.getByTestId("account-pack")).toContainText("restant");
     await page.getByLabel("Kilométrage actuel *").fill("80000");
-    await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
-    await page.getByText("J'ai déjà un code de pack").click();
-    await page.getByPlaceholder("ABCD123456").fill(code);
     await page.getByRole("button", { name: /Utiliser un crédit/ }).click();
     await expect(page).toHaveURL(/\/rapport\//, { timeout: 15000 });
     await expect(page.getByRole("heading", { name: "Vue d'ensemble" })).toBeVisible({ timeout: 30000 });
   }
   await expect(page.getByTestId("pack-box")).toContainText("0 rapport restant");
-  // 4e : crédit épuisé → erreur claire
+  // 4e : plus de crédit → les offres payantes sont proposées
   await page.goto("/");
   await page.getByLabel("Plaque d'immatriculation").fill("RS-333-TV");
   await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
   await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
-  await page.getByLabel("Kilométrage actuel *").fill("80000");
-  await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
-  await page.getByText("J'ai déjà un code de pack").click();
-  await page.getByPlaceholder("ABCD123456").fill(code);
-  await page.getByRole("button", { name: /Utiliser un crédit/ }).click();
-  await expect(alert(page)).toContainText("plus de crédit");
-  await page.getByPlaceholder("ABCD123456").fill("FAUXCODE99");
-  await page.getByRole("button", { name: /Utiliser un crédit/ }).click();
-  await expect(alert(page)).toContainText("inconnu ou expiré");
+  await expect(page.getByTestId("account-pack")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Payer/ })).toBeVisible();
+  // l'espace liste bien les 3 rapports du pack + packs
+  await page.goto("/mes-rapports");
+  await expect(page.getByTestId("report-row")).toHaveCount(3);
+  await expect(page.getByTestId("pack-card").first()).toContainText("0");
 });
 
 test("erreurs de saisie carte grise", async ({ page }) => {

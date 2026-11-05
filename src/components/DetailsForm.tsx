@@ -3,10 +3,16 @@
 import { CarteGriseGuide } from "./CarteGriseGuide";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { Vehicle } from "@/lib/engine/types";
 import { OFFERS, formatEuros, type Offer } from "@/lib/services/pricing";
 
-export function DetailsForm({ reportId, vehicle, defaults }: { reportId: string; vehicle: Vehicle; defaults?: { mileage?: number | null; email?: string | null; offer?: string | null } }) {
+export interface AccountInfo {
+  email: string;
+  pack: { offer: string; remaining: number; total: number; expiresAt: string } | null;
+}
+
+export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId: string; vehicle: Vehicle; defaults?: { mileage?: number | null; email?: string | null; offer?: string | null }; account?: AccountInfo | null }) {
   const router = useRouter();
   const isFr = vehicle.country === "FR";
   const [form, setForm] = useState({
@@ -15,11 +21,12 @@ export function DetailsForm({ reportId, vehicle, defaults }: { reportId: string;
     formulaNumber: "",
     firstRegDate: "",
     listingUrl: "",
-    email: defaults?.email ?? "",
+    email: account?.email ?? defaults?.email ?? "",
     offer: (defaults?.offer as Offer) ?? "single",
     packCode: "",
   });
-  const [usePack, setUsePack] = useState(false);
+  const [buyInstead, setBuyInstead] = useState(false);
+  const usePack = !!account?.pack && !buyInstead;
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -32,7 +39,7 @@ export function DetailsForm({ reportId, vehicle, defaults }: { reportId: string;
     if (!form.email.trim()) return setError("Indiquez votre e-mail : le rapport vous y sera envoyé.");
     setLoading(true);
     try {
-      const body = { ...form, packCode: usePack ? form.packCode : undefined };
+      const body = { ...form, packCode: undefined, useAccountPack: usePack };
       const res = await fetch(`/api/reports/${reportId}/details`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       const json = await res.json();
       if (!res.ok) { setError(json.error ?? "Erreur inattendue."); return; }
@@ -91,16 +98,29 @@ export function DetailsForm({ reportId, vehicle, defaults }: { reportId: string;
 
       <fieldset className="border-0 p-0 m-0 flex flex-col gap-4">
         <legend className="display text-xl font-bold mb-1">Votre rapport</legend>
-        <div className="flex flex-col gap-1.5 max-w-md">
-          <label htmlFor="email" className={labelCls}>Votre e-mail *</label>
-          <input id="email" type="email" inputMode="email" autoComplete="email" placeholder="vous@exemple.fr" value={form.email} onChange={set("email")} className={fieldCls} required />
-          <span className={help}>Le rapport et le lien de partage vous y seront envoyés.</span>
-        </div>
+        {account ? (
+          <div className="flex flex-col gap-1.5 max-w-md">
+            <span className={labelCls}>Votre e-mail</span>
+            <div className={`${fieldCls} flex items-center justify-between gap-3 bg-ground`}><span className="truncate">{account.email}</span><span className="text-xs text-oktext font-semibold whitespace-nowrap">Connecté</span></div>
+            <span className={help}>Le rapport sera rangé dans votre espace « Mes rapports ».</span>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-1.5 max-w-md">
+            <label htmlFor="email" className={labelCls}>Votre e-mail *</label>
+            <input id="email" type="email" inputMode="email" autoComplete="email" placeholder="vous@exemple.fr" value={form.email} onChange={set("email")} className={fieldCls} required />
+            <span className={help}>Le rapport vous y sera envoyé et restera disponible dans votre espace « Mes rapports ». <Link href={`/connexion?next=/verification/${reportId}`} className="text-navy font-semibold">Déjà un pack ? Connectez-vous</Link>.</span>
+          </div>
+        )}
 
-        <div className="flex items-center gap-3 flex-wrap">
-          <label className="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" checked={usePack} onChange={(e) => setUsePack(e.target.checked)} />J&apos;ai déjà un code de pack</label>
-          {usePack && <input aria-label="Code de pack" placeholder="ABCD123456" value={form.packCode} onChange={set("packCode")} className="h-10 rounded-lg border border-line px-3 uppercase tracking-wider text-sm" />}
-        </div>
+        {account?.pack && (
+          <div data-testid="account-pack" className={`rounded-2xl border p-4 flex flex-wrap justify-between items-center gap-3 ${usePack ? "bg-okbg border-emerald-200" : "bg-ground border-line"}`}>
+            <div className="flex flex-col gap-0.5">
+              <span className="font-bold">{OFFERS[account.pack.offer as Offer]?.label ?? "Votre pack"} : {account.pack.remaining} rapport{account.pack.remaining > 1 ? "s" : ""} restant{account.pack.remaining > 1 ? "s" : ""}</span>
+              <span className="text-[13px] text-[#4B5563]">{usePack ? "Ce rapport utilisera un crédit, sans paiement." : "Vous avez choisi d'acheter un nouveau rapport à la place."} Valable jusqu&apos;au {new Date(account.pack.expiresAt).toLocaleDateString("fr-FR")}.</span>
+            </div>
+            <button type="button" onClick={() => setBuyInstead(!buyInstead)} className="text-sm font-semibold text-navy bg-transparent border border-line rounded-lg px-3 py-2 cursor-pointer">{usePack ? "Acheter à la place" : "Utiliser mon pack"}</button>
+          </div>
+        )}
 
         {!usePack && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3" role="radiogroup" aria-label="Offre">

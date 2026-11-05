@@ -64,3 +64,22 @@ export const providerCache = pgTable("provider_cache", {
 export type ReportRow = typeof reports.$inferSelect;
 export type PackRow = typeof packs.$inferSelect;
 export type MaintenanceEntryRow = typeof maintenanceEntries.$inferSelect;
+
+/** Codes de connexion à 6 chiffres envoyés par e-mail (valables 10 minutes). */
+export const loginCodes = pgTable("login_codes", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull(),
+  codeHash: text("code_hash").notNull(),
+  attempts: integer("attempts").notNull().default(0),
+  usedAt: timestamp("used_at", { withTimezone: true }),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Sessions « Mes rapports » (cookie), 90 jours. */
+export const sessions = pgTable("sessions", {
+  token: text("token").primaryKey(),
+  email: text("email").notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});

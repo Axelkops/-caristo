@@ -77,7 +77,7 @@ const Plate = ({ value }: { value: string }) => (
   </span>
 );
 
-export function ReportView({ report, reportId, shareToken, readonly = false, pack }: { report: ReportData; reportId: string; shareToken?: string; readonly?: boolean; pack?: { code: string; remaining: number; expiresAt: string } }) {
+export function ReportView({ report, reportId, shareToken, readonly = false, pack }: { report: ReportData; reportId: string; shareToken?: string; readonly?: boolean; pack?: { remaining: number; expiresAt: string } }) {
   const r = report;
   const v = r.vehicle;
   const h = r.history;
@@ -329,8 +329,8 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
 
           {!readonly && pack && (
             <div className="rounded-2xl px-6 py-5 flex flex-wrap gap-3 items-center justify-between no-print" style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.35)" }} data-testid="pack-box">
-              <div className="flex flex-col gap-1"><span className="font-bold">Votre pack</span><span className="text-[13px] text-[#AEB6C4]">{pack.remaining} rapport{pack.remaining > 1 ? "s" : ""} restant{pack.remaining > 1 ? "s" : ""}, valable jusqu&apos;au {new Date(pack.expiresAt).toLocaleDateString("fr-FR")}. Saisissez ce code lors de votre prochain rapport.</span></div>
-              <span className="display text-2xl font-bold tracking-[3px] select-all bg-white/10 px-4 py-2 rounded-xl" data-testid="pack-code">{pack.code}</span>
+              <div className="flex flex-col gap-1"><span className="font-bold">Votre pack : {pack.remaining} rapport{pack.remaining > 1 ? "s" : ""} restant{pack.remaining > 1 ? "s" : ""}</span><span className="text-[13px] text-[#AEB6C4]">Valable jusqu&apos;au {new Date(pack.expiresAt).toLocaleDateString("fr-FR")}. Connectez-vous à votre espace avant le prochain rapport : le crédit sera utilisé automatiquement, sans repayer.</span></div>
+              <a href="/mes-rapports" className="bg-accent text-ink px-4 py-2.5 rounded-[10px] font-semibold led no-underline text-sm whitespace-nowrap">Mes rapports</a>
             </div>
           )}
           {!readonly && shareToken && <ShareBox reportId={reportId} shareToken={shareToken} reference={r.reference} />}

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, inArray, lt, sql } from "drizzle-orm";
 import { getDb, schema } from "@/lib/db";
+import { cleanupAuth } from "@/lib/services/auth";
 
 /**
  * Nettoyage périodique (à appeler chaque nuit, ex. via Vercel Cron) :
@@ -22,6 +23,7 @@ export async function GET(req: Request) {
   const wiped = await db.update(schema.reports).set({ holderName: null, formulaNumber: null, firstRegDate: null }).where(and(lt(schema.reports.readyAt, d30), sql`${schema.reports.formulaNumber} is not null`)).returning();
   const drafts = await db.delete(schema.reports).where(and(inArray(schema.reports.status, ["draft", "identified", "awaiting_payment"]), lt(schema.reports.createdAt, d7))).returning();
   const expired = await db.delete(schema.reports).where(lt(schema.reports.readyAt, d365)).returning();
+  await cleanupAuth();
   const cache = await db.delete(schema.providerCache).where(lt(schema.providerCache.expiresAt, new Date())).returning();
   return NextResponse.json({ wipedCarteGrise: wiped.length, deletedDrafts: drafts.length, deletedExpired: expired.length, cacheEntries: cache.length });
 }

@@ -23,7 +23,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
   if (r.status === "identified" || r.status === "draft") redirect(`/verification/${id}`);
   if (r.status === "ready" && r.report) {
     const pack = await getPackForReport(r.packId);
-    return <ReportView report={r.report as ReportData} reportId={r.id} shareToken={r.shareToken} pack={pack ? { code: pack.code, remaining: pack.creditsTotal - pack.creditsUsed, expiresAt: pack.expiresAt.toISOString() } : undefined} />;
+    return <ReportView report={r.report as ReportData} reportId={r.id} shareToken={r.shareToken} pack={pack ? { remaining: pack.creditsTotal - pack.creditsUsed, expiresAt: pack.expiresAt.toISOString() } : undefined} />;
   }
   return (
     <>

@@ -62,10 +62,12 @@ export interface DetailsInput {
   email: string;
   offer: Offer;
   packCode?: string;
+  /** true = utiliser un crédit du pack rattaché au compte connecté (accountEmail) */
+  useAccountPack?: boolean;
 }
 
 /** Étape 2 : enregistrer kilométrage, carte grise, e-mail, offre. */
-export async function saveDetails(reportId: string, d: DetailsInput): Promise<{ status: string; needsPayment: boolean }> {
+export async function saveDetails(reportId: string, d: DetailsInput, accountEmail?: string | null): Promise<{ status: string; needsPayment: boolean }> {
   const db = await getDb();
   const [r] = await db.select().from(schema.reports).where(eq(schema.reports.id, reportId)).limit(1);
   if (!r) throw new UserError("Rapport introuvable.", 404);
@@ -94,12 +96,21 @@ export async function saveDetails(reportId: string, d: DetailsInput): Promise<{ 
     update.listingUrl = u;
   }
 
-  // Pack existant ?
-  if (d.packCode) {
-    const code = d.packCode.trim().toUpperCase();
-    const [pack] = await db.select().from(schema.packs).where(and(eq(schema.packs.code, code), gt(schema.packs.expiresAt, new Date()))).limit(1);
-    if (!pack) throw new UserError("Code de pack inconnu ou expiré.");
-    if (pack.creditsUsed >= pack.creditsTotal) throw new UserError("Ce pack n'a plus de crédit disponible.");
+  // Pack existant : via le compte connecté, ou (secours) via un code
+  if (d.useAccountPack || d.packCode) {
+    let pack: typeof schema.packs.$inferSelect | undefined;
+    if (d.useAccountPack) {
+      if (!accountEmail) throw new UserError("Connectez-vous à votre espace pour utiliser votre pack.", 401);
+      const rows = await db.select().from(schema.packs).where(and(eq(schema.packs.email, accountEmail), gt(schema.packs.expiresAt, new Date()))).orderBy(schema.packs.expiresAt);
+      pack = rows.find((p) => p.creditsUsed < p.creditsTotal);
+      if (!pack) throw new UserError("Votre pack n'a plus de crédit disponible (ou a expiré).");
+      update.email = accountEmail;
+    } else {
+      const code = (d.packCode ?? "").trim().toUpperCase();
+      [pack] = await db.select().from(schema.packs).where(and(eq(schema.packs.code, code), gt(schema.packs.expiresAt, new Date()))).limit(1);
+      if (!pack) throw new UserError("Code de pack inconnu ou expiré.");
+      if (pack.creditsUsed >= pack.creditsTotal) throw new UserError("Ce pack n'a plus de crédit disponible.");
+    }
     await db.update(schema.packs).set({ creditsUsed: sql`${schema.packs.creditsUsed} + 1` }).where(eq(schema.packs.id, pack.id));
     update.packId = pack.id; update.status = "paid"; update.paidAt = new Date(); update.offer = pack.offer as Offer;
     await db.update(schema.reports).set(update).where(eq(schema.reports.id, reportId));
@@ -149,7 +160,7 @@ export async function generateReport(reportId: string): Promise<ReportData> {
     const report = buildReport({ id: r.id, reference, vehicle, mileage: r.mileage ?? undefined, history, recalls, listing, entries: entries.map((e) => ({ label: e.label, date: e.date, mileage: e.mileage ?? undefined })) });
     await db.update(schema.reports).set({ report, score: report.score, status: "ready", readyAt: new Date(), updatedAt: new Date(), error: null }).where(eq(schema.reports.id, reportId));
     const [pack] = r.packId ? await db.select().from(schema.packs).where(eq(schema.packs.id, r.packId)).limit(1) : [];
-    if (r.email) void sendReportReadyEmail({ to: r.email, reportId: r.id, shareToken: r.shareToken, reference, vehicle, packCode: pack && pack.creditsUsed === 1 ? pack.code : undefined, packCredits: pack ? pack.creditsTotal - pack.creditsUsed : undefined }).catch(() => undefined);
+    if (r.email) void sendReportReadyEmail({ to: r.email, reportId: r.id, shareToken: r.shareToken, reference, vehicle, packRemaining: pack ? pack.creditsTotal - pack.creditsUsed : undefined }).catch(() => undefined);
     return report;
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
