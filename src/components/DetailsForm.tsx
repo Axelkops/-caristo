@@ -1,5 +1,6 @@
 "use client";
 
+import { CarteGriseGuide } from "./CarteGriseGuide";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Vehicle } from "@/lib/engine/types";
@@ -63,22 +64,23 @@ export function DetailsForm({ reportId, vehicle, defaults }: { reportId: string;
       {isFr ? (
         <fieldset className="border-0 p-0 m-0 flex flex-col gap-4">
           <legend className="display text-xl font-bold mb-1">La carte grise</legend>
-          <p className="m-0 text-sm text-[#4B5563]">Trois informations ouvrent l&apos;historique officiel (contrôles techniques, kilométrages, sinistres, situation administrative). Acheteur : demandez une photo de la carte grise au vendeur.</p>
+          <p className="m-0 text-sm text-[#4B5563]">Trois informations de la carte grise ouvrent l&apos;historique officiel (contrôles techniques, kilométrages, sinistres, situation administrative). Acheteur : demandez une photo de la carte grise au vendeur. Le schéma montre où les trouver.</p>
+          <CarteGriseGuide />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex flex-col gap-1.5">
               <label htmlFor="formulaNumber" className={labelCls}>Numéro de formule</label>
               <input id="formulaNumber" placeholder="2021AB12345" autoCapitalize="characters" value={form.formulaNumber} onChange={set("formulaNumber")} className={`${fieldCls} uppercase`} />
-              <span className={help}>En bas à droite de la carte grise.</span>
+              <span className={help}>Repère 1 : en gras sous le titre, 11 caractères (année + 2 lettres + 5 chiffres).</span>
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="holderName" className={labelCls}>Nom du titulaire</label>
-              <input id="holderName" placeholder="Nom Prénom ou société" autoComplete="off" value={form.holderName} onChange={set("holderName")} className={fieldCls} />
-              <span className={help}>Case C.1.</span>
+              <input id="holderName" placeholder="DUPONT MARIE" autoComplete="off" value={form.holderName} onChange={set("holderName")} className={fieldCls} />
+              <span className={help}>Repère 2 : case C.1, tel qu&apos;écrit sur la carte grise.</span>
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="firstRegDate" className={labelCls}>Date de 1re immatriculation</label>
-              <input id="firstRegDate" placeholder="JJ/MM/AAAA" inputMode="numeric" value={form.firstRegDate} onChange={set("firstRegDate")} className={fieldCls} />
-              <span className={help}>Case B.</span>
+              <input id="firstRegDate" placeholder="27/02/2020" inputMode="numeric" value={form.firstRegDate} onChange={set("firstRegDate")} className={fieldCls} />
+              <span className={help}>Repère 3 : case B, sous la plaque d&apos;immatriculation.</span>
             </div>
           </div>
           <p className="m-0 text-xs text-muted">Sans ces informations, le rapport est produit avec tout le reste et indique clairement les sections non renseignées.</p>
