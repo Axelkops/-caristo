@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { COMPANY, SITE } from "@/lib/site";
+import { SITE } from "@/lib/site";
 import { Logo } from "./Logo";
 
 export function Footer() {
@@ -33,7 +33,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-white/10 pt-6 flex flex-wrap justify-between gap-3 text-[13px]">
-          <span>© {new Date().getFullYear()} {SITE.name} · Édité par {COMPANY.name} ({COMPANY.formShort}), {COMPANY.rcs} n° {COMPANY.siren}</span>
+          <span>© {new Date().getFullYear()} {SITE.name} · Tous droits réservés</span>
           <span>Données issues de sources tierces, restituées telles qu&apos;enregistrées à la date du rapport.</span>
         </div>
       </div>

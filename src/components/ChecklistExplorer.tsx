@@ -36,7 +36,7 @@ export function ChecklistExplorer({ compact = false }: { compact?: boolean }) {
     <button type="button" onClick={onClick} className="text-[13px] font-semibold px-3.5 py-2 rounded-full cursor-pointer transition-colors" style={{ background: on ? "#2563EB" : "rgba(255,255,255,0.06)", color: on ? "#fff" : "#C8D0DC", border: `1px solid ${on ? "#2563EB" : "rgba(147,197,253,0.2)"}` }}>{children}</button>
   );
 
-  const sections = compact ? checklist.sections.filter((s) => ["moteur", "boite"].includes(s.id)) : checklist.sections;
+  const sections = compact ? checklist.sections.filter((s) => ["vendeur", "acheteur"].includes(s.id)) : checklist.sections;
 
   return (
     <div className="flex flex-col gap-6 text-white" data-testid="checklist-explorer">
@@ -52,10 +52,11 @@ export function ChecklistExplorer({ compact = false }: { compact?: boolean }) {
         <span className="text-[13px] text-[#AEB6C4]" data-testid="explorer-count">{checklist.essential} essentiels · {checklist.total} points</span>
       </div>
 
-      <div className={`grid grid-cols-1 ${compact ? "md:grid-cols-2" : "lg:grid-cols-2"} gap-4`}>
+      <div className={`grid grid-cols-1 ${compact ? "md:grid-cols-2" : "lg:grid-cols-3"} gap-4`}>
         {sections.map((s) => (
           <div key={s.id} className="rounded-2xl p-5 flex flex-col gap-3 bg-white/[0.04] border border-white/10">
             <h3 className="m-0 text-[15px] font-bold">{s.title} <span className="text-[12px] font-medium text-[#8E9AAF]">· {s.items.length}</span></h3>
+            <p className="m-0 -mt-1 text-[12.5px] text-[#8E9AAF]">{s.sub}</p>
             <ul className="m-0 p-0 list-none flex flex-col gap-2">
               {(compact ? s.items.slice(0, 5) : s.items).map((i) => (
                 <li key={i.id} className="flex gap-3 items-start">

@@ -2,9 +2,11 @@ import type { KnownIssue, OfficialHistory, Recall, Vehicle } from "./types";
 import { vehicleAgeYears } from "./known-issues";
 
 /*
- * Points à vérifier avant l'achat : une liste construite pour CE véhicule.
- * Chaque point porte la raison de sa présence (énergie, boîte, âge, kilométrage, modèle),
- * afin que deux véhicules différents n'aient jamais la même liste.
+ * À vérifier avant l'achat : une liste courte, construite pour CE véhicule, en trois parties :
+ *  - Papiers : ce qui doit être en règle avant de payer ;
+ *  - Vendeur : ce qu'il faut lui demander ;
+ *  - Acheteur : ce qu'on contrôle soi-même sur place et à l'essai.
+ * Chaque point porte la raison de sa présence (énergie, boîte, âge, kilométrage, modèle).
  */
 
 export type ChecklistPriority = "essentiel" | "conseille";
@@ -12,7 +14,7 @@ export type ChecklistPriority = "essentiel" | "conseille";
 export interface ChecklistItem {
   id: string;
   text: string;
-  /** comment faire, en une phrase */
+  /** comment faire, en quelques mots (facultatif) */
   how?: string;
   priority: ChecklistPriority;
   /** pourquoi ce point est là : « Diesel », « Boîte double embrayage », « + de 150 000 km »… */
@@ -20,8 +22,10 @@ export interface ChecklistItem {
 }
 
 export interface ChecklistSection {
-  id: string;
+  id: "papiers" | "vendeur" | "acheteur";
   title: string;
+  /** qui s'en charge, en une ligne */
+  sub: string;
   items: ChecklistItem[];
 }
 
@@ -83,147 +87,77 @@ export function buildChecklist(input: ChecklistInput): Checklist {
   if (v.imported) profile.push("Importé");
   if (isAwd(v)) profile.push("4 roues motrices");
 
-  const S = (id: string, title: string): ChecklistSection => ({ id, title, items: [] });
-  const papers = S("papiers", "Papiers et vendeur");
-  const outside = S("exterieur", "Carrosserie, pneus et dessous");
-  const engine = S("moteur", electric ? "Moteur électrique et batterie" : hybrid ? "Moteur, batterie et système hybride" : "Moteur");
-  const gear = S("boite", electric ? "Transmission" : "Boîte de vitesses et transmission");
-  const inside = S("interieur", "Intérieur et équipements");
-  const drive = S("essai", "Essai sur route");
-  const model = S("modele", "Points propres à ce modèle");
-
+  const papers: ChecklistSection = { id: "papiers", title: "Papiers", sub: "À avoir en règle avant de payer.", items: [] };
+  const seller: ChecklistSection = { id: "vendeur", title: "À demander au vendeur", sub: "Les questions et documents qui révèlent l'entretien réel.", items: [] };
+  const buyer: ChecklistSection = { id: "acheteur", title: "À vérifier vous-même", sub: "Sur place, puis à l'essai (20 minutes, moteur froid au départ).", items: [] };
   const add = (sec: ChecklistSection, id: string, text: string, priority: ChecklistPriority, how?: string, because?: string) => sec.items.push({ id, text, how, priority, because });
 
   /* ---------- Papiers ---------- */
-  add(papers, "cg-nom", "La carte grise est au nom du vendeur et l'adresse correspond à sa pièce d'identité.", "essentiel", "Comparer la pièce d'identité, la carte grise (C.1, C.4a) et le nom sur le contrat. Un vendeur qui n'est pas le titulaire doit avoir un mandat.");
-  add(papers, "cg-vin", "Le numéro de série (E sur la carte grise) est identique à celui du véhicule.", "essentiel", "Lire la plaque constructeur (bas du pare-brise côté passager, montant de porte ou sous le capot) et comparer les 17 caractères.");
-  if (age >= 4 || hist?.inspections.length) add(papers, "ct", "Le contrôle technique a moins de 6 mois et le procès-verbal est fourni.", "essentiel", "Lire tout le procès-verbal : les défaillances mineures ne bloquent pas la vente mais annoncent des frais.", age >= 4 ? "Véhicule de plus de 4 ans" : undefined);
-  else add(papers, "ct-jeune", "Moins de 4 ans : pas de contrôle technique obligatoire, demander à la place le dernier compte rendu d'atelier.", "conseille", undefined, "Véhicule récent");
-  add(papers, "csa", "Le certificat de situation administrative (non-gage) date de moins de 15 jours.", "essentiel", "Gratuit sur le site de l'ANTS. Il doit indiquer « aucune opposition, aucun gage ».");
-  if (hist && !hist.available) add(papers, "hist-abs", "L'historique officiel n'a pas pu être consulté : demander au vendeur son rapport HistoVec (gratuit) imprimé ou à l'écran.", "essentiel", "Le vendeur se connecte sur histovec.interieur.gouv.fr avec sa carte grise et vous montre le rapport.", "Historique officiel non disponible");
-  if (hist?.pledge) add(papers, "gage", "Un gage figure dans l'historique officiel : exiger la main-levée du créancier avant de payer.", "essentiel", undefined, "Gage signalé");
-  if (hist?.opposition) add(papers, "oppo", "Une opposition bloque le transfert de la carte grise : ne pas acheter tant qu'elle n'est pas levée.", "essentiel", undefined, "Opposition signalée");
-  if (hist?.damagedProcedure) add(papers, "ve", "Une procédure « véhicule endommagé » existe : demander le rapport d'expertise et la preuve de la levée.", "essentiel", undefined, "Procédure VE");
-  if ((hist?.ownersCount ?? 0) >= 4) add(papers, "proprios", `${hist?.ownersCount} propriétaires : demander pourquoi le véhicule change souvent de mains.`, "conseille", undefined, "Nombreux propriétaires");
-  add(papers, "factures", "Les factures d'entretien couvrent toute la vie du véhicule, pas seulement les derniers mois.", "essentiel", "Classer les factures par date : un trou de plus de 2 ans ou 30 000 km est un signal.");
-  if (thermal) add(papers, "carnet", "Le carnet d'entretien (papier ou numérique) est tamponné aux bonnes échéances.", "conseille", "Chez beaucoup de constructeurs, le carnet est consultable sur l'application ou en concession avec le numéro de série.");
-  add(papers, "cles", "Le vendeur remet au moins deux clés qui fonctionnent toutes les deux.", "conseille", "Une clé à refaire coûte souvent 150 à 400 €.", undefined);
-  if (v.imported) add(papers, "import", "Véhicule importé : exiger le certificat de conformité européen et le quitus fiscal, et l'historique du pays d'origine.", "essentiel", undefined, "Véhicule importé");
-  if (age < 3) add(papers, "garantie", "La garantie constructeur est encore active et transférable : demander la date de fin exacte.", "conseille", "Vérifier aussi qu'aucun entretien hors réseau n'a fait sauter la garantie.", "Véhicule récent");
-  if (v.category === "utilitaire") add(papers, "tva", "Utilitaire : vérifier si le prix est TTC avec TVA récupérable (facture pro) ou vendu par un particulier.", "conseille", undefined, "Utilitaire");
-  if (fuel === "gpl") add(papers, "gpl-cg", "La mention GPL figure bien sur la carte grise (champ P.3) : une installation non homologuée est interdite.", "essentiel", undefined, "GPL");
+  add(papers, "cg-nom", "Carte grise au nom du vendeur, identique à sa pièce d'identité.", "essentiel");
+  add(papers, "cg-vin", "Numéro de série (E) identique sur la carte grise et sur le véhicule.", "essentiel", "Plaque constructeur en bas du pare-brise ou dans la porte.");
+  if (age >= 4 || hist?.inspections.length) add(papers, "ct", "Contrôle technique de moins de 6 mois, procès-verbal lu en entier.", "essentiel", undefined, "Plus de 4 ans");
+  else add(papers, "ct-jeune", "Moins de 4 ans : pas de contrôle technique, demander le dernier compte rendu d'atelier.", "conseille", undefined, "Véhicule récent");
+  add(papers, "csa", "Certificat de situation administrative (non-gage) de moins de 15 jours.", "essentiel", "Gratuit sur le site de l'ANTS.");
+  if (hist && !hist.available) add(papers, "hist-abs", "Historique officiel non consulté : demander au vendeur son rapport HistoVec (gratuit).", "essentiel", undefined, "Historique officiel non disponible");
+  if (hist?.pledge) add(papers, "gage", "Gage inscrit : exiger la main-levée du créancier avant de payer.", "essentiel", undefined, "Gage signalé");
+  if (hist?.opposition) add(papers, "oppo", "Opposition en cours : ne pas acheter tant qu'elle n'est pas levée.", "essentiel", undefined, "Opposition signalée");
+  if (hist?.damagedProcedure) add(papers, "ve", "Procédure « véhicule endommagé » : rapport d'expertise et preuve de levée.", "essentiel", undefined, "Procédure VE");
+  if (v.imported) add(papers, "import", "Importé : certificat de conformité européen et quitus fiscal.", "essentiel", undefined, "Véhicule importé");
+  if (fuel === "gpl") add(papers, "gpl-cg", "Mention GPL présente sur la carte grise (champ P.3).", "essentiel", undefined, "GPL");
+  if (v.category === "utilitaire") add(papers, "tva", "Prix TTC ou HT : vérifier si la TVA est récupérable.", "conseille", undefined, "Utilitaire");
 
-  /* ---------- Extérieur ---------- */
-  add(outside, "jeux", "Les écarts entre les éléments de carrosserie sont réguliers, les teintes identiques d'un panneau à l'autre.", "essentiel", "Regarder en lumière rasante. Un capot ou une aile plus neufs que le reste = choc réparé.");
-  add(outside, "vis", "Les vis de capot, d'ailes et de portes n'ont pas de traces d'outil.", "conseille", "Des vis marquées signifient qu'un élément a été déposé.");
-  add(outside, "pare-brise", "Le pare-brise n'a ni impact ni fissure (refus au contrôle technique dans le champ de vision).", "conseille");
-  add(outside, "pneus", "Les 4 pneus ont au moins 3 mm, s'usent de façon régulière et ont moins de 6 ans.", "essentiel", "Date : les 4 chiffres après « DOT » sur le flanc (semaine + année). Une usure d'un seul côté = parallélisme ou train abîmé.");
-  if (electric || hybrid) add(outside, "pneus-ev", "Usure des pneus avant plus rapide sur ce type de véhicule (couple immédiat) : vérifier qu'ils sont de la même marque et du même indice de charge.", "conseille", undefined, electric ? "Électrique" : "Hybride");
-  add(outside, "freins", "Les disques ne sont ni rayés ni voilés, sans lèvre sur le bord.", "conseille", "Passer le doigt sur le bord du disque : une marche nette = disque usé.");
-  if (electric) add(outside, "freins-ev", "Disques rouillés ou grippés : sur une électrique les freins servent peu et peuvent se gripper.", "conseille", "Rouler quelques mètres puis freiner fort une fois : pas de vibration ni de bruit de frottement.", "Électrique");
-  if (age >= 8 || km >= 150000) add(outside, "dessous", "Dessous de caisse, bas de caisse et passages de roue : pas de corrosion perforante ni de mastic récent.", "essentiel", "Se baisser avec une lampe. Un dessous entièrement repeint en noir cache souvent quelque chose.", age >= 8 ? `${Math.floor(age)} ans` : "Kilométrage élevé");
-  if (age >= 10) add(outside, "flexibles", "Flexibles de frein, durites et soufflets de cardan : pas de craquelures ni de suintement.", "conseille", undefined, "Plus de 10 ans");
-  add(outside, "fuites", "Aucune trace d'huile ou de liquide sous le véhicule après 10 minutes à l'arrêt.", "essentiel", "Demander à voir la place où le véhicule dort habituellement.");
-  if (electric || fuel === "hybride_rechargeable") add(outside, "trappe", "La trappe de charge se verrouille et la prise ne présente ni broche noircie ni jeu.", "conseille", undefined, "Recharge");
-  if (v.category === "utilitaire") add(outside, "utilitaire", "Plancher et parois du compartiment de charge : pas de déformation, portes arrière qui ferment bien, cloison fixée.", "essentiel", "Les utilitaires sont souvent surchargés : contrôler les lames de ressort et l'assiette arrière.", "Utilitaire");
-  if (v.category === "moto") add(outside, "moto", "Traces de chute : leviers, embouts de guidon, carter, repose-pieds râpés ; fourche sans fuite ; kit chaîne sans point dur.", "essentiel", undefined, "Deux-roues");
+  /* ---------- Vendeur ---------- */
+  add(seller, "factures", "Les factures d'entretien, de la première à la dernière.", "essentiel", "Un trou de 2 ans ou 30 000 km est un signal.");
+  add(seller, "cles", "Les deux clés, qui fonctionnent.", "conseille", "Une clé à refaire : 150 à 400 €.");
+  if (thermal && (km >= 90000 || age >= 6)) add(seller, "distribution", "La facture de la distribution (courroie ou chaîne).", "essentiel", "Sans facture, prévoir le remplacement.", km >= 90000 ? "Plus de 90 000 km" : "Plus de 6 ans");
+  if (fuel === "diesel") add(seller, "fap", "Son usage : route ou surtout ville ?", "essentiel", "Un diesel urbain encrasse le filtre à particules.", "Diesel");
+  if (fuel === "diesel" && euro6) add(seller, "adblue", "La fréquence des remplissages d'AdBlue et l'absence de message d'alerte.", "conseille", undefined, "Diesel Euro 6");
+  if (isTurboPetrol(v)) add(seller, "huile-conso", "S'il rajoute de l'huile entre deux vidanges.", "essentiel", undefined, "Essence turbo");
+  if (auto) add(seller, "auto-huile", "La facture de vidange de la boîte automatique (souvent tous les 60 000 km).", "essentiel", "Même si le constructeur dit « à vie ».", "Boîte automatique");
+  if (manual && km >= 120000) add(seller, "embrayage-vendeur", "Si l'embrayage a déjà été remplacé.", "conseille", undefined, "Plus de 120 000 km");
+  if (electric || hybrid) add(seller, "batt-certif", "Un certificat de santé de la batterie (concession ou diagnostic indépendant).", "essentiel", "À défaut, l'autonomie affichée à 100 % de charge.", electric ? "Électrique" : "Hybride");
+  if (electric || fuel === "hybride_rechargeable") add(seller, "cables", "Les câbles de recharge fournis (type 2, prise domestique).", "conseille", undefined, "Recharge");
+  if (electric) add(seller, "ev-garantie", "La date de fin de garantie batterie (souvent 8 ans ou 160 000 km).", "essentiel", undefined, "Électrique");
+  if (fuel === "gpl") add(seller, "gpl-reservoir", "L'attestation de l'installateur et la date du contrôle du réservoir.", "essentiel", undefined, "GPL");
+  if (age < 3) add(seller, "garantie", "La date de fin de garantie constructeur.", "conseille", undefined, "Véhicule récent");
+  if ((hist?.ownersCount ?? 0) >= 4) add(seller, "proprios", `Pourquoi ${hist?.ownersCount} propriétaires en si peu de temps.`, "conseille", undefined, "Nombreux propriétaires");
+  if (km >= 150000) add(seller, "km-eleve", "Ce qui a été remplacé : turbo, injecteurs, embrayage, amortisseurs, batterie.", "essentiel", undefined, "Plus de 150 000 km");
+  for (const r of (input.recalls ?? []).filter((x) => x.status !== "done").slice(0, 3)) add(seller, `recall-${r.reference ?? r.date}`, `Si le rappel « ${r.title} » a été fait (facture ou attestation).`, "essentiel", undefined, "Rappel constructeur");
 
-  /* ---------- Moteur ---------- */
-  if (thermal) {
-    add(engine, "froid", "Démarrage moteur froid, capot ouvert : pas de claquement, de sifflement ni de fumée au démarrage.", "essentiel", "Demander au vendeur de ne pas faire chauffer le véhicule avant votre arrivée. Toucher le capot en arrivant.");
-    add(engine, "huile", "Niveau et aspect de l'huile corrects : pas de dépôt beige sous le bouchon (mélange eau-huile).", "essentiel", "Un bouchon de remplissage avec une mousse beige = joint de culasse à suspecter.");
-    add(engine, "liquides", "Liquide de refroidissement propre et au niveau ; pas de trace de fuite sur le radiateur ni les durites.", "conseille");
-  }
-  if (fuel === "diesel") {
-    add(engine, "fumee", "À l'accélération franche moteur chaud : pas de fumée noire (injection) ni blanche/bleue persistante.", "essentiel", "Se faire suivre par quelqu'un ou regarder dans le rétroviseur sur une accélération.", "Diesel");
-    add(engine, "fap", "Filtre à particules : le véhicule fait régulièrement de la route, pas uniquement de la ville.", "essentiel", "Demander l'usage habituel. Un diesel urbain accumule les régénérations ratées : voyant, perte de puissance, consommation en hausse.", "Diesel");
-    add(engine, "egr", "Pas d'à-coups ni de trou à l'accélération à bas régime (vanne EGR encrassée).", "conseille", undefined, "Diesel");
-    add(engine, "turbo-d", "Pas de sifflement aigu ni de fumée bleue à l'accélération (turbo).", "essentiel", "Vérifier l'absence d'huile dans la durite d'admission si elle est accessible.", "Diesel");
-    if (euro6) add(engine, "adblue", "AdBlue : pas de message d'avertissement ni de compte à rebours ; demander la fréquence des remplissages.", "conseille", "Une panne du système AdBlue peut immobiliser le véhicule et coûte souvent 500 à 1 500 €.", "Diesel Euro 6");
-    add(engine, "injecteurs", "Ralenti stable et régulier, sans claquement sec d'injecteur.", "conseille", undefined, "Diesel");
-  }
-  if (fuel === "essence" || fuel === "hybride" || fuel === "hybride_rechargeable") {
-    add(engine, "fumee-e", "Pas de fumée bleue à l'accélération après un ralenti prolongé (consommation d'huile).", "essentiel", "Laisser tourner au ralenti 2 minutes puis accélérer : regarder l'échappement.", "Essence");
-    if (isTurboPetrol(v)) add(engine, "turbo-e", "Petit moteur essence turbo : vérifier la consommation d'huile et l'historique des vidanges (intervalle respecté, huile de la bonne norme).", "essentiel", "Demander si le propriétaire rajoute de l'huile entre deux vidanges. Une courroie « baignée dans l'huile » impose un remplacement anticipé sur certains moteurs.", "Essence turbo");
-    add(engine, "allumage", "Pas de ratés ni de tremblement au ralenti (bougies, bobines).", "conseille", undefined, "Essence");
-  }
-  if (fuel === "gpl") {
-    add(engine, "gpl-bascule", "Le passage essence → GPL se fait sans à-coup et le véhicule tient le ralenti dans les deux modes.", "essentiel", undefined, "GPL");
-    add(engine, "gpl-reservoir", "Le réservoir GPL a été contrôlé (épreuve) dans les délais et aucune odeur de gaz n'est perceptible.", "essentiel", "Demander la date de pose et l'attestation de l'installateur.", "GPL");
-  }
-  if (hybrid) {
-    add(engine, "hyb-batt", "La batterie hybride est saine : pas de message d'alerte, garantie constructeur (souvent 8 ans ou 160 000 km) indiquée.", "essentiel", "Demander un relevé de santé de la batterie en concession ou via l'application constructeur.", "Hybride");
-    add(engine, "hyb-transition", "La transition entre électrique et thermique se fait sans à-coup ni bruit, à l'arrêt comme en roulant.", "essentiel", undefined, "Hybride");
-    add(engine, "hyb-regen", "Le freinage régénératif fonctionne : la jauge montre une recharge en décélération.", "conseille", undefined, "Hybride");
-  }
-  if (fuel === "hybride_rechargeable") {
-    add(engine, "phev-charge", "Brancher le véhicule pendant la visite : la charge démarre et l'autonomie électrique affichée à 100 % est proche de celle annoncée.", "essentiel", "Une hybride rechargeable jamais rechargée fait travailler le thermique en surcharge : regarder la consommation moyenne sur l'ordinateur de bord.", "Hybride rechargeable");
-    add(engine, "phev-cable", "Le câble de recharge (prise domestique et/ou type 2) est fourni et en bon état.", "conseille", undefined, "Hybride rechargeable");
-  }
+  /* ---------- Acheteur ---------- */
+  add(buyer, "carrosserie", "Carrosserie : écarts réguliers, même teinte partout, pas de vis marquées.", "essentiel", "Regarder en lumière rasante.");
+  add(buyer, "pneus", "Pneus : 3 mm minimum, usure régulière, moins de 6 ans.", "essentiel", "Date : les 4 chiffres après « DOT ».");
+  if (age >= 8 || km >= 150000) add(buyer, "dessous", "Dessous de caisse : pas de rouille perforante ni de mastic récent.", "essentiel", undefined, age >= 8 ? `${Math.floor(age)} ans` : "Kilométrage élevé");
+  add(buyer, "fuites", "Aucune trace de fuite sous le véhicule.", "essentiel");
+  if (thermal) add(buyer, "froid", "Démarrage à froid : pas de claquement, de sifflement ni de fumée.", "essentiel", "Toucher le capot en arrivant : il doit être froid.", "Thermique");
+  if (thermal) add(buyer, "huile", "Bouchon d'huile propre, sans dépôt beige.", "essentiel", "Dépôt beige = eau dans l'huile.", "Thermique");
+  if (fuel === "diesel") add(buyer, "fumee", "Pas de fumée noire ou bleue en accélérant moteur chaud.", "essentiel", undefined, "Diesel");
+  if (fuel === "essence" || hybrid) add(buyer, "fumee-e", "Pas de fumée bleue en accélérant après un ralenti prolongé.", "essentiel", undefined, "Essence");
+  if (fuel === "gpl") add(buyer, "gpl-bascule", "Passage essence → GPL sans à-coup, aucune odeur de gaz.", "essentiel", undefined, "GPL");
+  if (hybrid) add(buyer, "hyb-transition", "Passage électrique ↔ thermique sans à-coup.", "essentiel", undefined, "Hybride");
+  if (fuel === "hybride_rechargeable") add(buyer, "phev-charge", "Brancher le véhicule : la charge démarre.", "essentiel", undefined, "Hybride rechargeable");
   if (electric) {
-    add(engine, "ev-soh", "État de santé de la batterie (SOH) connu : demander un certificat de santé de la batterie, que la concession ou un diagnostic indépendant peut établir.", "essentiel", "À défaut, batterie chargée à 100 % : comparer l'autonomie affichée à l'autonomie neuve du modèle. Une perte au-delà de 15 à 20 % se négocie.", "Électrique");
-    add(engine, "ev-garantie", "Garantie batterie encore active (généralement 8 ans ou 160 000 km, seuil 70 %) : noter la date de fin.", "essentiel", undefined, "Électrique");
-    add(engine, "ev-charge", "Lancer une charge pendant la visite (borne ou prise) : la charge démarre, sans message d'erreur, à la puissance attendue.", "essentiel", "Si possible, tester aussi une charge rapide : une puissance très basse peut révéler une batterie fatiguée ou bridée.", "Électrique");
-    add(engine, "ev-cables", "Câbles fournis : câble type 2 et, souvent, câble pour prise domestique. Un câble manquant coûte 150 à 300 €.", "conseille", undefined, "Électrique");
-    add(engine, "ev-12v", "Batterie 12 V : pas de message de défaut au démarrage, véhicule qui « s'allume » immédiatement.", "conseille", "La petite batterie 12 V tombe souvent en panne avant la grosse.", "Électrique");
-    add(engine, "ev-bruit", "Aucun sifflement ou grondement inhabituel du moteur ou du réducteur à l'accélération et en décélération.", "conseille", undefined, "Électrique");
-    add(engine, "ev-usage", "Demander l'usage de la recharge : majoritairement lente (bon) ou presque toujours rapide (plus d'usure).", "conseille", undefined, "Électrique");
+    add(buyer, "ev-charge", "Lancer une charge : elle démarre, sans message d'erreur.", "essentiel", "Si possible, tester une charge rapide.", "Électrique");
+    add(buyer, "ev-autonomie", "Noter l'autonomie et le % au départ et à l'arrivée de l'essai : cohérents avec la distance.", "essentiel", undefined, "Électrique");
+    add(buyer, "ev-freins", "Freinage fort une fois : pas de vibration ni de bruit (disques peu sollicités).", "conseille", undefined, "Électrique");
   }
-  if (thermal && (km >= 90000 || age >= 6)) add(engine, "distribution", "Distribution (courroie ou chaîne) : facture de remplacement ou preuve qu'elle n'est pas encore due.", "essentiel", "Sans facture, prévoir le remplacement : une rupture détruit le moteur.", km >= 90000 ? "Plus de 90 000 km" : "Plus de 6 ans");
-  if (thermal && km >= 150000) add(engine, "km-eleve", "Au-delà de 150 000 km : demander précisément ce qui a été remplacé (turbo, injecteurs, embrayage, amortisseurs, batterie).", "essentiel", undefined, "Plus de 150 000 km");
+  if (manual) add(buyer, "embrayage", "Embrayage : en 3e à 50 km/h, accélérer à fond ; le régime ne doit pas monter sans la vitesse.", "essentiel", "Sinon il patine : 600 à 1 500 €.", "Boîte manuelle");
+  if (manual) add(buyer, "synchros", "Toutes les vitesses passent sans craquement, y compris la 2e à froid.", "essentiel", undefined, "Boîte manuelle");
+  if (manual && fuel === "diesel") add(buyer, "bimasse", "Pas de claquement métallique au ralenti ni à la coupure (volant bi-masse).", "essentiel", undefined, "Diesel à boîte manuelle");
+  if (auto) add(buyer, "auto-passages", "Passages de rapports doux, sans à-coup ni hésitation, surtout entre 0 et 30 km/h.", "essentiel", undefined, "Boîte automatique");
+  if (autoKind === "double_embrayage") add(buyer, "dsg", "Manœuvres lentes en avant et en arrière : aucun broutement.", "essentiel", "Double embrayage : 1 500 à 4 000 € si usé.", "Double embrayage");
+  if (autoKind === "cvt") add(buyer, "cvt", "Vitesse stabilisée : pas de bruit de courroie ni de vibration.", "essentiel", undefined, "CVT");
+  if (autoKind === "robotisee") add(buyer, "robot", "Passages lents mais sans secousse, pas de message d'embrayage.", "essentiel", undefined, "Boîte robotisée");
+  if (isAwd(v)) add(buyer, "awd", "Virage serré à faible vitesse : pas de vibration ni de bruit de roulement.", "essentiel", undefined, "4 roues motrices");
+  add(buyer, "interieur", "Usure du volant, des pédales et du siège cohérente avec le kilométrage.", "essentiel");
+  add(buyer, "voyants", "Au contact, tous les voyants s'allument puis s'éteignent.", "essentiel", "Un voyant qui ne s'allume jamais a pu être débranché.");
+  add(buyer, "equipements", "Vitres, clim (vraiment froide), écran, caméra, aides à la conduite : tout fonctionne.", "conseille");
+  add(buyer, "essai", "À l'essai : freinage droit sans vibration, direction sans jeu, pas de claquement sur dos-d'âne.", "essentiel", km >= 120000 ? "Au-delà de 120 000 km, amortisseurs souvent en fin de vie." : undefined);
+  if (v.category === "utilitaire") add(buyer, "utilitaire", "Compartiment de charge : plancher droit, portes qui ferment, assiette arrière correcte.", "essentiel", undefined, "Utilitaire");
+  if (v.category === "moto") add(buyer, "moto", "Traces de chute (leviers, carters, embouts), fourche sans fuite, kit chaîne sans point dur.", "essentiel", undefined, "Deux-roues");
+  for (const i of (input.knownIssues ?? []).filter((x) => x.applies && x.inZone).slice(0, 3)) add(buyer, `issue-${i.id}`, `${i.title} : ${i.whatToCheck}`, i.severity === "high" ? "essentiel" : "conseille", undefined, "Point connu du modèle");
 
-  /* ---------- Boîte / transmission ---------- */
-  if (manual) {
-    add(gear, "embrayage", "Embrayage : le point de patinage n'est pas trop haut et le moteur ne s'emballe pas quand on accélère en 3e à bas régime.", "essentiel", "Test : en 3e à 50 km/h, accélérer à fond. Si le régime monte sans que la vitesse suive, l'embrayage patine (600 à 1 500 €).", "Boîte manuelle");
-    add(gear, "synchros", "Toutes les vitesses passent sans craquement, y compris la 2e à froid et la marche arrière.", "essentiel", undefined, "Boîte manuelle");
-    add(gear, "butee", "Pas de grognement pédale enfoncée ni de vibration à la pédale (butée, volant moteur).", "conseille", undefined, "Boîte manuelle");
-    if (fuel === "diesel") add(gear, "bimasse", "Volant moteur bi-masse : pas de claquement métallique au ralenti ni de vibration au démarrage et à la coupure.", "essentiel", "Fréquent sur les diesels manuels au-delà de 120 000 km : 1 000 à 2 000 € avec l'embrayage.", "Diesel à boîte manuelle");
-  }
-  if (auto) {
-    add(gear, "auto-passages", "Les passages de rapports sont doux, sans à-coup ni hésitation, en montée comme en descente de rapports.", "essentiel", "Tester en ville à faible vitesse (0-30 km/h) : c'est là que les boîtes fatiguées se trahissent.", "Boîte automatique");
-    add(gear, "auto-huile", "L'huile de boîte a été remplacée aux échéances (souvent tous les 60 000 km) : exiger la facture, même si le constructeur dit « à vie ».", "essentiel", undefined, "Boîte automatique");
-    if (autoKind === "double_embrayage") add(gear, "dsg", "Boîte à double embrayage : pas de broutement au démarrage ni de secousse en manœuvre, pas de message « boîte » ; mécatronique sans fuite.", "essentiel", "En marche arrière lente puis en avant à très basse vitesse, l'embrayage doit être progressif. Un remplacement coûte 1 500 à 4 000 €.", "Double embrayage");
-    if (autoKind === "convertisseur") add(gear, "convertisseur", "Boîte à convertisseur : aucun à-coup au passage de P à D ou R, pas de glissement (régime qui monte sans accélération).", "conseille", undefined, "Convertisseur de couple");
-    if (autoKind === "cvt") add(gear, "cvt", "Boîte CVT : pas de bruit de courroie ni de vibration à vitesse stabilisée, pas d'à-coup en relance.", "essentiel", "Une CVT abîmée se remplace plus souvent qu'elle ne se répare.", "CVT");
-    if (autoKind === "e_cvt") add(gear, "ecvt", "Transmission hybride e-CVT : très fiable, mais vérifier l'absence de bruit de roulement à vitesse constante.", "conseille", undefined, "e-CVT");
-    if (autoKind === "robotisee") add(gear, "robot", "Boîte robotisée : les passages sont lents par nature, mais sans secousse ; pas de message d'embrayage ; vérifier la date du dernier réglage.", "essentiel", undefined, "Boîte robotisée");
-    add(gear, "auto-modes", "Les modes (P, R, N, D, mode manuel/palettes) répondent tous et le levier ou sélecteur se verrouille bien en P.", "conseille", undefined, "Boîte automatique");
-  }
-  if (v.gearbox === "inconnue" && !electric) add(gear, "boite-inconnue", "Type de boîte à confirmer sur place : manuelle (tester l'embrayage) ou automatique (tester la douceur des passages et l'huile).", "conseille");
-  if (electric) {
-    add(gear, "ev-reducteur", "Pas de boîte de vitesses : vérifier seulement l'absence de jeu à l'accélération/décélération et que le mode « B » (régénération forte) fonctionne.", "conseille", undefined, "Électrique");
-  }
-  if (isAwd(v)) add(gear, "awd", "Transmission intégrale : pas de bruit de roulement, pas de vibration en virage serré à faible vitesse, pneus 4 identiques.", "essentiel", "Des pneus d'usure différente peuvent endommager la transmission intégrale.", "4 roues motrices");
-  add(gear, "cardans", "Pas de claquement en braquant à fond en avançant lentement (cardans) ni de vibration à l'accélération.", "conseille");
-
-  /* ---------- Intérieur ---------- */
-  add(inside, "usure", "L'usure du volant, du pommeau, des pédales et du siège conducteur correspond au kilométrage affiché.", "essentiel", km && km < 80000 ? "Sous 80 000 km, un volant lustré ou un siège affaissé ne colle pas." : "Un intérieur refait à neuf sur un fort kilométrage mérite une question.");
-  add(inside, "voyants", "Au contact, tous les voyants s'allument puis s'éteignent au démarrage (moteur, airbag, ABS, ESP).", "essentiel", "Un voyant qui ne s'allume jamais a pu être débranché.");
-  add(inside, "electrique", "Tous les équipements fonctionnent : vitres, rétroviseurs, climatisation qui souffle vraiment froid, écran, caméra, aides à la conduite.", "conseille");
-  add(inside, "humidite", "Pas d'odeur d'humidité, tapis et coffre (sous le plancher) secs.", "conseille", "Une infiltration abîme les calculateurs placés sous les sièges ou dans le coffre.");
-  add(inside, "compteur", "Le kilométrage affiché est cohérent avec les factures, le contrôle technique et l'ordinateur de bord.", "essentiel", hist?.mileageReadings.length ? "Comparer avec les relevés officiels du rapport." : "Comparer avec les factures et le procès-verbal du contrôle technique.");
-  if (electric || hybrid) add(inside, "ev-conso", "Consulter la consommation moyenne (kWh/100 km ou l/100 km) sur l'ordinateur de bord : une valeur anormale révèle un usage intensif.", "conseille", undefined, electric ? "Électrique" : "Hybride");
-  if (age >= 8) add(inside, "sellerie", "Sellerie, ciel de toit et joints de portes : pas de décollement ni de moisissure.", "conseille", undefined, `${Math.floor(age)} ans`);
-
-  /* ---------- Essai ---------- */
-  add(drive, "duree", "Essai d'au moins 20 minutes, moteur froid au départ, avec ville, route et une voie rapide.", "essentiel");
-  add(drive, "freinage", "Freinage fort : le véhicule reste droit, sans vibration dans le volant ni la pédale.", "essentiel");
-  add(drive, "direction", "Direction : pas de jeu, pas de bruit en braquant, le véhicule ne tire pas d'un côté en ligne droite.", "essentiel");
-  add(drive, "suspension", "Pas de claquement sur dos-d'âne ni de rebond excessif (amortisseurs, silentblocs).", "conseille", km >= 120000 ? "Au-delà de 120 000 km, les amortisseurs d'origine sont souvent en fin de vie." : undefined);
-  add(drive, "bruits", "Aucun bruit de roulement qui change en virage (roulements), ni de sifflement qui augmente avec la vitesse.", "conseille");
-  if (thermal) add(drive, "temperature", "La température moteur monte normalement et reste stable, le chauffage fonctionne.", "conseille", undefined, "Thermique");
-  if (electric) add(drive, "ev-autonomie", "Noter l'autonomie et le pourcentage de batterie au départ et à l'arrivée : la consommation réelle doit être cohérente avec la distance parcourue.", "essentiel", undefined, "Électrique");
-  add(drive, "aides", "Régulateur, aide au stationnement, ABS/ESP : aucun message d'erreur après l'essai.", "conseille");
-
-  /* ---------- Modèle ---------- */
-  for (const i of input.knownIssues ?? []) {
-    if (!i.applies) continue;
-    add(model, `issue-${i.id}`, `${i.title} : ${i.whatToCheck}`, i.inZone && i.severity !== "low" ? "essentiel" : "conseille", i.costMin !== undefined || i.costMax !== undefined ? `Coût en cas de réparation : ${i.costMin ?? 0} à ${i.costMax ?? i.costMin ?? 0} €.` : undefined, "Point connu du modèle");
-  }
-  const openRecalls = (input.recalls ?? []).filter((r) => r.status !== "done");
-  for (const r of openRecalls.slice(0, 5)) add(model, `recall-${r.reference ?? r.date}`, `Rappel constructeur « ${r.title} » : vérifier qu'il a été effectué (facture ou attestation du réseau).`, "essentiel", undefined, "Rappel constructeur");
-
-  const sections = [papers, outside, engine, gear, inside, drive, model].filter((s) => s.items.length > 0);
+  const sections = [papers, seller, buyer];
   const all = sections.flatMap((s) => s.items);
   return { profile, sections, total: all.length, essential: all.filter((i) => i.priority === "essentiel").length };
 }

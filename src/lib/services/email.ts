@@ -45,7 +45,7 @@ export async function sendReportReadyEmail(args: { to: string; reportId: string;
     `Retrouvez tous vos rapports à tout moment dans votre espace : ${siteUrl()}/mes-rapports (connexion par code envoyé à cette adresse, sans mot de passe).`,
   ];
   if (args.packRemaining !== undefined) lines.push(``, `Votre pack : ${args.packRemaining} rapport${args.packRemaining > 1 ? "s" : ""} restant${args.packRemaining > 1 ? "s" : ""}. Connectez-vous à votre espace avant de lancer le prochain rapport : le crédit sera utilisé automatiquement.`);
-  lines.push(``, `Caristo · Édité par Digikom Group`);
+  lines.push(``, `Caristo · rapportcaristo.com`);
   await sendEmail({ to: args.to, subject, text: lines.join("\n") });
 }
 
@@ -57,7 +57,7 @@ export async function sendLoginCodeEmail(args: { to: string; code: string }): Pr
     ``,
     `Il est valable 10 minutes. Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail.`,
     ``,
-    `Caristo · Édité par Digikom Group`,
+    `Caristo · rapportcaristo.com`,
   ].join("\n");
   return sendEmail({ to: args.to, subject: `${args.code} est votre code de connexion Caristo`, text });
 }
@@ -72,7 +72,7 @@ export async function sendVehicleNotFoundEmail(args: { to: string; plate: string
     ``,
     `Vérifiez la plaque sur la carte grise (case A) et relancez un rapport sur ${siteUrl()}.`,
     ``,
-    `Caristo · Édité par Digikom Group`,
+    `Caristo · rapportcaristo.com`,
   ].join("\n");
   await sendEmail({ to: args.to, subject: `Plaque ${args.plate} introuvable : vous êtes remboursé`, text });
 }

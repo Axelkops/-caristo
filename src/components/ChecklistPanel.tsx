@@ -55,13 +55,14 @@ export function ChecklistPanel({ checklist, storageKey }: { checklist: Checklist
         <span className="text-[13px] text-[#AEB6C4] whitespace-nowrap" data-testid="checklist-progress">{checked} / {items.length} vérifié{checked > 1 ? "s" : ""}</span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {checklist.sections.map((s) => {
           const list = s.items.filter((i) => filter === "tous" || i.priority === "essentiel");
           if (!list.length) return null;
           return (
             <div key={s.id} className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "rgba(7,15,31,0.55)", border: "1px solid rgba(147,197,253,0.12)" }}>
               <h3 className="m-0 text-[15px] font-bold text-white flex items-center justify-between gap-2">{s.title}<span className="text-[12px] font-medium text-[#8E9AAF]">{list.filter((i) => done[i.id]).length}/{list.length}</span></h3>
+              <p className="m-0 -mt-1 text-[12.5px] text-[#8E9AAF]">{s.sub}</p>
               <ul className="m-0 p-0 list-none flex flex-col gap-2">
                 {list.map((i) => (
                   <li key={i.id}>

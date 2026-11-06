@@ -4,7 +4,7 @@ import { Document, Page, Text, View, StyleSheet, Font, Svg, Path, Circle, Line, 
 import type { ReportData, Inspection } from "../engine/types";
 import { buildChecklist, type Checklist } from "../engine/checklist";
 import { FUEL_LABEL, GEARBOX_LABEL } from "../engine/labels";
-import { SITE, COMPANY } from "../site";
+import { SITE } from "../site";
 
 
 /* ------------------------------------------------------------------ */
@@ -217,7 +217,7 @@ const TopBar = ({ r }: { r: ReportData }) => (
 );
 const Footer = () => (
   <View style={s.footer} fixed>
-    <Text style={s.footerText}>{SITE.name} · {SITE.domain} · Édité par {COMPANY.name}</Text>
+    <Text style={s.footerText}>{`${SITE.name} · ${SITE.domain}`}</Text>
     <Text style={s.footerText} render={({ pageNumber, totalPages }) => `Page ${pageNumber} / ${totalPages}`} />
   </View>
 );
@@ -463,7 +463,7 @@ export function Pdf({ r }: { r: ReportData }) {
             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5 }}>
               <View style={{ width: 3, height: 12, backgroundColor: ACCENT, borderRadius: 2, marginRight: 6 }} />
               <Text style={s.h3}>{sec.title}</Text>
-              <Text style={[s.small, { marginLeft: 6 }]}>{`· ${plural(sec.items.length, "point")}`}</Text>
+              <Text style={[s.small, { marginLeft: 6 }]}>{`· ${sec.sub}`}</Text>
             </View>
             {sec.items.slice(0, 1).map(checkItem)}
             </View>
@@ -475,7 +475,7 @@ export function Pdf({ r }: { r: ReportData }) {
         <View style={s.section}>
           <View wrap={false}><SectionHead title="À savoir" />{r.limits.slice(0, 1).map((l) => <View key={l} style={{ flexDirection: "row", marginBottom: 2 }}><Text style={{ color: ACCENT, marginRight: 5, fontSize: 8.5 }}>•</Text><Text style={[s.small, { flex: 1 }]}>{clean(l)}</Text></View>)}</View>
           {r.limits.slice(1).map((l) => <View key={l} style={{ flexDirection: "row", marginBottom: 2 }}><Text style={{ color: ACCENT, marginRight: 5, fontSize: 8.5 }}>•</Text><Text style={[s.small, { flex: 1 }]}>{clean(l)}</Text></View>)}
-          <Text style={[s.small, { marginTop: 10 }]}>Ce rapport restitue les données enregistrées sur ce véhicule à la date d&apos;émission. Il ne constitue ni une expertise ni une garantie sur l&apos;état mécanique. {SITE.name} est édité par {COMPANY.name} ({COMPANY.formShort}), {COMPANY.rcs} n° {COMPANY.siren}. Contact : {SITE.contactEmail}.</Text>
+          <Text style={[s.small, { marginTop: 10 }]}>Ce rapport restitue les données enregistrées sur ce véhicule à la date d&apos;émission. Il ne constitue ni une expertise ni une garantie sur l&apos;état mécanique. Contact : {SITE.contactEmail}.</Text>
         </View>
         </View>
         <Footer />
