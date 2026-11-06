@@ -8,3 +8,4 @@ out
 test-results
 playwright-report
 .DS_Store
+.e2e-standalone

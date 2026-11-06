@@ -6,7 +6,7 @@ export default defineConfig({
   retries: 0,
   use: { baseURL: "http://127.0.0.1:3100", trace: "retain-on-failure" },
   webServer: {
-    command: "DATABASE_URL=file:./data/e2e DEMO_MODE=true PORT=3100 NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3100 npx next start -p 3100",
+    command: "DATABASE_URL=file:../data/e2e DEMO_MODE=true PORT=3100 HOSTNAME=127.0.0.1 NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3100 sh scripts/serve-standalone.sh",
     url: "http://127.0.0.1:3100",
     reuseExistingServer: false,
     timeout: 120_000,
