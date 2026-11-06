@@ -18,7 +18,7 @@ export default function Mentions() {
       </ul>
 
       <h2>Hébergement</h2>
-      <p>{HOST.name}, {HOST.address} ; {HOST.note}. Les données sont stockées sur un serveur dédié situé en France.</p>
+      <p>{HOST.name}, {HOST.address} ; {HOST.note}. Les données sont stockées sur un serveur privé situé en France.</p>
 
       <h2>Propriété intellectuelle</h2>
       <p>Le site, son nom, son logo, ses textes, ses visuels, sa base de pannes connues et ses rapports sont la propriété de {COMPANY.name} ou font l&apos;objet d&apos;une licence. Toute reproduction, représentation ou extraction, totale ou partielle, sans autorisation écrite est interdite. Les marques et modèles automobiles cités appartiennent à leurs propriétaires respectifs et ne sont mentionnés qu&apos;à titre d&apos;identification des véhicules.</p>

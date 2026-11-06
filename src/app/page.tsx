@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SearchWidget } from "@/components/SearchWidget";
-import { ChecklistExplorer } from "@/components/ChecklistExplorer";
+import { PannesSection, VerifierSection, EntretienSection } from "@/components/HomeSections";
 import { ScanWidget } from "@/components/ScanWidget";
 import { OFFERS, formatEuros } from "@/lib/services/pricing";
 
@@ -20,14 +20,23 @@ const CONTENT = [
   { d: '<path d="M12 3l9 16H3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r="0.6"/>', t: "Sinistres", s: "Accidents déclarés et réparations contrôlées par expert." },
   { d: '<path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/>', t: "Gage, opposition, vol", s: "Ce qui empêche une vente, vérifié avant de payer." },
   { d: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4L15 12l-3-3z"/>', t: "Pannes connues du modèle", s: "Les faiblesses de ce modèle, avec le coût et quoi vérifier." },
-  { d: '<path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>', t: "À vérifier avant l'achat", s: "La liste de contrôle faite pour ce véhicule : énergie, boîte, âge, kilométrage." },
-  { d: '<path d="M4 19V5M4 19h16"/><path d="M7 15l4-5 3 3 5-7"/>', t: "Cote du marché", s: "Une fourchette de prix réaliste pour ce véhicule." },
-  { d: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', t: "Échéancier d'entretien", s: "Ce qu'il faudra faire à 12, 24 et 36 mois, et combien." },
+  { d: '<path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>', t: "À vérifier avant l'achat", s: "La liste de contrôle faite pour ce véhicule : énergie, boîte et consommables." },
+  { d: '<path d="M4 19V5M4 19h16"/><path d="M7 15l4-5 3 3 5-7"/>', t: "Cote estimée", s: "Une fourchette de prix réaliste pour ce véhicule." },
+  { d: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', t: "Échéancier d'entretien", s: "Ce qu'il faudra faire à 12, 24 et 36 mois, et ce que ça coûtera." },
   { d: '<path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/>', t: "Le prix de l'annonce face à la cote", s: "Vous saisissez le prix demandé : le rapport dit s'il est dans la cote, au-dessus ou en dessous." },
-  { d: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>', t: "Rappels constructeur", s: "Les rappels du modèle, à faire vérifier gratuitement en concession." },
+  { d: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>', t: "Rappels constructeur", s: "Les campagnes de rappel du modèle, à vérifier en concession." },
 ];
 
-const FEATURES = ["Historique, kilométrage, sinistres", "Pannes connues du modèle", "Points à vérifier avant l'achat", "Prix de l'annonce confronté à la cote", "Cote du marché", "Échéancier d'entretien 12, 24, 36 mois", "Rappels constructeur", "Espace Mes rapports"];
+/** Comparatif honnête : ce qu'on trouve partout, puis ce que seul Caristo ajoute. */
+const COMPARE: { f: string; both: boolean }[] = [
+  { f: "Historique, kilométrage, sinistres, vol", both: true },
+  { f: "Cote estimée du véhicule", both: true },
+  { f: "Rapport en ligne et en PDF, espace client", both: true },
+  { f: "Pannes connues du modèle, avec le coût", both: false },
+  { f: "Entretien à prévoir, chiffré", both: false },
+  { f: "Points à vérifier, côté vendeur et côté acheteur", both: false },
+  { f: "Prix de l'annonce confronté à la cote", both: false },
+];
 
 export default function Home() {
   return (
@@ -70,7 +79,7 @@ export default function Home() {
               {[
                 ["Électrique", "Batterie, garantie, rappels logiciels.", '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'],
                 ["Hybride", "Batterie haute tension, double motorisation.", '<path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>'],
-                ["Collection", "Anciennes immatriculations reconnues, cote adaptée.", '<path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.3 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/>'],
+                ["Anciennes plaques", "Format 1234 AB 56 reconnu, comme les plaques actuelles.", '<path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.3 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/>'],
                 ["Utilitaire", "Fourgons et camionnettes : pannes et entretien adaptés.", '<rect x="2" y="7" width="13" height="10" rx="1.5"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/>'],
               ].map(([t, s, d]) => (
                 <div key={t} className="bg-white border border-line rounded-[18px] p-5 flex flex-col gap-3">
@@ -84,74 +93,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PANNES */}
-      <section id="pannes" className="bg-ink text-white px-4 sm:px-6 py-20 sm:py-24">
-        <div className="max-w-[1200px] mx-auto flex flex-col gap-12">
-          <div className="flex flex-col gap-3.5 max-w-[760px]">
-            <span className="text-xs font-semibold text-accentsoft uppercase tracking-[1.8px]">Fonctionnalité exclusive</span>
-            <h2 className="m-0 text-[32px] sm:text-[42px] leading-[1.08] font-bold">Toutes les pannes connues de ce modèle.</h2>
-          </div>
-          <div className="flex flex-wrap gap-8 items-stretch">
-            <div className="flex-[1_1_420px] min-w-0 bg-navy2 border border-accent/30 rounded-[20px] p-6 flex flex-col gap-3.5" style={{ boxShadow: "0 0 60px rgba(37,99,235,0.2)" }}>
-              <div className="flex justify-between items-center gap-3 flex-wrap">
-                <span className="display text-[17px] font-bold">Peugeot 3008 1.5 BlueHDi · 2019 · 118 000 km</span>
-                <span className="text-[11px] font-semibold text-accentsoft uppercase tracking-wider">Exemple</span>
-              </div>
-              <div className="border border-red-500/40 bg-red-500/10 rounded-[14px] p-4 flex flex-col gap-2.5">
-                <div className="flex justify-between gap-2.5 items-center"><span className="font-semibold">Courroie de distribution</span><span className="text-[11px] font-semibold bg-bad px-2.5 py-1 rounded-full">À vérifier en priorité</span></div>
-                <div className="relative h-2 bg-white/10 rounded"><div className="absolute left-0 w-[72%] h-full bg-red-500 rounded" style={{ boxShadow: "0 0 10px #EF4444" }} /><div className="absolute left-[58%] -top-1 w-[3px] h-4 bg-white rounded" /></div>
-                <div className="flex justify-between text-xs text-red-300"><span>Panne possible dès 80 000 km</span><span>Ce véhicule : 118 000 km</span></div>
-                <div className="grid grid-cols-2 gap-2 text-[13px]"><span className="px-2.5 py-2 rounded-lg bg-white/10"><strong className="font-semibold">Coût :</strong> 900 – 1 400 €</span><span className="px-2.5 py-2 rounded-lg bg-white/10"><strong className="font-semibold">À faire :</strong> demander la facture</span></div>
-              </div>
-              {[["Vanne antipollution", "Fréquent · 350 – 600 €", "text-amber-300"], ["Boîte automatique", "Occasionnel · mise à jour", "text-muteddark"], ["Réservoir AdBlue", "Rappel déjà fait", "text-emerald-400"]].map(([a, b, c]) => (
-                <div key={a} className="border border-white/10 rounded-[14px] px-4 py-3.5 flex justify-between items-center gap-2.5"><span className="text-sm">{a}</span><span className={`text-xs font-semibold ${c}`}>{b}</span></div>
-              ))}
-            </div>
-            <div className="flex-[1_1_320px] min-w-0 grid gap-3.5">
-              {[["1", "La panne", "Et à quel kilométrage elle arrive sur ce modèle."], ["2", "Le prix de la réparation", "Pour négocier, ou renoncer."], ["3", "Quoi vérifier sur place", "En 2 minutes, avant de signer."]].map(([n, t, s]) => (
-                <div key={n} className="bg-white/5 border border-white/10 rounded-[18px] p-6 flex gap-4 items-center">
-                  <span className="display text-[34px] font-bold text-accent w-12 shrink-0">{n}</span>
-                  <div className="flex flex-col gap-1"><span className="text-lg font-semibold">{t}</span><span className="text-sm text-muteddark">{s}</span></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <PannesSection />
 
-      {/* À VÉRIFIER */}
-      <section id="verifier" className="bg-ink text-white px-4 sm:px-6 py-20 sm:py-24 border-t border-white/10">
-        <div className="max-w-[1200px] mx-auto flex flex-col gap-10">
-          <div className="flex flex-col gap-3.5 max-w-[760px]">
-            <span className="text-xs font-semibold text-accentsoft uppercase tracking-[1.8px]">Inclus dans le rapport</span>
-            <h2 className="m-0 text-[32px] sm:text-[42px] leading-[1.08] font-bold">Les points à vérifier, différents pour chaque véhicule.</h2>
-            <p className="m-0 text-base text-muteddark leading-relaxed max-w-[62ch]">Une électrique, un diesel à boîte manuelle ou une hybride à boîte automatique ne se contrôlent pas de la même façon. Essayez : changez l&apos;énergie ou la boîte et regardez la liste changer.</p>
-          </div>
-          <ChecklistExplorer compact />
-        </div>
-      </section>
+      <VerifierSection />
 
-      {/* ENTRETIEN */}
-      <section id="entretien" className="px-4 sm:px-6 py-20 sm:py-24 bg-white border-b border-line">
-        <div className="max-w-[1200px] mx-auto flex flex-col gap-11">
-          <div className="flex flex-col gap-3.5 max-w-[680px]">
-            <span className="text-xs font-semibold text-[#1D4ED8] uppercase tracking-[1.8px]">Inclus dans le rapport</span>
-            <h2 className="m-0 text-[32px] sm:text-[42px] leading-[1.08] font-bold">Ce qu&apos;il faudra prévoir après l&apos;achat.</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="bg-ground rounded-[20px] p-7 flex flex-col gap-4 items-start">
-              <span className="w-14 h-14 rounded-2xl bg-navy flex items-center justify-center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></svg></span>
-              <span className="display text-xl font-bold">Échéancier 12, 24, 36 mois</span>
-              <span className="text-sm text-[#4B5563] leading-relaxed">Ce qu&apos;il faudra faire, quand, et combien ça coûte.</span>
-            </div>
-            <div className="bg-ground rounded-[20px] p-7 flex flex-col gap-4 items-start">
-              <span className="w-14 h-14 rounded-2xl bg-navy flex items-center justify-center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.7 21a2 2 0 0 1-3.4 0" /></svg></span>
-              <span className="display text-xl font-bold">Rappels constructeur</span>
-              <span className="text-sm text-[#4B5563] leading-relaxed">Les rappels connus du modèle, à faire vérifier gratuitement en concession avec le VIN.</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <EntretienSection />
 
       {/* POURQUOI */}
       <section id="pourquoi" className="px-4 sm:px-6 py-20 sm:py-24">
@@ -159,18 +105,19 @@ export default function Home() {
           <div className="flex flex-col gap-3.5 max-w-[760px]">
             <span className="text-xs font-semibold text-[#1D4ED8] uppercase tracking-[1.8px]">Pourquoi Caristo</span>
             <h2 className="m-0 text-[32px] sm:text-[42px] leading-[1.08] font-bold">Plus complet. Moins cher.</h2>
+            <p className="m-0 text-base text-[#4B5563] leading-relaxed max-w-[62ch]">Les rapports d&apos;historique disent ce qui est arrivé au véhicule. Caristo dit aussi ce qui va arriver : les pannes à surveiller, l&apos;entretien à payer, et quoi contrôler avant de signer.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             <div className="bg-white border border-line rounded-3xl p-8 flex flex-col gap-5">
-              <div className="flex flex-col gap-1"><span className="text-xs font-semibold text-muted uppercase tracking-[1.5px]">Rapports classiques</span><span className="display text-[40px] font-bold text-muted">≈ 32 €</span></div>
+              <div className="flex flex-col gap-1"><span className="text-xs font-semibold text-muted uppercase tracking-[1.5px]">Rapport d&apos;historique classique</span><span className="display text-[40px] font-bold text-muted">≈ 33 €</span><span className="text-[13px] text-muted">Tarif courant d&apos;un rapport unique chez les principaux services</span></div>
               <ul className="m-0 p-0 list-none flex flex-col gap-3.5 text-[15px] text-[#4B5563]">
-                {FEATURES.map((f, i) => <li key={f} className={`flex gap-3 items-center ${i ? "text-gray-400" : ""}`}>{i ? <Cross /> : <Check color="#6B7280" />}{f}</li>)}
+                {COMPARE.map((c) => <li key={c.f} className={`flex gap-3 items-center ${c.both ? "" : "text-gray-400"}`}>{c.both ? <Check color="#6B7280" /> : <Cross />}{c.f}</li>)}
               </ul>
             </div>
             <div className="bg-ink text-white rounded-3xl p-8 flex flex-col gap-5 led-strong">
-              <div className="flex flex-col gap-1"><span className="text-xs font-semibold text-accentsoft uppercase tracking-[1.5px]">Caristo</span><span className="display text-[40px] font-bold">{formatEuros(OFFERS.single.priceCents)}</span></div>
+              <div className="flex flex-col gap-1"><span className="text-xs font-semibold text-accentsoft uppercase tracking-[1.5px]">Caristo</span><span className="display text-[40px] font-bold">{formatEuros(OFFERS.single.priceCents)}</span><span className="text-[13px] text-muteddark">Rapport unique, tout compris</span></div>
               <ul className="m-0 p-0 list-none flex flex-col gap-3.5 text-[15px]">
-                {FEATURES.map((f) => <li key={f} className="flex gap-3 items-center"><Check />{f}</li>)}
+                {COMPARE.map((c) => <li key={c.f} className="flex gap-3 items-center"><Check />{c.f}{!c.both && <span className="ml-auto text-[10px] font-bold uppercase tracking-wider text-accentsoft">En plus</span>}</li>)}
               </ul>
             </div>
           </div>
@@ -182,7 +129,7 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto flex flex-col gap-12">
           <h2 className="m-0 text-[32px] sm:text-[42px] leading-[1.08] font-bold">Tarifs</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            <PriceCard offer="single" items={["Rapport complet", "Pannes connues et échéancier", "Cote et rappels constructeur", "PDF, lien de partage et espace Mes rapports"]} />
+            <PriceCard offer="single" items={["Rapport complet", "Pannes connues et rappels constructeur", "Cote et entretien à prévoir", "PDF, lien de partage et espace pour mes rapports"]} />
             <PriceCard offer="pack3" highlight items={["Tout le rapport unique, ×3", "Rapports rangés dans votre espace", "Crédits utilisés automatiquement", "Valable 12 mois"]} />
             <PriceCard offer="pack10" items={["Tout le pack 3, ×10", "Pour les gros acheteurs et les pros", "Valable 24 mois"]} />
           </div>
@@ -220,7 +167,7 @@ function PriceCard({ offer, highlight = false, items }: { offer: keyof typeof OF
   const o = OFFERS[offer];
   return (
     <div className={`${highlight ? "bg-navy border border-accent/50 md:-translate-y-3.5" : "bg-navy2 border border-white/10"} rounded-[22px] p-8 flex flex-col gap-4`} style={highlight ? { boxShadow: "0 0 80px rgba(37,99,235,0.35), 0 30px 60px rgba(0,0,0,0.4)" } : undefined}>
-      <div className="flex justify-between items-center gap-2.5"><span className="text-sm font-medium text-muteddark">{o.label}</span>{highlight && <span className="text-[11px] font-semibold text-ink bg-accent px-2.5 py-1 rounded-full led">Le plus choisi</span>}</div>
+      <div className="flex justify-between items-center gap-2.5"><span className="text-sm font-medium text-muteddark">{o.label}</span>{highlight && <span className="text-[11px] font-semibold text-ink bg-accent px-2.5 py-1 rounded-full led">Recommandé</span>}</div>
       <div className="flex items-baseline gap-1.5 flex-wrap"><span className="display text-[50px] font-bold leading-none">{(o.priceCents / 100).toLocaleString("fr-FR", { minimumFractionDigits: 2 })}</span><span className="text-lg text-muteddark">€</span>{o.credits > 1 && <span className="text-[13px] text-accentsoft ml-2">{formatEuros(o.perReportCents)} le rapport</span>}</div>
       <ul className="m-0 p-0 list-none flex flex-col gap-2.5 text-sm text-[#D5DCE8]">{items.map((i) => <li key={i} className="flex gap-2.5"><Check />{i}</li>)}</ul>
       <Link href="/#top" className={`mt-auto text-center py-3.5 rounded-xl font-semibold no-underline ${highlight ? "bg-accent text-ink led" : "border border-white/20 text-white"}`}>{highlight ? "Prendre le pack" : "Choisir"}</Link>

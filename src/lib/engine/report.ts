@@ -32,9 +32,12 @@ export function checkMileage(history: OfficialHistory, mileage: number | undefin
   const annual = r.length >= 2 ? Math.round(((last.mileage - r[0].mileage) / Math.max(1, (new Date(last.date).getTime() - new Date(r[0].date).getTime()) / (30.44 * 24 * 3600 * 1000))) * 12) : undefined;
   if (rollback) return { consistent: false, annualKm: annual, comment: "Le kilométrage a reculé entre deux relevés officiels. C'est le signe d'un compteur modifié : à éclaircir avec le vendeur avant toute décision." };
   if (mileage !== undefined) {
-    if (mileage < last.mileage) return { consistent: false, annualKm: annual, comment: `Le kilométrage saisi (${fmtKm(mileage)}) est inférieur au dernier relevé officiel (${fmtKm(last.mileage)} le ${fmtDate(last.date)}). Compteur à vérifier.` };
+    // tolérance d'arrondi : un kilométrage saisi « 118 000 » pour un relevé de 118 215 km n'est pas une fraude
+    const tolerance = Math.max(1000, Math.round(last.mileage * 0.01));
+    if (mileage < last.mileage - tolerance) return { consistent: false, annualKm: annual, comment: `Le kilométrage saisi (${fmtKm(mileage)}) est inférieur au dernier relevé officiel (${fmtKm(last.mileage)} le ${fmtDate(last.date)}). Compteur à vérifier.` };
     const expectedMax = last.mileage + ((annual ?? 20000) / 12) * months * 2.5 + 5000;
     if (mileage > expectedMax) return { consistent: true, annualKm: annual, comment: `Le kilométrage saisi (${fmtKm(mileage)}) est très supérieur au dernier relevé (${fmtKm(last.mileage)} le ${fmtDate(last.date)}). Usage intensif récent, à confirmer.` };
+    if (mileage < last.mileage) return { consistent: true, annualKm: annual, comment: `Le kilométrage saisi (${fmtKm(mileage)}) est proche du dernier relevé officiel (${fmtKm(last.mileage)} le ${fmtDate(last.date)}) : écart d'arrondi. Relevez le compteur exact lors de la visite.` };
     return { consistent: true, annualKm: annual, comment: `Progression régulière${annual ? `, environ ${annual.toLocaleString("fr-FR")} km par an` : ""}. Le kilométrage saisi (${fmtKm(mileage)}) est cohérent avec le dernier relevé (${fmtKm(last.mileage)} le ${fmtDate(last.date)}).` };
   }
   return { consistent: true, annualKm: annual, comment: `Progression régulière${annual ? `, environ ${annual.toLocaleString("fr-FR")} km par an` : ""}. Dernier relevé : ${fmtKm(last.mileage)} le ${fmtDate(last.date)}.` };

@@ -30,7 +30,9 @@ test("accueil : sections et tarifs cohérents", async ({ page }) => {
   await expect(page.getByTestId("scan-widget")).toBeVisible();
   await expect(page.getByTestId("scan-widget")).toContainText("ZZ-999-ZZ");
   await expect(page.getByText("Le contenu du rapport.")).toBeVisible();
-  await expect(page.getByText("Toutes les pannes connues de ce modèle.")).toBeVisible();
+  await expect(page.getByText("Les pannes du modèle, leur coût et quoi vérifier.")).toBeVisible();
+  await expect(page.locator("#verifier")).toContainText("Côté vendeur");
+  await expect(page.locator("#verifier")).toContainText("Côté acheteur");
   await expect(page.locator("#tarifs")).toContainText("19,90");
   await expect(page.locator("#tarifs")).toContainText("49,90");
   await expect(page.locator("#tarifs")).toContainText("129,90");

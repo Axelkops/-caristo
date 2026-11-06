@@ -15,7 +15,7 @@ export default function Confidentialite() {
       <div className="bg-white border border-line rounded-2xl px-5 py-4 flex flex-col gap-2">
         <strong>L&apos;essentiel</strong>
         <ul>
-          <li>Nous ne demandons que ce qui sert à produire votre rapport : la plaque ou le VIN, le kilométrage, votre e-mail et, si vous le souhaitez, trois informations de la carte grise.</li>
+          <li>Nous ne demandons que ce qui sert à produire votre rapport : la plaque ou le VIN, le kilométrage, votre e-mail, trois informations de la carte grise (pour un véhicule immatriculé en France) et, si vous le souhaitez, le prix de l&apos;annonce.</li>
           <li>Les informations de la carte grise servent uniquement à consulter l&apos;historique officiel et sont effacées 30 jours après la production du rapport.</li>
           <li>Pas de mot de passe : votre espace fonctionne avec un code envoyé par e-mail.</li>
           <li>Aucune revente de données, aucune publicité, aucun cookie de suivi.</li>
@@ -30,8 +30,8 @@ export default function Confidentialite() {
       <div className="overflow-x-auto -mx-1 px-1"><table className="min-w-[520px]">
         <thead><tr><th>Catégorie</th><th>Données</th><th>Origine</th></tr></thead>
         <tbody>
-          <tr><td>Véhicule</td><td>Plaque d&apos;immatriculation ou VIN, kilométrage saisi, fiche technique obtenue</td><td>Vous, puis nos fournisseurs de données</td></tr>
-          <tr><td>Carte grise (facultatif)</td><td>Numéro de formule, nom du titulaire, date de première immatriculation</td><td>Vous</td></tr>
+          <tr><td>Véhicule</td><td>Plaque d&apos;immatriculation ou VIN, kilométrage saisi, prix de l&apos;annonce (facultatif), fiche technique obtenue</td><td>Vous, puis nos fournisseurs de données</td></tr>
+          <tr><td>Carte grise (véhicule immatriculé en France)</td><td>Numéro de formule, nom du titulaire, date de première immatriculation</td><td>Vous</td></tr>
           <tr><td>Contact et compte</td><td>Adresse e-mail, codes de connexion (stockés sous forme hachée), sessions</td><td>Vous</td></tr>
           <tr><td>Commande</td><td>Offre choisie, montant, date, référence de paiement. Les données de carte ne transitent jamais par {SITE.name}.</td><td>Vous et Stripe</td></tr>
           <tr><td>Rapport</td><td>Le contenu du rapport produit et son lien de partage</td><td>Produit par {SITE.name}</td></tr>
@@ -56,7 +56,8 @@ export default function Confidentialite() {
       <h2 id="pc-4">4. Destinataires et sous-traitants</h2>
       <ul>
         <li><strong>Hébergement</strong> : {HOST.name}, {HOST.note}.</li>
-        <li><strong>Fournisseurs de données véhicule</strong> : ils reçoivent la plaque ou le VIN et, pour l&apos;historique officiel, les informations de la carte grise, uniquement pour répondre à la consultation.</li>
+        <li><strong>Fournisseurs de données véhicule</strong> : ils reçoivent la plaque ou le VIN, uniquement pour identifier le véhicule.</li>
+        <li><strong>Historique officiel</strong> : le service public HistoVec (ministère de l&apos;Intérieur) reçoit la plaque et les informations de la carte grise, uniquement pour répondre à la consultation.</li>
         <li><strong>Paiement</strong> : Stripe (données de paiement, traitées sous sa propre responsabilité).</li>
         <li><strong>E-mails</strong> : notre prestataire d&apos;envoi reçoit votre adresse et le contenu des e-mails du service.</li>
         <li><strong>Autorités</strong> : uniquement sur réquisition légale.</li>

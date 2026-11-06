@@ -137,7 +137,7 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
               return (
                 <label key={k} className={`cursor-pointer rounded-2xl border p-4 flex flex-col gap-1.5 ${active ? "border-navy bg-navy text-white" : "border-line bg-white"}`}>
                   <input type="radio" name="offer" value={k} checked={active} onChange={() => setForm({ ...form, offer: k })} className="sr-only" />
-                  <span className="flex justify-between items-center gap-2"><span className={`text-sm font-medium ${active ? "text-muteddark" : "text-muted"}`}>{o.label}</span>{k === "pack3" && <span className="text-[11px] font-semibold text-ink bg-accent px-2 py-0.5 rounded-full">Le plus choisi</span>}</span>
+                  <span className="flex justify-between items-center gap-2"><span className={`text-sm font-medium ${active ? "text-muteddark" : "text-muted"}`}>{o.label}</span>{k === "pack3" && <span className="text-[11px] font-semibold text-ink bg-accent px-2 py-0.5 rounded-full">Recommandé</span>}</span>
                   <span className="display text-2xl font-bold">{formatEuros(o.priceCents)}</span>
                   <span className={`text-xs ${active ? "text-accentsoft" : "text-muted"}`}>{o.credits > 1 ? `${formatEuros(o.perReportCents)} le rapport · valable ${o.validityMonths} mois` : "Paiement unique"}</span>
                 </label>

@@ -13,13 +13,13 @@ const ROWS = [
   { k: "Gage · opposition · vol", v: "Rien à signaler", c: "ok" },
   { k: "Sinistres", v: "Aucun enregistré", c: "ok" },
   { k: "Pannes connues", v: "1 point à vérifier", c: "warn" },
-  { k: "Entretien à prévoir", v: "≈ 900 € sous 12 mois", c: "warn" },
+  { k: "Entretien à prévoir", v: "≈ 2 850 € sur 12 mois", c: "warn" },
   { k: "Prix de l'annonce", v: "500 € au-dessus de la cote", c: "warn" },
   { k: "Cote estimée", v: "12 000 – 13 500 €", c: "ok" },
 ] as const;
 const PLATE = "ZZ-999-ZZ";
-const SCORE = 81;
-const LABEL = "Bon véhicule, 1 point à contrôler";
+const SCORE = 75;
+const LABEL = "Risque modéré, 3\u00A0points à\u00A0contrôler";
 const CIRC = 150.8;
 
 type Phase = "idle" | "scan" | "done";

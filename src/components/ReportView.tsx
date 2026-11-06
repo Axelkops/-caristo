@@ -102,7 +102,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
     { label: "Sinistres", value: !h.available ? "Non vérifié" : h.claims.length || h.damagedProcedure ? plural(h.claims.length || 1, "enregistré") : "Aucun enregistré", tone: !h.available ? "neutral" : h.claims.length || h.damagedProcedure ? "warn" : "ok" },
     { label: "Pannes connues", value: inZoneHigh.length ? `${inZoneHigh.length} à vérifier en priorité` : inZone.length ? `${plural(inZone.length, "point")} à contrôler` : "Rien de notable", tone: inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok" },
     { label: "Origine", value: v.imported ? "Importé" : v.country === "FR" ? "France depuis l'origine" : `Immatriculé : ${v.country}`, tone: v.imported ? "warn" : "ok", sub: v.imported && v.firstRegistrationInCountry ? `En France depuis ${fmtDateFr(v.firstRegistrationInCountry)}` : undefined },
-    { label: "Cote estimée", value: r.valuation?.verdict === "au_dessus" ? `${euros(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Annonce : ${euros(r.valuation.askingPrice)}` : "Cote estimée" },
+    { label: "Cote estimée", value: r.valuation?.verdict === "au_dessus" ? `${euros(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Prix de l'annonce : ${euros(r.valuation.askingPrice)}` : "Cote estimée" },
   ];
 
   const nav = [["apercu", "Vue d'ensemble"], ["verifier", "À vérifier"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote estimée"], ...(r.listing.available ? [["annonce", "Annonce"]] : [])];
@@ -177,7 +177,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
         <div className="max-w-[1200px] mx-auto flex flex-col gap-6">
 
           {/* ===== Points à vérifier avant l'achat ===== */}
-          <Panel id="verifier" title="À vérifier avant l'achat" sub="Liste construite pour ce véhicule : énergie, boîte, âge, kilométrage et points connus du modèle. À cocher pendant la visite et l'essai." tone="info" badge={<Tag tone="info">{checklist.essential} essentiels · {checklist.total} points</Tag>}>
+          <Panel id="verifier" title="À vérifier avant l'achat" sub="Liste construite pour ce véhicule : énergie, boîte, consommables et points connus du modèle. À cocher pendant la visite et l'essai." tone="info" badge={<Tag tone="info">{checklist.essential} essentiels · {checklist.total} points</Tag>}>
             <ChecklistPanel checklist={checklist} storageKey={reportId || shareToken || r.reference} />
           </Panel>
 
@@ -262,7 +262,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
             {!h.available ? (
               <div className="rounded-2xl p-5 flex flex-col gap-1.5 text-[14px] text-[#AEB6C4] max-w-[80ch]" style={{ background: INSET.background, border: "1px solid rgba(142,154,175,0.2)" }}>
                 <span className="font-semibold text-[#E5E9F0]">{h.reason}</span>
-                <span>Le reste du rapport est produit avec la fiche technique, les pannes connues du modèle, la cote et l&apos;annonce. Demandez au vendeur le dernier procès-verbal de contrôle technique et le certificat de situation administrative.</span>
+                <span>Le reste du rapport est produit avec la fiche technique, les pannes connues du modèle et la cote. Demandez au vendeur le dernier procès-verbal de contrôle technique et le certificat de situation administrative.</span>
               </div>
             ) : (
               <div className="flex flex-col gap-6">

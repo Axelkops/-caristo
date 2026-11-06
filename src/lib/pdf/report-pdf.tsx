@@ -243,7 +243,7 @@ export function Pdf({ r }: { r: ReportData }) {
     { label: "Sinistres", value: !h.available ? "Non vérifié" : h.claims.length || h.damagedProcedure ? plural(h.claims.length || 1, "enregistré") : "Aucun enregistré", tone: !h.available ? "neutral" : h.claims.length || h.damagedProcedure ? "warn" : "ok" },
     { label: "Pannes connues", value: inZoneHigh.length ? `${inZoneHigh.length} à vérifier en priorité` : inZone.length ? `${plural(inZone.length, "point")} à contrôler` : "Rien de notable", tone: inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok" },
     { label: "Origine", value: v.imported ? "Importé" : v.country === "FR" ? "France depuis l'origine" : `Immatriculé : ${v.country}`, tone: v.imported ? "warn" : "ok", sub: v.imported && v.firstRegistrationInCountry ? `En France depuis ${fd(v.firstRegistrationInCountry)}` : undefined },
-    { label: "Cote estimée", value: r.valuation?.verdict === "au_dessus" ? `${eur(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Annonce : ${eur(r.valuation.askingPrice)}` : "Cote estimée" },
+    { label: "Cote estimée", value: r.valuation?.verdict === "au_dessus" ? `${eur(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Prix de l'annonce : ${eur(r.valuation.askingPrice)}` : "Cote estimée" },
   ];
 
   const issueCard = (i: ReportData["knownIssues"][number]) => {
@@ -473,7 +473,7 @@ export function Pdf({ r }: { r: ReportData }) {
 
         <View style={s.section}>
         <View wrap={false}>
-        <SectionHead title="À vérifier avant l'achat" sub="Liste construite pour ce véhicule : énergie, boîte, âge, kilométrage et points connus du modèle. À cocher pendant la visite et l'essai." badge={<Tag tone="info">{checklist.essential} essentiels · {checklist.total} points</Tag>} />
+        <SectionHead title="À vérifier avant l'achat" sub="Liste construite pour ce véhicule : énergie, boîte, consommables et points connus du modèle. À cocher pendant la visite et l'essai." badge={<Tag tone="info">{checklist.essential} essentiels · {checklist.total} points</Tag>} />
         <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 6 }}>{checklist.profile.map((p) => <Text key={p} style={[s.tag, { color: INFO, backgroundColor: TINT.info, marginRight: 5, marginBottom: 5 }]}>{clean(p)}</Text>)}</View>
         </View>
         {(["vendeur", "acheteur"] as const).map((party) => {

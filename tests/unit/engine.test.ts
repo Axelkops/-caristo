@@ -127,3 +127,15 @@ describe("rapport complet", () => {
     expect(r.maintenance.items.length).toBeGreaterThan(0);
   });
 });
+
+import { checkMileage as checkMileage2 } from "@/lib/engine/report";
+describe("kilométrage saisi arrondi", () => {
+  const veh = { make: "T", model: "M", country: "FR", fuel: "diesel", gearbox: "manuelle", category: "voiture" } as const;
+  const hist = { available: true, inspections: [], claims: [], mileageReadings: [{ date: "2023-03-12", mileage: 78424, source: "controle_technique" as const }, { date: "2025-03-12", mileage: 118215, source: "controle_technique" as const }] };
+  it("accepte un écart d'arrondi sous le dernier relevé", () => {
+    expect(checkMileage2(hist, 118000, veh, new Date("2026-11-06")).consistent).toBe(true);
+  });
+  it("signale un compteur nettement inférieur au dernier relevé", () => {
+    expect(checkMileage2(hist, 110000, veh, new Date("2026-11-06")).consistent).toBe(false);
+  });
+});
