@@ -85,7 +85,7 @@ test("VIN : onglet, validation et identification mondiale", async ({ page }) => 
 test("parcours complet : rapport, PDF, partage", async ({ page, request }) => {
   await goToReport(page, "AB-123-CD", { withCarteGrise: true });
   // contenu
-  for (const h of ["Vue d'ensemble", "Pannes connues du modèle", "Entretien à prévoir", "Historique officiel", "Rappels constructeur", "Cote et prix"]) {
+  for (const h of ["Vue d'ensemble", "Pannes connues du modèle", "Entretien à prévoir", "Historique officiel", "Rappels constructeur", "Cote estimée du véhicule", "À vérifier avant l'achat"]) {
     await expect(page.getByRole("heading", { name: h, exact: true })).toBeVisible();
   }
   await expect(page.getByText(/Indice de confiance/)).toBeVisible();
