@@ -46,6 +46,19 @@ export function buildClaims(ex: { price?: number; mileage?: number; flags: strin
   return claims;
 }
 
+/** Le client a saisi le prix de l'annonce : on l'utilise pour la comparaison, même si la page n'a pas pu être lue. */
+export function withDeclaredPrice(listing: ListingAnalysis, price: number, vehicle: Vehicle, mileage?: number): ListingAnalysis {
+  const val = estimateValuation(vehicle, mileage ?? listing.declaredMileage, price);
+  const priceClaim: ListingAnalysis["claims"][number] = {
+    text: `Prix de l'annonce : ${price.toLocaleString("fr-FR")} €`,
+    status: val.verdict === "au_dessus" ? "warning" : "ok",
+    detail: val.verdict === "au_dessus" ? `${(val.deltaToHigh ?? 0).toLocaleString("fr-FR")} € au-dessus du haut de la cote estimée (${val.low.toLocaleString("fr-FR")} – ${val.high.toLocaleString("fr-FR")} €) : marge de négociation, ou justification à demander.` : val.verdict === "sous_la_cote" ? `Sous la cote estimée (${val.low.toLocaleString("fr-FR")} – ${val.high.toLocaleString("fr-FR")} €) : vérifier pourquoi (état, sinistre, urgence).` : `Dans la cote estimée (${val.low.toLocaleString("fr-FR")} – ${val.high.toLocaleString("fr-FR")} €).`,
+  };
+  const others = listing.claims.filter((c) => !/^Prix /.test(c.text) && !/^Annonce inaccessible/.test(c.text));
+  const unreadable = listing.url && !listing.available ? [{ text: "Page de l'annonce non lisible automatiquement", status: "missing" as const, detail: "Le site bloque la lecture : la comparaison porte sur le prix saisi." }] : [];
+  return { ...listing, available: true, askingPrice: price, claims: [priceClaim, ...others, ...unreadable] };
+}
+
 export const fetchListingProvider: ListingProvider = {
   name: "fetch",
   async analyze(url: string, vehicle: Vehicle, mileage?: number): Promise<ListingAnalysis> {

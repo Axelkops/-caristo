@@ -446,6 +446,22 @@ export function Pdf({ r }: { r: ReportData }) {
           </View>
         )}
 
+        {r.listing.available && r.listing.claims.length > 0 && (
+          <View style={s.section} wrap={false}>
+            <SectionHead title="L'annonce face au rapport" sub="Ce que dit l'annonce, confronté aux données officielles et à la cote estimée." badge={<Tag tone={r.listing.claims.some((c) => c.status === "warning") ? "warn" : "ok"}>{r.listing.claims.some((c) => c.status === "warning") ? "À éclaircir" : "Cohérente"}</Tag>} />
+            {r.listing.claims.map((c, i) => {
+              const tone: Tone = c.status === "warning" ? "warn" : c.status === "missing" ? "neutral" : "ok";
+              return (
+                <View key={i} style={[s.card, { marginBottom: 5, borderLeftWidth: 3, borderLeftColor: TONE[tone] }]}>
+                  <Text style={{ fontWeight: 600, fontSize: 9, color: tone === "neutral" ? TEXT : TONE[tone] }}>{clean(c.text)}</Text>
+                  {c.detail && <Text style={[s.small, { marginTop: 2 }]}>{clean(c.detail)}</Text>}
+                </View>
+              );
+            })}
+            {r.listing.url && <Text style={[s.small, { marginTop: 2 }]}>{r.listing.url}</Text>}
+          </View>
+        )}
+
         <View style={s.section}>
           <View wrap={false}>
           <SectionHead title="Rappels constructeur" badge={<Tag tone={openRecalls.length ? "warn" : "ok"}>{openRecalls.length ? `${openRecalls.length} à faire` : r.recalls.length ? plural(r.recalls.length, "trouvé") : "Aucun rappel trouvé"}</Tag>} />

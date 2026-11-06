@@ -10,6 +10,7 @@ const Body = z.object({
   formulaNumber: z.string().max(20).optional(),
   firstRegDate: z.string().max(10).optional(),
   listingUrl: z.string().max(500).optional(),
+  listingPrice: z.union([z.string().max(20), z.number()]).optional(),
   email: z.string().max(200),
   offer: z.enum(["single", "pack3", "pack10"]),
   packCode: z.string().max(20).optional(),

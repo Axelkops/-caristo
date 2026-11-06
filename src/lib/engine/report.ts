@@ -12,6 +12,8 @@ export interface ReportInputs {
   history: OfficialHistory;
   recalls: Recall[];
   listing: ListingAnalysis;
+  /** prix demandé dans l'annonce, saisi par le client */
+  askingPrice?: number;
   entries?: { label: string; date: string; mileage?: number }[];
   valuationOverride?: ReportData["valuation"];
   now?: Date;
@@ -102,7 +104,8 @@ export function buildReport(input: ReportInputs): ReportData {
   const mileage = input.mileage ?? history.mileageReadings.at(-1)?.mileage;
   const knownIssues = findKnownIssues(vehicle, mileage, now);
   const mileageCheck = checkMileage(history, input.mileage, vehicle, now);
-  const valuation = input.valuationOverride ?? estimateValuation(vehicle, mileage, input.listing.askingPrice, now);
+  const askingPrice = input.askingPrice ?? input.listing.askingPrice;
+  const valuation = input.valuationOverride ?? estimateValuation(vehicle, mileage, askingPrice, now);
   const maintenance = buildMaintenanceSchedule({ vehicle, mileage, history, knownIssues, entries: input.entries, now });
   const sc = computeScore({ history, mileageCheck, knownIssues, recalls: input.recalls, valuation, listing: input.listing, vehicle });
   const questions = buildQuestions({ history, knownIssues, maintenance, valuation, listing: input.listing, vehicle, mileageCheck });
@@ -114,7 +117,7 @@ export function buildReport(input: ReportInputs): ReportData {
     { label: "Rappels constructeur", status: "ok", detail: input.recalls.length ? `${input.recalls.length} rappel(s) trouvé(s)` : "Aucun rappel trouvé" },
     { label: "Pannes connues du modèle", status: knownIssues.length ? "ok" : "partial", detail: `${knownIssues.length} point(s)` },
     { label: "Cote du marché", status: "ok", detail: "estimation" },
-    { label: "Annonce", status: input.listing.available ? "ok" : "none", detail: input.listing.available ? undefined : "Aucun lien d'annonce fourni" },
+    { label: "Prix de l'annonce", status: askingPrice ? "ok" : "none", detail: askingPrice ? `${askingPrice.toLocaleString("fr-FR")} € confrontés à la cote` : "Non renseigné" },
   ];
 
   const limits = [

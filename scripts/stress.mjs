@@ -51,7 +51,7 @@ const emails = () => pick(["test@exemple.fr", "a@b.co", "pasunemail", "", "x@y",
 async function phaseDetails(ids) {
   const valid = [];
   for (const { id, country } of ids) {
-    const body = { mileage: kms(), formulaNumber: formulas(), holderName: pick(["DUPONT MARIE", "", "X", "Jean-Édouard L'Hôte", "<img src=x>"]), firstRegDate: dates(), email: emails(), offer: pick(["single", "pack3", "pack10", "single", "gratuit"]) };
+    const body = { mileage: kms(), listingPrice: pick(["", "13200", "9 900", "abc", "-5", "12e3", 15000, "1 000 000 000"]), formulaNumber: formulas(), holderName: pick(["DUPONT MARIE", "", "X", "Jean-Édouard L'Hôte", "<img src=x>"]), firstRegDate: dates(), email: emails(), offer: pick(["single", "pack3", "pack10", "single", "gratuit"]) };
     const res = await call("POST", `/api/reports/${id}/details`, body);
     if (res.status === 200) {
       if (!res.json?.next) problems.push({ what: "details 200 sans next", body, json: res.json });

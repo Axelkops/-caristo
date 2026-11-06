@@ -69,6 +69,7 @@ export interface DetailsInput {
   formulaNumber?: string;
   firstRegDate?: string;
   listingUrl?: string;
+  listingPrice?: string | number;
   email: string;
   offer: Offer;
   packCode?: string;
@@ -102,10 +103,15 @@ export async function saveDetails(reportId: string, d: DetailsInput, accountEmai
     update.firstRegDate = date;
     update.holderName = holder;
   }
-  if (d.listingUrl) {
+  if (d.listingUrl && d.listingUrl.trim()) {
     const u = d.listingUrl.trim();
     if (!/^https?:\/\/[^\s]+$/i.test(u)) throw new UserError("Le lien de l'annonce doit commencer par http:// ou https://.");
     update.listingUrl = u;
+  }
+  if (d.listingPrice !== undefined && String(d.listingPrice).trim() !== "") {
+    const price = parseMileage(d.listingPrice);
+    if (price === null || price < 100 || price > 1_000_000) throw new UserError("Prix de l'annonce invalide : indiquez un montant en euros (ex. 13 200).");
+    update.listingPrice = price;
   }
 
   // Pack existant : via le compte connecté, ou (secours) via un code
@@ -181,14 +187,15 @@ export async function generateReport(reportId: string): Promise<ReportData> {
   }
   try {
     const [historyP, recallsP, listingP] = await Promise.all([getHistoryProvider(), getRecallsProvider(), getListingProvider()]);
-    const [history, recalls, listing] = await Promise.all([
+    const [history, recalls, listingRaw] = await Promise.all([
       historyP.fetchHistory({ vehicle, plate: r.inputKind === "plate" ? r.inputValue : vehicle.plate, holderName: r.holderName ?? undefined, formulaNumber: r.formulaNumber ?? undefined, firstRegDate: r.firstRegDate ?? undefined }).catch((e: Error) => ({ available: false, reason: `Historique officiel indisponible (${e.message}).`, inspections: [], mileageReadings: [], claims: [] })),
       recallsP.fetchRecalls(vehicle).catch(() => []),
       r.listingUrl ? listingP.analyze(r.listingUrl, vehicle, r.mileage ?? undefined).catch((): ListingAnalysis => ({ available: false, url: r.listingUrl!, claims: [] })) : Promise.resolve<ListingAnalysis>({ available: false, claims: [] }),
     ]);
+    const listing = listingRaw;
     const entries = await db.select().from(schema.maintenanceEntries).where(eq(schema.maintenanceEntries.reportId, reportId));
     const reference = `CAR-${new Date().getFullYear()}-${r.id.slice(-6).toUpperCase()}`;
-    const report = buildReport({ id: r.id, reference, vehicle, mileage: r.mileage ?? undefined, history, recalls, listing, entries: entries.map((e) => ({ label: e.label, date: e.date, mileage: e.mileage ?? undefined })) });
+    const report = buildReport({ id: r.id, reference, vehicle, mileage: r.mileage ?? undefined, history, recalls, listing, askingPrice: r.listingPrice ?? undefined, entries: entries.map((e) => ({ label: e.label, date: e.date, mileage: e.mileage ?? undefined })) });
     if (r.firstRegDate && vehicle.firstRegistration && r.firstRegDate !== vehicle.firstRegistration) {
       const fr = (d: string) => d.split("-").reverse().join("/");
       report.warnings = [`La date de 1re immatriculation saisie (${fr(r.firstRegDate)}) ne correspond pas à celle du véhicule trouvé pour la plaque ${vehicle.plate ?? r.inputValue} (${fr(vehicle.firstRegistration)}). Vérifiez que la plaque saisie est bien celle de la carte grise.`];

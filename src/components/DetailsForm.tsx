@@ -21,6 +21,7 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
     formulaNumber: "",
     firstRegDate: "",
     listingUrl: "",
+    listingPrice: "",
     email: account?.email ?? defaults?.email ?? "",
     offer: (defaults?.offer as Offer) ?? "single",
     packCode: "",
@@ -65,6 +66,11 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
             <label htmlFor="mileage" className={labelCls}>Kilométrage actuel *</label>
             <input id="mileage" inputMode="numeric" placeholder="118 000" value={form.mileage} onChange={set("mileage")} className={fieldCls} required />
             <span className={help}>Celui du compteur, ou celui de l&apos;annonce si vous êtes acheteur.</span>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="listingPrice" className={labelCls}>Prix de l&apos;annonce <span className="font-medium text-muted">(facultatif)</span></label>
+            <div className="relative"><input id="listingPrice" inputMode="numeric" placeholder="13 200" value={form.listingPrice} onChange={set("listingPrice")} className={`${fieldCls} pr-9`} /><span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted text-sm">€</span></div>
+            <span className={help}>Le rapport dit s&apos;il est dans la cote, au-dessus ou en dessous.</span>
           </div>
         </div>
       </fieldset>

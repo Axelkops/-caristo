@@ -2,13 +2,14 @@ import { test, expect, type Page } from "@playwright/test";
 
 const alert = (page: Page) => page.locator('[role="alert"]:not(#__next-route-announcer__)');
 
-async function goToReport(page: Page, plate: string, opts: { withCarteGrise?: boolean; listing?: boolean; pack?: "single" | "pack3" | "pack10"; email?: string } = {}) {
+async function goToReport(page: Page, plate: string, opts: { withCarteGrise?: boolean; listing?: boolean; price?: number; pack?: "single" | "pack3" | "pack10"; email?: string } = {}) {
   await page.goto("/");
   await page.getByLabel("Plaque d'immatriculation").fill(plate);
   await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
   await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
   await expect(page.getByText("Plaque valide")).toBeVisible();
   await page.getByLabel("Kilométrage actuel *").fill("118000");
+  if (opts.price) await page.getByLabel(/Prix de l'annonce/).fill(String(opts.price));
   if (opts.withCarteGrise !== false) {
     await page.getByLabel("Numéro de formule").fill("2021AB12345");
     await page.getByLabel("Nom du titulaire").fill("Dupont Jean");
@@ -26,6 +27,8 @@ async function goToReport(page: Page, plate: string, opts: { withCarteGrise?: bo
 test("accueil : sections et tarifs cohérents", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Sachez tout de ce véhicule");
+  await expect(page.getByTestId("scan-widget")).toBeVisible();
+  await expect(page.getByTestId("scan-widget")).toContainText("ZZ-999-ZZ");
   await expect(page.getByText("Le contenu du rapport.")).toBeVisible();
   await expect(page.getByText("Toutes les pannes connues de ce modèle.")).toBeVisible();
   await expect(page.locator("#tarifs")).toContainText("19,90");
@@ -83,8 +86,10 @@ test("VIN : onglet, validation et identification mondiale", async ({ page }) => 
 });
 
 test("parcours complet : rapport, PDF, partage", async ({ page, request }) => {
-  await goToReport(page, "AB-123-CD", { withCarteGrise: true });
+  await goToReport(page, "AB-123-CD", { withCarteGrise: true, price: 19900 });
   // contenu
+  await expect(page.locator("#cote")).toContainText("Prix de l'annonce");
+  await expect(page.locator("#cote")).toContainText(/19.900/);
   for (const h of ["Vue d'ensemble", "Pannes connues du modèle", "Entretien à prévoir", "Historique officiel", "Rappels constructeur", "Cote estimée du véhicule", "À vérifier avant l'achat"]) {
     await expect(page.getByRole("heading", { name: h, exact: true })).toBeVisible();
   }

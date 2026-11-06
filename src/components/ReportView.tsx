@@ -105,7 +105,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
     { label: "Cote estimée", value: r.valuation?.verdict === "au_dessus" ? `${euros(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Annonce : ${euros(r.valuation.askingPrice)}` : "Cote estimée" },
   ];
 
-  const nav = [["apercu", "Vue d'ensemble"], ["verifier", "À vérifier"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote estimée"]];
+  const nav = [["apercu", "Vue d'ensemble"], ["verifier", "À vérifier"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote estimée"], ...(r.listing.available ? [["annonce", "Annonce"]] : [])];
   const specs = [FUEL_LABEL[v.fuel], GEARBOX_LABEL[v.gearbox], v.powerHp ? `${v.powerHp} ch` : "", v.firstRegistration ? `Mise en circulation ${fmtDateFr(v.firstRegistration)}` : "", r.mileage !== undefined ? fmtKm(r.mileage) : "", v.critAir ? `Crit'Air ${v.critAir}` : ""].filter(Boolean);
 
   return (
@@ -348,10 +348,11 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
           )}
 
           {/* ===== Annonce ===== */}
-          {r.listing.available && <Panel id="annonce" title="Annonce" tone={r.listing.available ? (r.listing.claims.some((c) => c.status === "warning") ? "warn" : "ok") : "neutral"} badge={<Tag tone={r.listing.available ? (r.listing.claims.some((c) => c.status === "warning") ? "warn" : "ok") : "neutral"}>{r.listing.available ? "Lue automatiquement" : "Aucune annonce"}</Tag>}>
-            {r.listing.claims.length ? <ul className="m-0 p-0 list-none grid grid-cols-1 md:grid-cols-2 gap-2.5">{r.listing.claims.map((c, i) => { const t: Tone = c.status === "warning" ? "warn" : c.status === "missing" ? "neutral" : "ok"; return <li key={i} className="rounded-xl px-4 py-3 flex gap-3 items-start" style={{ background: TINT[t], border: `1px solid ${EDGE[t]}` }}><span className="mt-1.5"><Led tone={t} size={8} /></span><div className="flex flex-col gap-0.5"><span className="font-semibold" style={{ color: t === "neutral" ? "#E5E9F0" : C[t] }}>{c.text}</span>{c.detail && <span className="text-[13px] text-[#AEB6C4]">{c.detail}</span>}</div></li>; })}</ul> : <p className="m-0 text-[15px] text-[#AEB6C4] max-w-[70ch]">Aucun lien d&apos;annonce fourni. Avec le lien, Caristo compare prix et kilométrage annoncés aux données réelles.</p>}
+          {r.listing.available && (() => { const warns = r.listing.claims.filter((c) => c.status === "warning").length; const tone: Tone = warns ? "warn" : "ok"; return (
+          <Panel id="annonce" title="L'annonce face au rapport" sub="Ce que dit l'annonce, confronté aux données officielles et à la cote estimée." tone={tone} badge={<Tag tone={tone}>{warns ? plural(warns, "point à éclaircir", "points à éclaircir") : "Cohérente"}</Tag>}>
+            <ul className="m-0 p-0 list-none grid grid-cols-1 md:grid-cols-2 gap-2.5">{r.listing.claims.map((c, i) => { const t: Tone = c.status === "warning" ? "warn" : c.status === "missing" ? "neutral" : "ok"; return <li key={i} className="rounded-xl px-4 py-3 flex gap-3 items-start" style={{ background: TINT[t], border: `1px solid ${EDGE[t]}` }}><span className="mt-1.5"><Led tone={t} size={8} /></span><div className="flex flex-col gap-0.5"><span className="font-semibold" style={{ color: t === "neutral" ? "#E5E9F0" : C[t] }}>{c.text}</span>{c.detail && <span className="text-[13px] text-[#AEB6C4]">{c.detail}</span>}</div></li>; })}</ul>
             {r.listing.url && <a href={r.listing.url} target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#93C5FD] break-all">{r.listing.url}</a>}
-          </Panel>}
+          </Panel>); })()}
 
           <p className="m-0 text-[12px] text-[#5B6779] max-w-[90ch] px-2">Ce rapport restitue les données enregistrées sur ce véhicule à la date d&apos;émission. Les pannes connues sont des faiblesses fréquentes du modèle, pas un diagnostic de ce véhicule. La cote est une estimation. Il ne constitue ni une expertise ni une garantie sur l&apos;état mécanique du véhicule.</p>
 

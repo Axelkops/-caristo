@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SearchWidget } from "@/components/SearchWidget";
 import { ChecklistExplorer } from "@/components/ChecklistExplorer";
+import { ScanWidget } from "@/components/ScanWidget";
 import { OFFERS, formatEuros } from "@/lib/services/pricing";
 
 const Check = ({ color = "var(--accent)" }: { color?: string }) => (
@@ -22,10 +23,11 @@ const CONTENT = [
   { d: '<path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>', t: "À vérifier avant l'achat", s: "La liste de contrôle faite pour ce véhicule : énergie, boîte, âge, kilométrage." },
   { d: '<path d="M4 19V5M4 19h16"/><path d="M7 15l4-5 3 3 5-7"/>', t: "Cote du marché", s: "Une fourchette de prix réaliste pour ce véhicule." },
   { d: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', t: "Échéancier d'entretien", s: "Ce qu'il faudra faire à 12, 24 et 36 mois, et combien." },
+  { d: '<path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/>', t: "Le prix de l'annonce face à la cote", s: "Vous saisissez le prix demandé : le rapport dit s'il est dans la cote, au-dessus ou en dessous." },
   { d: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>', t: "Rappels constructeur", s: "Les rappels du modèle, à faire vérifier gratuitement en concession." },
 ];
 
-const FEATURES = ["Historique, kilométrage, sinistres", "Pannes connues du modèle", "Points à vérifier avant l'achat", "Cote du marché", "Échéancier d'entretien 12, 24, 36 mois", "Rappels constructeur", "Espace Mes rapports"];
+const FEATURES = ["Historique, kilométrage, sinistres", "Pannes connues du modèle", "Points à vérifier avant l'achat", "Prix de l'annonce confronté à la cote", "Cote du marché", "Échéancier d'entretien 12, 24, 36 mois", "Rappels constructeur", "Espace Mes rapports"];
 
 export default function Home() {
   return (
@@ -35,11 +37,11 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto flex flex-wrap gap-12 items-center">
           <div className="flex-[1_1_480px] min-w-0 flex flex-col gap-7">
             <h1 className="m-0 text-[40px] sm:text-[58px] leading-[1.04] font-bold">Sachez tout de ce véhicule avant de le payer.</h1>
-            <p className="m-0 text-lg sm:text-[19px] leading-relaxed text-muteddark max-w-[520px]">Historique, kilométrage, sinistres, pannes connues et cote. Le rapport complet en moins d&apos;une minute.</p>
+            <p className="m-0 text-lg sm:text-[19px] leading-relaxed text-muteddark max-w-[520px]">Historique, kilométrage, sinistres, pannes connues, cote, et le prix de l&apos;annonce passé au crible. Le rapport complet en moins d&apos;une minute.</p>
             <SearchWidget />
           </div>
           <div className="flex-[1_1_400px] min-w-0 flex justify-center">
-            <HeroExample />
+            <ScanWidget />
           </div>
         </div>
       </section>
@@ -226,33 +228,3 @@ function PriceCard({ offer, highlight = false, items }: { offer: keyof typeof OF
   );
 }
 
-function HeroExample() {
-  return (
-    <div className="w-full max-w-[480px] bg-navy2 text-white border border-accent/35 rounded-[22px] p-6 flex flex-col gap-4 relative" style={{ boxShadow: "0 0 0 1px rgba(59,130,246,0.15), 0 0 70px rgba(37,99,235,0.3), 0 30px 70px rgba(0,0,0,0.45)" }}>
-      <span className="absolute -top-3 right-5 bg-accent text-ink text-[11px] font-bold tracking-wider uppercase px-3 py-1.5 rounded-full led">Exemple de rapport</span>
-      <div className="flex justify-between items-start gap-3">
-        <div className="flex flex-col gap-1"><span className="display text-[21px] font-bold">Peugeot 3008 1.5 BlueHDi</span><span className="text-[13px] text-muteddark">AB-123-CD · 2019 · 118 000 km · Diesel · Boîte auto</span></div>
-        <div className="flex flex-col items-center gap-1"><span className="w-16 h-16 rounded-full border-[5px] border-emerald-500 flex items-center justify-center display text-[17px] font-bold text-emerald-400" style={{ boxShadow: "0 0 18px rgba(16,185,129,0.4)" }}>88 %</span><span className="text-[11px] font-semibold text-emerald-400">Risque faible</span></div>
-      </div>
-      <div className="grid grid-cols-2 min-[400px]:grid-cols-4 gap-2">
-        {[["Kilométrage", "Cohérent", "text-emerald-400"], ["Sinistres", "Aucun", "text-emerald-400"], ["Gage / vol", "Aucun", "text-emerald-400"], ["Origine", "Importée", "text-amber-300"]].map(([a, b, c]) => (
-          <div key={a} className="bg-white/5 rounded-xl px-2 py-2.5 flex flex-col gap-1 items-center text-center"><span className="text-[10px] text-[#7C8798] uppercase tracking-wider">{a}</span><span className={`text-[13px] font-semibold ${c}`}>{b}</span></div>
-        ))}
-      </div>
-      <div className="flex flex-col gap-1.5">
-        <div className="flex justify-between text-[11px] text-[#7C8798]"><span className="uppercase tracking-wider">Kilométrage relevé</span><span>4 contrôles · aucun recul</span></div>
-        <div className="flex items-end gap-1.5 h-11">{[34, 54, 76].map((h) => <div key={h} className="flex-1 bg-white/10 rounded-t" style={{ height: `${h}%` }} />)}<div className="flex-1 bg-accent rounded-t h-full" style={{ boxShadow: "0 0 12px rgba(59,130,246,0.6)" }} /></div>
-        <div className="flex justify-between text-[10px] text-[#7C8798]"><span>38 410</span><span>61 200</span><span>84 950</span><span className="text-accentsoft font-semibold">112 300 km</span></div>
-      </div>
-      <div className="border-t border-white/10 pt-3 flex flex-col gap-2">
-        <span className="text-[10px] font-semibold text-[#7C8798] uppercase tracking-wider">À vérifier sur ce véhicule</span>
-        <div className="flex items-center gap-2.5 bg-red-500/10 rounded-[10px] px-3 py-2"><span className="dot bg-red-500" style={{ boxShadow: "0 0 10px #EF4444" }} /><span className="text-[13px] flex-1">Courroie de distribution</span><span className="text-xs font-semibold text-red-300">900 – 1 400 €</span></div>
-        <div className="flex items-center gap-2.5 bg-white/5 rounded-[10px] px-3 py-2"><span className="dot bg-amber-400" /><span className="text-[13px] flex-1">Vanne antipollution</span><span className="text-xs text-muteddark">350 – 600 €</span></div>
-      </div>
-      <div className="grid grid-cols-2 gap-2">
-        <div className="bg-accent/10 border border-accent/30 rounded-xl px-3 py-2.5 flex flex-col gap-0.5"><span className="text-[10px] text-accentsoft uppercase tracking-wider">Cote du marché</span><span className="text-[15px] font-bold">16 200 – 17 400 €</span><span className="text-[11px] text-muteddark">Cote moyenne 16 800 €</span></div>
-        <div className="bg-accent/10 border border-accent/30 rounded-xl px-3 py-2.5 flex flex-col gap-0.5"><span className="text-[10px] text-accentsoft uppercase tracking-wider">Entretien 12 mois</span><span className="text-[15px] font-bold">≈ 400 – 550 €</span><span className="text-[11px] text-muteddark">Vidange, filtres, contrôle</span></div>
-      </div>
-    </div>
-  );
-}
