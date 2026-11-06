@@ -2,6 +2,8 @@ import type { ReportData } from "@/lib/engine/types";
 import { FUEL_LABEL, GEARBOX_LABEL, fmtDateFr } from "./VehicleCard";
 import { fmtKm } from "@/lib/engine/maintenance";
 import { ShareBox } from "./ShareBox";
+import { ChecklistPanel } from "./ChecklistPanel";
+import { buildChecklist } from "@/lib/engine/checklist";
 
 /*
  * Rapport Caristo — « tableau de bord » : fond nuit, panneaux translucides, voyants LED.
@@ -89,6 +91,8 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
   const inZone = r.knownIssues.filter((i) => i.inZone);
   const scoreTone: Tone = r.score <= "B" ? "ok" : r.score === "C" ? "warn" : "bad";
   const openRecalls = r.recalls.filter((x) => x.status === "open");
+  // rapports produits avant l'ajout de la liste : on la construit à la volée
+  const checklist = r.checklist ?? buildChecklist({ vehicle: v, mileage: r.mileage, history: h, knownIssues: r.knownIssues, recalls: r.recalls, now: issued });
 
   const lights: { label: string; value: string; tone: Tone; sub?: string }[] = [
     { label: "Kilométrage", value: r.mileageCheck.consistent === false ? "Incohérent" : r.mileageCheck.consistent ? "Cohérent" : "Non vérifiable", tone: r.mileageCheck.consistent === false ? "bad" : r.mileageCheck.consistent ? "ok" : "neutral", sub: readings.length ? plural(readings.length, "relevé officiel", "relevés officiels") : r.mileage ? `${fmtKm(r.mileage)} saisis` : undefined },
@@ -99,7 +103,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
     { label: "Prix et cote", value: r.valuation?.verdict === "au_dessus" ? `${euros(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Annonce : ${euros(r.valuation.askingPrice)}` : "Cote estimée" },
   ];
 
-  const nav = [["apercu", "Vue d'ensemble"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote et prix"]];
+  const nav = [["apercu", "Vue d'ensemble"], ["verifier", "À vérifier"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote et prix"]];
   const specs = [FUEL_LABEL[v.fuel], GEARBOX_LABEL[v.gearbox], v.powerHp ? `${v.powerHp} ch` : "", v.firstRegistration ? `Mise en circulation ${fmtDateFr(v.firstRegistration)}` : "", r.mileage !== undefined ? fmtKm(r.mileage) : "", v.critAir ? `Crit'Air ${v.critAir}` : ""].filter(Boolean);
 
   return (
@@ -109,10 +113,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
         <div className="max-w-[1200px] mx-auto flex flex-col gap-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center">
             <div className="flex flex-col gap-5 min-w-0">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className="text-[13px] text-[#8E9AAF]">Rapport {r.reference}, établi le {issued.toLocaleDateString("fr-FR")}</span>
-                {!readonly && <a href={`/api/reports/${reportId}/pdf`} target="_blank" rel="noopener" data-testid="pdf-top" className="no-print inline-flex items-center gap-2 bg-accent text-white px-4 py-2.5 rounded-[10px] text-sm font-semibold no-underline led"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>Télécharger le PDF</a>}
-              </div>
+              <span className="text-[13px] text-[#8E9AAF]">Rapport {r.reference}, établi le {issued.toLocaleDateString("fr-FR")}</span>
               <div className="flex flex-col gap-2">
                 <h1 className="m-0 text-[36px] sm:text-[52px] leading-[1.02] font-bold">{v.make} {v.model}</h1>
                 {v.version && <span className="text-[17px] text-[#AEB6C4]">{v.version}</span>}
@@ -122,6 +123,15 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
                 {v.vin && <span className="text-[12px] text-[#8E9AAF] tracking-[1.5px]">VIN {v.vin}</span>}
               </div>
               <ul className="m-0 p-0 list-none flex flex-wrap gap-x-5 gap-y-2 text-[14px] text-[#C8D0DC]">{specs.map((c) => <li key={c} className="flex items-center gap-2"><Led tone="info" size={6} />{c}</li>)}</ul>
+              {!readonly && (
+                <div className="relative inline-flex self-start mt-1">
+                  <span aria-hidden="true" className="absolute -inset-2 rounded-2xl" style={{ background: "radial-gradient(closest-side, rgba(59,130,246,0.55), transparent)", filter: "blur(14px)" }} />
+                  <a href={`/api/reports/${reportId}/pdf`} target="_blank" rel="noopener" data-testid="pdf-top" className="no-print relative inline-flex items-center gap-2.5 bg-accent text-white px-5 py-3 rounded-xl text-[15px] font-semibold no-underline" style={{ boxShadow: "0 0 0 1px rgba(147,197,253,0.35), 0 10px 30px rgba(37,99,235,0.45)" }}>
+                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>
+                    Télécharger le rapport PDF
+                  </a>
+                </div>
+              )}
             </div>
             <div className="justify-self-center lg:justify-self-end rounded-[24px] px-6 pt-5 pb-5 flex flex-col items-center gap-1 w-full max-w-[280px]" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015))", border: "1px solid rgba(147,197,253,0.14)", boxShadow: "0 24px 60px rgba(0,0,0,0.45)" }}>
               <span className="text-[12px] text-[#8E9AAF]">Indice de confiance</span>
@@ -163,6 +173,11 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
 
       <div className="px-4 sm:px-6 pb-14">
         <div className="max-w-[1200px] mx-auto flex flex-col gap-6">
+
+          {/* ===== Points à vérifier avant l'achat ===== */}
+          <Panel id="verifier" title="À vérifier avant l'achat" sub="Liste construite pour ce véhicule : énergie, boîte, âge, kilométrage et points connus du modèle. À cocher pendant la visite et l'essai." tone="info" badge={<Tag tone="info">{checklist.essential} essentiels · {checklist.total} points</Tag>}>
+            <ChecklistPanel checklist={checklist} storageKey={reportId || shareToken || r.reference} />
+          </Panel>
 
           {/* ===== Pannes connues ===== */}
           <Panel id="pannes" title="Pannes connues du modèle" sub="Faiblesses fréquentes sur ce modèle, pas un diagnostic de ce véhicule : à contrôler sur place." tone={inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok"} badge={<Tag tone={inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok"}>{inZoneHigh.length ? `${inZoneHigh.length} à vérifier en priorité` : plural(r.knownIssues.length, "point")}</Tag>}>

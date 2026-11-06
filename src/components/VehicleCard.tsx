@@ -1,14 +1,8 @@
 import type { Vehicle } from "@/lib/engine/types";
 import { CarIcon } from "./Logo";
 
-export const FUEL_LABEL: Record<Vehicle["fuel"], string> = { diesel: "Diesel", essence: "Essence", hybride: "Hybride", hybride_rechargeable: "Hybride rechargeable", electrique: "Électrique", gpl: "GPL", autre: "Énergie non précisée" };
-export const GEARBOX_LABEL: Record<Vehicle["gearbox"], string> = { manuelle: "Boîte manuelle", automatique: "Boîte automatique", inconnue: "" };
-
-export function fmtDateFr(iso?: string): string {
-  if (!iso) return "";
-  const [y, m, d] = iso.split("-");
-  return `${d}/${m}/${y}`;
-}
+import { FUEL_LABEL, GEARBOX_LABEL, fmtDateFr } from "@/lib/engine/labels";
+export { FUEL_LABEL, GEARBOX_LABEL, fmtDateFr };
 
 export function VehicleCard({ vehicle, badge }: { vehicle: Vehicle; badge?: string }) {
   if (vehicle.pending) {

@@ -1,4 +1,5 @@
 /** Types du moteur Caristo. Tout le rapport est construit à partir de ces structures. */
+import type { Checklist } from "./checklist";
 
 export type Fuel = "diesel" | "essence" | "hybride" | "hybride_rechargeable" | "electrique" | "gpl" | "autre";
 export type Gearbox = "manuelle" | "automatique" | "inconnue";
@@ -157,6 +158,8 @@ export interface ReportData {
   maintenance: MaintenanceSchedule;
   listing: ListingAnalysis;
   questions: SellerQuestion[];
+  /** points à vérifier avant l'achat, construits pour ce véhicule */
+  checklist: Checklist;
   sources: { label: string; status: "ok" | "partial" | "none"; detail?: string }[];
   limits: string[];
 }

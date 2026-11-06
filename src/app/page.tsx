@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SearchWidget } from "@/components/SearchWidget";
+import { ChecklistExplorer } from "@/components/ChecklistExplorer";
 import { OFFERS, formatEuros } from "@/lib/services/pricing";
 
 const Check = ({ color = "var(--accent)" }: { color?: string }) => (
@@ -18,12 +19,13 @@ const CONTENT = [
   { d: '<path d="M12 3l9 16H3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r="0.6"/>', t: "Sinistres", s: "Accidents déclarés et réparations contrôlées par expert." },
   { d: '<path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/>', t: "Gage, opposition, vol", s: "Ce qui empêche une vente, vérifié avant de payer." },
   { d: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4L15 12l-3-3z"/>', t: "Pannes connues du modèle", s: "Les faiblesses de ce modèle, avec le coût et quoi vérifier." },
+  { d: '<path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>', t: "À vérifier avant l'achat", s: "La liste de contrôle faite pour ce véhicule : énergie, boîte, âge, kilométrage." },
   { d: '<path d="M4 19V5M4 19h16"/><path d="M7 15l4-5 3 3 5-7"/>', t: "Cote du marché", s: "Une fourchette de prix réaliste pour ce véhicule." },
   { d: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', t: "Échéancier d'entretien", s: "Ce qu'il faudra faire à 12, 24 et 36 mois, et combien." },
   { d: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>', t: "Rappels constructeur", s: "Les rappels du modèle, à faire vérifier gratuitement en concession." },
 ];
 
-const FEATURES = ["Historique, kilométrage, sinistres", "Pannes connues du modèle", "Cote du marché", "Échéancier d'entretien 12, 24, 36 mois", "Rappels constructeur", "Espace Mes rapports"];
+const FEATURES = ["Historique, kilométrage, sinistres", "Pannes connues du modèle", "Points à vérifier avant l'achat", "Cote du marché", "Échéancier d'entretien 12, 24, 36 mois", "Rappels constructeur", "Espace Mes rapports"];
 
 export default function Home() {
   return (
@@ -112,6 +114,18 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* À VÉRIFIER */}
+      <section id="verifier" className="bg-ink text-white px-4 sm:px-6 py-20 sm:py-24 border-t border-white/10">
+        <div className="max-w-[1200px] mx-auto flex flex-col gap-10">
+          <div className="flex flex-col gap-3.5 max-w-[760px]">
+            <span className="text-xs font-semibold text-accentsoft uppercase tracking-[1.8px]">Inclus dans le rapport</span>
+            <h2 className="m-0 text-[32px] sm:text-[42px] leading-[1.08] font-bold">Les points à vérifier, différents pour chaque véhicule.</h2>
+            <p className="m-0 text-base text-muteddark leading-relaxed max-w-[62ch]">Une électrique, un diesel à boîte manuelle ou une hybride à boîte automatique ne se contrôlent pas de la même façon. Essayez : changez l&apos;énergie ou la boîte et regardez la liste changer.</p>
+          </div>
+          <ChecklistExplorer compact />
         </div>
       </section>
 

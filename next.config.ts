@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // fichiers chargés dynamiquement par la génération PDF (polices standard), non détectés automatiquement
   outputFileTracingIncludes: {
-    "/api/reports/[id]/pdf": ["./node_modules/pdfkit/js/standard-fonts/**/*", "./node_modules/pdfkit/js/data/**/*", "./node_modules/@react-pdf/**/*.wasm", "./node_modules/yoga-layout/**/*"],
+    "/api/reports/[id]/pdf": ["./node_modules/pdfkit/js/standard-fonts/**/*", "./node_modules/pdfkit/js/data/**/*", "./node_modules/@react-pdf/**/*.wasm", "./node_modules/yoga-layout/**/*", "./src/assets/fonts/**/*"],
   },
   async headers() {
     return [{ source: "/(.*)", headers: [

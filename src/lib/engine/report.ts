@@ -1,3 +1,4 @@
+import { buildChecklist } from "./checklist";
 import type { KnownIssue, ListingAnalysis, OfficialHistory, Recall, ReportData, SellerQuestion, Vehicle } from "./types";
 import { findKnownIssues, vehicleAgeYears } from "./known-issues";
 import { buildMaintenanceSchedule, fmtDate, fmtKm } from "./maintenance";
@@ -105,6 +106,7 @@ export function buildReport(input: ReportInputs): ReportData {
   const maintenance = buildMaintenanceSchedule({ vehicle, mileage, history, knownIssues, entries: input.entries, now });
   const sc = computeScore({ history, mileageCheck, knownIssues, recalls: input.recalls, valuation, listing: input.listing, vehicle });
   const questions = buildQuestions({ history, knownIssues, maintenance, valuation, listing: input.listing, vehicle, mileageCheck });
+  const checklist = buildChecklist({ vehicle, mileage, history, knownIssues, recalls: input.recalls, now });
 
   const sources: ReportData["sources"] = [
     { label: "Fiche technique", status: "ok" },
@@ -142,6 +144,7 @@ export function buildReport(input: ReportInputs): ReportData {
     maintenance,
     listing: input.listing,
     questions,
+    checklist,
     sources,
     limits,
   };

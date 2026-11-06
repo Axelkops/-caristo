@@ -15,6 +15,7 @@ export function Footer() {
             <span className="text-white font-semibold">Produit</span>
             <Link href="/#contenu" className="no-underline text-muteddark hover:text-white">Le rapport</Link>
             <Link href="/#pannes" className="no-underline text-muteddark hover:text-white">Pannes connues</Link>
+            <Link href="/points-a-verifier" className="no-underline text-muteddark hover:text-white">Points à vérifier avant l&apos;achat</Link>
             <Link href="/#entretien" className="no-underline text-muteddark hover:text-white">Entretien</Link>
             <Link href="/#tarifs" className="no-underline text-muteddark hover:text-white">Tarifs</Link>
             <Link href="/mes-rapports" className="no-underline text-muteddark hover:text-white">Mes rapports</Link>
