@@ -28,6 +28,8 @@ export interface Vehicle {
   seats?: number;
   color?: string;
   imported?: boolean;
+  /** true tant que le véhicule n'a pas été identifié chez le fournisseur (identification après paiement) */
+  pending?: boolean;
 }
 
 export interface MileageReading {
@@ -141,6 +143,8 @@ export interface ReportData {
   vehicle: Vehicle;
   mileage?: number;
   score: "A" | "B" | "C" | "D" | "E";
+  /** avertissements affichés en tête du rapport (ex. plaque qui ne correspond pas à la carte grise) */
+  warnings?: string[];
   /** indice de confiance 0–100 (100 = aucune alerte) */
   scorePercent: number;
   scoreLabel: string;

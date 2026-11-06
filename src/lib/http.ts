@@ -12,6 +12,7 @@ export function handleError(e: unknown) {
 /** Limite simple par IP (mémoire) : n requêtes par fenêtre. Suffisant pour un seul serveur ; en multi-instances, préférer un stockage partagé. */
 const buckets = new Map<string, { count: number; reset: number }>();
 export function rateLimit(key: string, max = 20, windowMs = 60_000): boolean {
+  if (process.env.RATE_LIMIT_DISABLED === "true") return true; // tests automatisés uniquement
   const now = Date.now();
   const b = buckets.get(key);
   if (!b || b.reset < now) { buckets.set(key, { count: 1, reset: now + windowMs }); return true; }

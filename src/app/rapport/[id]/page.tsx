@@ -30,7 +30,7 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
       <div className="bg-ink text-white px-4 sm:px-6 py-5"><div className="max-w-[1100px] mx-auto"><Steps current={3} /></div></div>
       <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-10 flex flex-col gap-7">
         <VehicleCard vehicle={r.vehicle as Vehicle} badge="Véhicule identifié" />
-        <ReportProgress reportId={id} initialStatus={r.status} />
+        <ReportProgress reportId={id} initialStatus={r.status} initialError={r.error ?? undefined} />
       </div>
     </>
   );

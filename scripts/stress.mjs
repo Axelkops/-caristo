@@ -35,7 +35,7 @@ async function phaseIdentify(n) {
     else body = pick([{}, { input: 123 }, { input: plateFR(), kind: "xxx" }, { input: plateFR(), country: "ZZZ" }, "pas du json", { input: plateFR(), country: pick(["DE", "ES", "IT", "BE", "GB"]) }]);
     const res = await call("POST", "/api/identify", body);
     if (res.status === 200) {
-      if (!res.json?.reportId || !res.json?.vehicle?.make) problems.push({ what: "identify 200 sans véhicule", body, json: res.json });
+      if (!res.json?.reportId || !(res.json?.vehicle?.make || res.json?.vehicle?.pending)) problems.push({ what: "identify 200 sans véhicule", body, json: res.json });
       else ids.push({ id: res.json.reportId, country: res.json.country });
     } else if (![400, 404, 429].includes(res.status)) problems.push({ what: "identify statut inattendu", body, status: res.status });
     else if (res.status !== 429 && !res.json?.error) problems.push({ what: "erreur sans message", body, status: res.status });

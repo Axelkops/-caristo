@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const STEPS = ["Fiche technique", "Historique officiel", "Rappels constructeur", "Pannes connues du modèle", "Cote du marché", "Échéancier d'entretien", "Questions au vendeur"];
+const STEPS = ["Identification du véhicule", "Fiche technique", "Historique officiel", "Rappels constructeur", "Pannes connues du modèle", "Cote du marché", "Échéancier d'entretien"];
 
-export function ReportProgress({ reportId, initialStatus }: { reportId: string; initialStatus: string }) {
+export function ReportProgress({ reportId, initialStatus, initialError }: { reportId: string; initialStatus: string; initialError?: string }) {
   const router = useRouter();
   const [status, setStatus] = useState(initialStatus);
-  const [error, setError] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>(initialError);
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
@@ -22,18 +23,27 @@ export function ReportProgress({ reportId, initialStatus }: { reportId: string; 
         setError(json.error);
         setTick((t) => t + 1);
         if (json.status === "ready") { clearInterval(timer); router.refresh(); }
-        if (json.status === "failed") clearInterval(timer);
+        if (json.status === "failed" || json.status === "refunded") clearInterval(timer);
       } catch { /* on réessaie au tick suivant */ }
     }, 1500);
     return () => { active = false; clearInterval(timer); };
   }, [reportId, router]);
 
   const done = Math.min(STEPS.length, Math.floor(tick * 1.4) + 1);
+  if (status === "refunded") {
+    return (
+      <div className="bg-warnbg border border-[#FDD9A8] rounded-2xl p-6 flex flex-col gap-3" data-testid="refunded">
+        <span className="font-semibold text-warntext">Aucun véhicule ne correspond à cette plaque.</span>
+        <span className="text-sm text-warntext">{error ?? "Vous avez été remboursé."} Un e-mail de confirmation vous a été envoyé.</span>
+        <Link href="/#top" className="w-fit bg-navy text-white px-4 py-2.5 rounded-[10px] text-sm font-semibold no-underline">Saisir la bonne plaque</Link>
+      </div>
+    );
+  }
   if (status === "failed") {
     return (
       <div className="bg-badbg border border-red-200 rounded-2xl p-6 flex flex-col gap-2">
         <span className="font-semibold text-badtext">La génération a échoué.</span>
-        <span className="text-sm text-badtext">{error ?? "Erreur inconnue."} Si le problème persiste, contactez-nous : vous serez remboursé.</span>
+        <span className="text-sm text-badtext">{error ?? "Erreur inconnue."} Pour toute question : contact@rapportcaristo.com.</span>
       </div>
     );
   }

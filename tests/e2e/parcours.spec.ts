@@ -7,7 +7,7 @@ async function goToReport(page: Page, plate: string, opts: { withCarteGrise?: bo
   await page.getByLabel("Plaque d'immatriculation").fill(plate);
   await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
   await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
-  await expect(page.getByText("Véhicule identifié")).toBeVisible();
+  await expect(page.getByText("Plaque valide")).toBeVisible();
   await page.getByLabel("Kilométrage actuel *").fill("118000");
   if (opts.withCarteGrise !== false) {
     await page.getByLabel("Numéro de formule").fill("2021AB12345");
@@ -45,11 +45,29 @@ test("plaque invalide : message clair, pas de navigation", async ({ page }) => {
   await expect(page).toHaveURL("/");
 });
 
-test("plaque inconnue du fournisseur : erreur 404 propre", async ({ page }) => {
+test("plaque sans véhicule : identifiée après paiement, remboursement automatique", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel("Plaque d'immatriculation").fill("ZZ-999-ZZ");
   await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
-  await expect(alert(page)).toContainText("Aucun véhicule trouvé");
+  await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
+  await expect(page.getByTestId("vehicle-pending")).toContainText("ZZ-999-ZZ");
+  await page.getByLabel("Kilométrage actuel *").fill("80000");
+  await page.getByLabel("Numéro de formule").fill("2021AB12345");
+  await page.getByLabel("Nom du titulaire").fill("Dupont Jean");
+  await page.getByLabel("Date de 1re immatriculation").fill("12/03/2019");
+  await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
+  await page.getByRole("button", { name: /Payer/ }).click();
+  await page.getByRole("button", { name: "Payer (simulation)" }).click();
+  await expect(page.getByTestId("refunded")).toContainText("Aucun véhicule ne correspond", { timeout: 30000 });
+});
+
+test("date de carte grise : avertissement seulement si elle diffère du véhicule", async ({ page }) => {
+  // PQ-456-RS → véhicule de démonstration immatriculé le 12/03/2019 : même date que celle saisie, pas d'avertissement
+  await goToReport(page, "PQ-456-RS");
+  await expect(page.getByTestId("report-warning")).toHaveCount(0);
+  // AB-123-CD → véhicule immatriculé le 14/04/2022 : date saisie différente, avertissement en tête
+  await goToReport(page, "AB-123-CD");
+  await expect(page.getByTestId("report-warning")).toContainText("ne correspond pas");
 });
 
 test("VIN : onglet, validation et identification mondiale", async ({ page }) => {
@@ -61,7 +79,7 @@ test("VIN : onglet, validation et identification mondiale", async ({ page }) => 
   await page.getByLabel("Numéro VIN").fill("1HGCM82633A004352");
   await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
   await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
-  await expect(page.getByText("Honda")).toBeVisible();
+  await expect(page.getByTestId("vehicle-pending")).toContainText("1HGCM82633A004352");
 });
 
 test("parcours complet : rapport, PDF, partage", async ({ page, request }) => {
@@ -209,7 +227,7 @@ test("pages légales et 404", async ({ page }) => {
   await expect(page.getByText("Page introuvable")).toBeVisible();
 });
 
-test("API : rate limit et validation", async ({ request }) => {
+test("API : validation des entrées", async ({ request }) => {
   const bad = await request.post("/api/identify", { data: { input: "" } });
   expect(bad.status()).toBe(400);
   const r = await request.post("/api/demo/pay", { data: {} });

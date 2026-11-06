@@ -131,6 +131,13 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
             </div>
           </div>
 
+          {r.warnings?.length ? (
+            <div role="note" data-testid="report-warning" className="rounded-2xl px-5 py-4 flex gap-3 items-start" style={{ background: TINT.warn, border: `1px solid ${EDGE.warn}` }}>
+              <Led tone="warn" />
+              <div className="flex flex-col gap-1 text-[14px] leading-relaxed">{r.warnings.map((w) => <span key={w} style={{ color: C.warn }}>{w}</span>)}</div>
+            </div>
+          ) : null}
+
           {/* Voyants */}
           <div id="apercu" className="scroll-mt-6 flex flex-col gap-4">
             <h2 className="m-0 text-[15px] font-semibold text-[#8E9AAF]">Vue d&apos;ensemble</h2>

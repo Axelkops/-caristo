@@ -7,7 +7,7 @@ export const metadata = { title: "Conditions générales de vente" };
 const TOC = [
   ["1", "Éditeur et champ d'application"], ["2", "Définitions"], ["3", "Le service"], ["4", "Espace « Mes rapports »"], ["5", "Commande"],
   ["6", "Prix"], ["7", "Paiement"], ["8", "Packs de rapports"], ["9", "Livraison et accès au rapport"], ["10", "Droit de rétractation"],
-  ["11", "Rapport impossible à produire"], ["12", "Nature des informations et limites"], ["13", "Obligations de l'utilisateur"], ["14", "Responsabilité"],
+  ["11", "Plaque sans véhicule correspondant, erreur de saisie"], ["12", "Nature des informations et limites"], ["13", "Obligations de l'utilisateur"], ["14", "Responsabilité"],
   ["15", "Propriété intellectuelle"], ["16", "Données personnelles"], ["17", "Suspension et résiliation"], ["18", "Modification des conditions"], ["19", "Droit applicable et réclamations"],
 ].map(([n, l]) => ({ id: `cgv-${n}`, label: `${n}. ${l}` }));
 
@@ -34,7 +34,7 @@ export default function CGV() {
       <p>L&apos;espace « Mes rapports » est créé automatiquement avec la première commande et rattaché à l&apos;adresse e-mail saisie. Il n&apos;y a pas de mot de passe : la connexion se fait par un code à usage unique envoyé à cette adresse, valable 10 minutes. L&apos;utilisateur est responsable de l&apos;accès à sa boîte e-mail ; toute personne ayant accès à cette boîte peut accéder à l&apos;espace. Une session reste ouverte 90 jours sur l&apos;appareil utilisé, sauf déconnexion.</p>
 
       <h2 id="cgv-5">5. Commande</h2>
-      <p>La commande se déroule en trois étapes : identification du véhicule (plaque ou VIN) et affichage de la fiche reconnue, que l&apos;utilisateur vérifie ; saisie du kilométrage, des informations de la carte grise (facultatives) et de l&apos;adresse e-mail, puis choix de l&apos;offre ; paiement. La commande est ferme au paiement. Le rapport est ensuite produit immédiatement. {SITE.name} se réserve le droit de refuser une commande en cas d&apos;abus manifeste ou de suspicion de fraude.</p>
+      <p>La commande se déroule en trois étapes : saisie de la plaque d&apos;immatriculation ou du numéro VIN, dont seul le format est vérifié ; saisie du kilométrage, des informations de la carte grise et de l&apos;adresse e-mail, puis choix de l&apos;offre ; paiement. Le véhicule est identifié auprès de nos fournisseurs après le paiement, puis le rapport est produit immédiatement. La commande est ferme au paiement. L&apos;utilisateur est seul responsable de l&apos;exactitude de la plaque ou du VIN saisi : le rapport est produit pour l&apos;identifiant saisi. {SITE.name} se réserve le droit de refuser une commande en cas d&apos;abus manifeste ou de suspicion de fraude.</p>
 
       <h2 id="cgv-6">6. Prix</h2>
       <p>Les prix sont indiqués en euros, toutes taxes comprises (TVA française incluse). À la date de mise à jour des présentes : rapport unique {formatEuros(OFFERS.single.priceCents)} ; pack de {OFFERS.pack3.credits} rapports {formatEuros(OFFERS.pack3.priceCents)} ; pack de {OFFERS.pack10.credits} rapports {formatEuros(OFFERS.pack10.priceCents)}. Le prix applicable est celui affiché au moment de la commande. Une facture est disponible sur demande à {mail}.</p>
@@ -57,8 +57,8 @@ export default function CGV() {
       <p>Le rapport est un contenu numérique fourni sans support matériel, dont l&apos;exécution commence immédiatement après le paiement. Conformément à l&apos;article L221-28 13° du Code de la consommation, en validant le paiement, l&apos;utilisateur demande expressément l&apos;exécution immédiate et reconnaît perdre son droit de rétractation pour le rapport produit.</p>
       <p>Pour un pack, le droit de rétractation subsiste pendant 14 jours à compter de l&apos;achat pour les crédits non utilisés : l&apos;utilisateur est remboursé du prix du pack, déduction faite des rapports déjà produits, chacun étant décompté au prix du rapport unique en vigueur. La demande se fait par e-mail à {mail}, en indiquant l&apos;adresse e-mail de l&apos;achat ; un modèle de formulaire figure en annexe. Le remboursement intervient sous 14 jours sur le moyen de paiement utilisé.</p>
 
-      <h2 id="cgv-11">11. Rapport impossible à produire</h2>
-      <p>Le véhicule est identifié avant le paiement. Si, malgré cela, aucune source ne renvoie de donnée et que le rapport ne peut pas être produit, la commande est remboursée (ou le crédit restitué) sous 5 jours ouvrés, sur simple demande à {mail} ou à l&apos;initiative de {SITE.name}.</p>
+      <h2 id="cgv-11">11. Plaque ou VIN sans véhicule correspondant, erreur de saisie</h2>
+      <p>Si aucun véhicule ne correspond à la plaque ou au VIN saisi, le rapport n&apos;est pas produit : le paiement est remboursé automatiquement sur le moyen de paiement utilisé (délai bancaire de 5 à 10 jours), ou le crédit est rendu au pack. Un e-mail le confirme. Si l&apos;identifiant saisi correspond à un autre véhicule que celui visé par l&apos;utilisateur (erreur de saisie), le rapport produit est dû et n&apos;est pas remboursé ; lorsque la date de 1re immatriculation saisie ne concorde pas avec celle du véhicule identifié, le rapport l&apos;indique en tête. En cas d&apos;indisponibilité technique empêchant la production du rapport, celui-ci est relancé ou remboursé sous 5 jours ouvrés.</p>
 
       <h2 id="cgv-12">12. Nature des informations et limites</h2>
       <ul>

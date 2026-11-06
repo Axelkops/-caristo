@@ -170,7 +170,7 @@ export default function Home() {
             <PriceCard offer="pack3" highlight items={["Tout le rapport unique, ×3", "Rapports rangés dans votre espace", "Crédits utilisés automatiquement", "Valable 12 mois"]} />
             <PriceCard offer="pack10" items={["Tout le pack 3, ×10", "Pour les gros acheteurs et les pros", "Valable 24 mois"]} />
           </div>
-          <p className="m-0 text-[13px] text-[#7C8798] text-center">Paiement sécurisé par carte, Apple Pay ou Google Pay. Remboursé si le rapport ne peut pas être produit.</p>
+          <p className="m-0 text-[13px] text-[#7C8798] text-center">Paiement sécurisé par carte, Apple Pay ou Google Pay. Remboursé automatiquement si aucun véhicule ne correspond à la plaque.</p>
         </div>
       </section>
 
@@ -182,7 +182,7 @@ export default function Home() {
             {[
               ["De quoi ai-je besoin pour faire un rapport ?", "La plaque, le kilométrage et trois informations de la carte grise : le numéro de formule, le nom du titulaire et la date de première immatriculation. Si vous êtes acheteur, demandez une photo de la carte grise au vendeur."],
               ["Comment savez-vous quoi vérifier sur ce véhicule précisément ?", "La plaque nous donne le modèle et le moteur exacts. Nous croisons avec le kilométrage, l'âge et notre base de pannes connues par modèle."],
-              ["Que se passe-t-il si le rapport ne peut pas être produit ?", "Le véhicule est identifié avant le paiement, donc c'est rare. Si malgré tout aucune source ne répond, vous êtes remboursé sous 5 jours ouvrés."],
+              ["Et si je me trompe de plaque ?", "Le rapport est produit pour la plaque saisie : vérifiez-la bien sur la carte grise (case A). Si aucun véhicule ne correspond à cette plaque, vous êtes remboursé automatiquement. Si la plaque correspond à un autre véhicule, le rapport le signale quand la date de 1re immatriculation saisie ne concorde pas, mais il n'est pas remboursé."],
               ["Comment retrouver mes rapports plus tard ?", "Dans « Mes rapports » : saisissez l'adresse e-mail utilisée lors de l'achat, vous recevez un code à 6 chiffres, et vous retrouvez tous vos rapports, vos PDF et vos packs. Pas de mot de passe à retenir."],
               ["Le rapport garantit-il que le véhicule est sain ?", "Non. Il vous dit ce qui est enregistré sur ce véhicule et quoi vérifier sur place. Il ne remplace pas un essai ni un passage en garage."],
               ["Et pour un véhicule immatriculé hors de France ?", "Le rapport contient la fiche technique, les pannes connues, la cote et l'échéancier. L'historique officiel (contrôles techniques, sinistres, gage) n'existe que pour les véhicules immatriculés en France : le rapport l'indique clairement."],

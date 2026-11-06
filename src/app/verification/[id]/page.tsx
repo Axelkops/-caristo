@@ -22,7 +22,7 @@ export default async function VerificationPage({ params, searchParams }: { param
   const account = email ? { email, pack: (await getUsablePacks(email))[0] ?? null } : null;
   return (
     <>
-      <div className="bg-ink text-white px-4 sm:px-6 py-5"><div className="max-w-[1100px] mx-auto flex items-center justify-between gap-4 flex-wrap"><Steps current={2} /><Link href="/" className="text-sm text-muteddark no-underline">Ce n&apos;est pas le bon véhicule ?</Link></div></div>
+      <div className="bg-ink text-white px-4 sm:px-6 py-5"><div className="max-w-[1100px] mx-auto flex items-center justify-between gap-4 flex-wrap"><Steps current={2} /><Link href="/" className="text-sm text-muteddark no-underline">{vehicle.pending ? "Corriger la plaque" : "Ce n\u2019est pas le bon véhicule ?"}</Link></div></div>
       <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-10 flex flex-col gap-7">
         {cancel && <p className="m-0 bg-warnbg text-warntext rounded-xl px-4 py-3 text-sm">Paiement annulé. Vous pouvez reprendre quand vous voulez : rien n&apos;a été débité.</p>}
         <VehicleCard vehicle={vehicle} badge="Véhicule identifié" />

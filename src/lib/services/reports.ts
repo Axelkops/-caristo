@@ -4,9 +4,11 @@ import { getDb, schema } from "../db";
 import type { ListingAnalysis, ReportData, Vehicle } from "../engine/types";
 import { buildReport } from "../engine/report";
 import { parseDate, parseFormulaNumber, parseMileage, parsePlate, parseVin } from "../engine/identifiers";
-import { getHistoryProvider, getListingProvider, getRecallsProvider, getVehicleProvider } from "../providers";
+import { getHistoryProvider, getListingProvider, getRecallsProvider, getVehicleProvider, identifyAfterPayment, plateCountrySupported } from "../providers";
+import { decodeVinBasic } from "../providers/vin-decoder";
 import { OFFERS, type Offer } from "./pricing";
-import { sendReportReadyEmail } from "./email";
+import { sendAdminAlert, sendReportReadyEmail, sendVehicleNotFoundEmail } from "./email";
+import { refundCheckout } from "./payments";
 
 const nanoid = customAlphabet("0123456789abcdefghijkmnpqrstuvwxyz", 14);
 const packCode = customAlphabet("ABCDEFGHJKMNPQRSTUVWXYZ23456789", 10);
@@ -43,9 +45,17 @@ export async function identifyAndCreate(raw: { input: string; kind?: "plate" | "
     kind = "plate"; normalized = p.normalized; country = p.country;
   }
 
-  const provider = await getVehicleProvider();
-  const vehicle = await provider.identify({ kind, value: normalized, country });
-  if (!vehicle) throw new UserError(kind === "plate" ? "Aucun véhicule trouvé pour cette plaque. Vérifiez la saisie ou utilisez le numéro VIN." : "Aucun véhicule trouvé pour ce VIN.", 404);
+  let vehicle: Vehicle | null;
+  if (identifyAfterPayment()) {
+    // L'identification chez le fournisseur est payante : elle n'a lieu qu'après le paiement.
+    if (kind === "plate" && !(await plateCountrySupported(country))) throw new UserError("Les plaques de ce pays ne sont pas reconnues automatiquement. Utilisez le numéro VIN (case E de la carte grise) ou décrivez le véhicule vous-même.", 422);
+    const basic = kind === "vin" ? decodeVinBasic(normalized) : null;
+    vehicle = { make: basic?.make ?? "", model: basic?.model ?? "", vin: kind === "vin" ? normalized : undefined, plate: kind === "plate" ? normalized : undefined, country, fuel: "autre", gearbox: "inconnue", category: "voiture", imported: false, pending: true };
+  } else {
+    const provider = await getVehicleProvider();
+    vehicle = await provider.identify({ kind, value: normalized, country });
+    if (!vehicle) throw new UserError(kind === "plate" ? "Aucun véhicule trouvé pour cette plaque. Vérifiez la saisie ou utilisez le numéro VIN." : "Aucun véhicule trouvé pour ce VIN.", 404);
+  }
 
   const db = await getDb();
   const id = nanoid();
@@ -116,7 +126,7 @@ export async function saveDetails(reportId: string, d: DetailsInput, accountEmai
     await db.update(schema.packs).set({ creditsUsed: sql`${schema.packs.creditsUsed} + 1` }).where(eq(schema.packs.id, pack.id));
     update.packId = pack.id; update.status = "paid"; update.paidAt = new Date(); update.offer = pack.offer as Offer;
     await db.update(schema.reports).set(update).where(eq(schema.reports.id, reportId));
-    void generateReport(reportId);
+    void generateReport(reportId).catch(() => undefined);
     return { status: "paid", needsPayment: false };
   }
   update.status = "awaiting_payment";
@@ -139,7 +149,7 @@ export async function markPaid(reportId: string, stripeSessionId: string | null)
     await db.insert(schema.packs).values({ id: packId, code: packCode(), email: r.email ?? "", offer, creditsTotal: o.credits, creditsUsed: 1, stripeSessionId: stripeSessionId ? `${stripeSessionId}:pack` : null, expiresAt });
   }
   await db.update(schema.reports).set({ status: "paid", paidAt: new Date(), stripeSessionId: stripeSessionId ?? null, packId, updatedAt: new Date() }).where(eq(schema.reports.id, reportId));
-  void generateReport(reportId);
+  void generateReport(reportId).catch(() => undefined);
 }
 
 /** Génère le rapport complet (après paiement). Tolérant : chaque source peut échouer sans bloquer. */
@@ -149,8 +159,27 @@ export async function generateReport(reportId: string): Promise<ReportData> {
   if (!r) throw new UserError("Rapport introuvable.", 404);
   if (r.report && r.status === "ready") return r.report as ReportData;
   await db.update(schema.reports).set({ status: "generating", updatedAt: new Date() }).where(eq(schema.reports.id, reportId));
+  // Identification payante, faite seulement maintenant que le rapport est payé
+  let vehicle = r.vehicle as Vehicle;
+  if (vehicle.pending) {
+    let found: Vehicle | null;
+    try {
+      const provider = await getVehicleProvider();
+      found = await provider.identify({ kind: r.inputKind as "plate" | "vin", value: r.inputValue, country: r.country });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      await db.update(schema.reports).set({ status: "failed", error: "L'identification du véhicule est momentanément indisponible. Notre équipe a été prévenue et relance votre rapport : vous recevrez un e-mail.", updatedAt: new Date() }).where(eq(schema.reports.id, reportId));
+      void sendAdminAlert("Identification impossible", `Rapport ${reportId} (${r.inputValue}) payé mais non identifié : ${msg}\nRelancer après correction : le rapport reste en statut « failed ».`).catch(() => undefined);
+      throw e;
+    }
+    if (!found || found.pending) {
+      await refundNotFound(r);
+      return Promise.reject(new UserError("Aucun véhicule ne correspond à cette plaque.", 404));
+    }
+    vehicle = { ...found, pending: undefined };
+    await db.update(schema.reports).set({ vehicle }).where(eq(schema.reports.id, reportId));
+  }
   try {
-    const vehicle = r.vehicle as Vehicle;
     const [historyP, recallsP, listingP] = await Promise.all([getHistoryProvider(), getRecallsProvider(), getListingProvider()]);
     const [history, recalls, listing] = await Promise.all([
       historyP.fetchHistory({ vehicle, plate: r.inputKind === "plate" ? r.inputValue : vehicle.plate, holderName: r.holderName ?? undefined, formulaNumber: r.formulaNumber ?? undefined, firstRegDate: r.firstRegDate ?? undefined }).catch((e: Error) => ({ available: false, reason: `Historique officiel indisponible (${e.message}).`, inspections: [], mileageReadings: [], claims: [] })),
@@ -160,6 +189,10 @@ export async function generateReport(reportId: string): Promise<ReportData> {
     const entries = await db.select().from(schema.maintenanceEntries).where(eq(schema.maintenanceEntries.reportId, reportId));
     const reference = `CAR-${new Date().getFullYear()}-${r.id.slice(-6).toUpperCase()}`;
     const report = buildReport({ id: r.id, reference, vehicle, mileage: r.mileage ?? undefined, history, recalls, listing, entries: entries.map((e) => ({ label: e.label, date: e.date, mileage: e.mileage ?? undefined })) });
+    if (r.firstRegDate && vehicle.firstRegistration && r.firstRegDate !== vehicle.firstRegistration) {
+      const fr = (d: string) => d.split("-").reverse().join("/");
+      report.warnings = [`La date de 1re immatriculation saisie (${fr(r.firstRegDate)}) ne correspond pas à celle du véhicule trouvé pour la plaque ${vehicle.plate ?? r.inputValue} (${fr(vehicle.firstRegistration)}). Vérifiez que la plaque saisie est bien celle de la carte grise.`];
+    }
     await db.update(schema.reports).set({ report, score: report.score, status: "ready", readyAt: new Date(), updatedAt: new Date(), error: null }).where(eq(schema.reports.id, reportId));
     const [pack] = r.packId ? await db.select().from(schema.packs).where(eq(schema.packs.id, r.packId)).limit(1) : [];
     if (r.email) void sendReportReadyEmail({ to: r.email, reportId: r.id, shareToken: r.shareToken, reference, vehicle, packRemaining: pack ? pack.creditsTotal - pack.creditsUsed : undefined }).catch(() => undefined);
@@ -210,4 +243,28 @@ export async function addMaintenanceEntry(reportId: string, e: { date: string; m
   const cost = e.cost !== undefined && e.cost !== "" ? parseMileage(e.cost) : null;
   await db.insert(schema.maintenanceEntries).values({ id: nanoid(), reportId, date, mileage, label, cost, kind: e.kind ?? "invoice" });
   return regenerate(reportId);
+}
+
+/** Aucun véhicule pour la plaque payée : remboursement (carte) ou crédit rendu (pack), puis e-mail au client. */
+async function refundNotFound(r: typeof schema.reports.$inferSelect): Promise<void> {
+  const db = await getDb();
+  let refundKind: "card" | "credit" | "none" = "none";
+  let note = "Aucun véhicule ne correspond à cette plaque. ";
+  try {
+    if (r.packId && !(r.stripeSessionId && r.offer === "single")) {
+      // crédit d'un pack (achat du pack ou crédit déjà acquis) : on rend le crédit
+      await db.update(schema.packs).set({ creditsUsed: sql`greatest(${schema.packs.creditsUsed} - 1, 0)` }).where(eq(schema.packs.id, r.packId));
+      refundKind = "credit"; note += "Le crédit a été rendu à votre pack.";
+    } else if (r.stripeSessionId) {
+      await refundCheckout(r.stripeSessionId);
+      refundKind = "card"; note += "Votre paiement a été remboursé (5 à 10 jours selon votre banque).";
+    } else {
+      note += "Aucun montant n'a été débité.";
+    }
+  } catch (e) {
+    note += "Le remboursement sera traité manuellement sous 5 jours ouvrés.";
+    void sendAdminAlert("Remboursement à faire", `Rapport ${r.id} (${r.inputValue}) : véhicule introuvable, remboursement automatique impossible : ${e instanceof Error ? e.message : e}`).catch(() => undefined);
+  }
+  await db.update(schema.reports).set({ status: "refunded", error: note, updatedAt: new Date() }).where(eq(schema.reports.id, r.id));
+  if (r.email) void sendVehicleNotFoundEmail({ to: r.email, plate: r.inputValue, refundKind }).catch(() => undefined);
 }

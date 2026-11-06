@@ -109,7 +109,7 @@ export async function getAllPacks(email: string) {
 /** Rapports d'une adresse (payés, en cours ou prêts), du plus récent au plus ancien. */
 export async function getReportsForEmail(email: string) {
   const db = await getDb();
-  return db.select().from(schema.reports).where(and(eq(schema.reports.email, email), inArray(schema.reports.status, ["paid", "generating", "ready", "failed"]))).orderBy(desc(schema.reports.createdAt));
+  return db.select().from(schema.reports).where(and(eq(schema.reports.email, email), inArray(schema.reports.status, ["paid", "generating", "ready", "failed", "refunded"]))).orderBy(desc(schema.reports.createdAt));
 }
 
 /** Nettoyage : codes expirés et sessions périmées (appelé par la tâche de nettoyage). */

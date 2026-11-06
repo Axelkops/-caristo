@@ -14,7 +14,7 @@ import { cached } from "./cache";
  * La lecture est tolérante : si un champ change de nom, le véhicule est quand même identifié avec ce qui existe.
  */
 const DEFAULT_URL = "https://api.apiplaqueimmatriculation.com";
-const SUPPORTED_COUNTRIES = new Set(["FR", "ES", "GB", "UK", "DE", "IT", "PT", "NL"]);
+export const SUPPORTED_COUNTRIES = new Set(["FR", "ES", "GB", "UK", "DE", "IT", "PT", "NL"]);
 
 function pick(o: Record<string, unknown>, ...keys: string[]): string | undefined {
   for (const k of keys) {

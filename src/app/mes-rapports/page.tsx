@@ -15,6 +15,7 @@ const STATUS: Record<string, { label: string; cls: string }> = {
   paid: { label: "En préparation", cls: "bg-[#EFF6FF] text-[#1D4ED8]" },
   generating: { label: "En préparation", cls: "bg-[#EFF6FF] text-[#1D4ED8]" },
   failed: { label: "Incident, contactez-nous", cls: "bg-badbg text-badtext" },
+  refunded: { label: "Plaque introuvable, remboursé", cls: "bg-warnbg text-warntext" },
 };
 
 export default async function MyReportsPage() {
@@ -77,7 +78,7 @@ export default async function MyReportsPage() {
                   <div className="flex items-center gap-4 min-w-0">
                     <span className="w-12 h-12 rounded-xl bg-ink flex items-center justify-center shrink-0"><CarIcon stroke="var(--accent)" size={24} /></span>
                     <div className="flex flex-col gap-1 min-w-0">
-                      <span className="font-bold truncate">{v.make} {v.model}{v.version ? ` ${v.version}` : ""}</span>
+                      <span className="font-bold truncate">{v.pending ? (v.plate ?? v.vin) : `${v.make} ${v.model}${v.version ? ` ${v.version}` : ""}`}</span>
                       <span className="text-[13px] text-muted flex flex-wrap gap-x-3">{v.plate && <span className="font-semibold tracking-wider text-fg">{v.plate}</span>}<span>{r.createdAt.toLocaleDateString("fr-FR")}</span>{r.mileage ? <span>{r.mileage.toLocaleString("fr-FR")} km</span> : null}</span>
                     </div>
                   </div>

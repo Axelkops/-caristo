@@ -40,3 +40,13 @@ export async function parseStripeEvent(rawBody: string, signature: string) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");
   return stripe.webhooks.constructEvent(rawBody, signature, process.env.STRIPE_WEBHOOK_SECRET ?? "");
 }
+
+/** Rembourse intégralement un paiement Stripe à partir de l'identifiant de la session de paiement. */
+export async function refundCheckout(sessionId: string): Promise<void> {
+  const Stripe = (await import("stripe")).default;
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  const pi = typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id;
+  if (!pi) throw new Error("Paiement introuvable pour le remboursement");
+  await stripe.refunds.create({ payment_intent: pi, reason: "requested_by_customer" });
+}

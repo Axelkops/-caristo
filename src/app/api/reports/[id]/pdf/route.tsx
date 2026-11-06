@@ -52,6 +52,7 @@ function Pdf({ r }: { r: ReportData }) {
           <Text style={{ fontSize: 9, color: "#AEB6C4" }}>{clean(r.scoreReasons.join(" "))}</Text>
         </View>
 
+        {r.warnings?.map((w) => <Text key={w} style={[s.warn, { marginTop: 8 }]}>Attention : {clean(w)}</Text>)}
         <Text style={s.h2}>Synthèse</Text>
         <View style={s.row}>
           <View style={s.cell}><Text style={s.label}>Kilométrage</Text><Text style={s.value}>{r.mileageCheck.consistent === false ? "Incohérent" : r.mileageCheck.consistent ? "Cohérent" : "Non vérifiable"}</Text></View>

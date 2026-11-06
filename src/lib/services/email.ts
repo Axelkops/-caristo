@@ -61,3 +61,24 @@ export async function sendLoginCodeEmail(args: { to: string; code: string }): Pr
   ].join("\n");
   return sendEmail({ to: args.to, subject: `${args.code} est votre code de connexion Caristo`, text });
 }
+
+export async function sendVehicleNotFoundEmail(args: { to: string; plate: string; refundKind: "card" | "credit" | "none" }): Promise<void> {
+  const how = args.refundKind === "card" ? "Votre paiement a été intégralement remboursé sur votre carte (délai bancaire : 5 à 10 jours)." : args.refundKind === "credit" ? "Le crédit utilisé a été rendu à votre pack : vous pouvez lancer un nouveau rapport depuis votre espace." : "Aucun montant n'a été débité.";
+  const text = [
+    `Bonjour,`,
+    ``,
+    `Aucun véhicule ne correspond à la plaque ${args.plate} : le rapport n'a pas pu être produit.`,
+    how,
+    ``,
+    `Vérifiez la plaque sur la carte grise (case A) et relancez un rapport sur ${siteUrl()}.`,
+    ``,
+    `Caristo · Édité par Digikom Group`,
+  ].join("\n");
+  await sendEmail({ to: args.to, subject: `Plaque ${args.plate} introuvable : vous êtes remboursé`, text });
+}
+
+/** Alerte interne (boîte de contact) quand une identification échoue pour une raison technique. */
+export async function sendAdminAlert(subject: string, text: string): Promise<void> {
+  const to = process.env.SMTP_USER ?? process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@rapportcaristo.com";
+  await sendEmail({ to, subject: `[Caristo] ${subject}`, text });
+}

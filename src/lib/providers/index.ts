@@ -38,6 +38,18 @@ export function isDemo(): boolean {
   return (process.env.DEMO_MODE ?? "true").toLowerCase() === "true";
 }
 
+/** L'identification chez le fournisseur (payante) n'a lieu qu'après le paiement, sauf si IDENTIFY_AFTER_PAYMENT=false. */
+export function identifyAfterPayment(): boolean {
+  return (process.env.IDENTIFY_AFTER_PAYMENT ?? "true").toLowerCase() !== "false";
+}
+
+/** Le fournisseur sait-il identifier une plaque de ce pays ? (le fournisseur de démonstration accepte tout) */
+export async function plateCountrySupported(country: string): Promise<boolean> {
+  if (isDemo() || (process.env.PLATE_PROVIDER ?? "mock") === "mock") return true;
+  const { SUPPORTED_COUNTRIES } = await import("./vehicle-apiplaque");
+  return SUPPORTED_COUNTRIES.has(country);
+}
+
 export async function getVehicleProvider(): Promise<VehicleProvider> {
   if (isDemo() || (process.env.PLATE_PROVIDER ?? "mock") === "mock") return (await import("./vehicle-mock")).mockVehicleProvider;
   return (await import("./vehicle-apiplaque")).apiPlaqueProvider;

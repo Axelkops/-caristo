@@ -7,7 +7,7 @@ export const SITE = {
   domain: "rapportcaristo.com",
   url: "https://rapportcaristo.com",
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@rapportcaristo.com",
-  legalUpdated: "5 novembre 2026",
+  legalUpdated: "6 novembre 2026",
 };
 
 export const COMPANY = {
