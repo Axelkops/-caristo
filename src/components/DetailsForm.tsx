@@ -117,7 +117,7 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
           <div data-testid="account-pack" className={`rounded-2xl border p-4 flex flex-wrap justify-between items-center gap-3 ${usePack ? "bg-okbg border-emerald-200" : "bg-ground border-line"}`}>
             <div className="flex flex-col gap-0.5">
               <span className="font-bold">{OFFERS[account.pack.offer as Offer]?.label ?? "Votre pack"} : {account.pack.remaining} rapport{account.pack.remaining > 1 ? "s" : ""} restant{account.pack.remaining > 1 ? "s" : ""}</span>
-              <span className="text-[13px] text-[#4B5563]">{usePack ? "Ce rapport utilisera un crédit, sans paiement." : "Vous avez choisi d'acheter un nouveau rapport à la place."} Valable jusqu&apos;au {new Date(account.pack.expiresAt).toLocaleDateString("fr-FR")}.</span>
+              <span className="text-[13px] text-[#4B5563]">{usePack ? "Ce rapport utilisera un crédit, sans paiement." : "Vous avez choisi d'acheter un nouveau rapport à la place."} Valable jusqu&apos;au {new Date(account.pack.expiresAt).toLocaleDateString("fr-FR", { timeZone: "Europe/Paris" })}.</span>
             </div>
             <button type="button" onClick={() => setBuyInstead(!buyInstead)} className="text-sm font-semibold text-navy bg-transparent border border-line rounded-lg px-3 py-2 cursor-pointer">{usePack ? "Acheter à la place" : "Utiliser mon pack"}</button>
           </div>

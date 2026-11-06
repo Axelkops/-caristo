@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ShareBox({ reportId, shareToken, reference }: { reportId: string; shareToken: string; reference: string }) {
   const [copied, setCopied] = useState(false);
-  const base = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL ?? "");
+  // l'adresse complète n'est connue que dans le navigateur : on l'ajoute après l'affichage, pour que serveur et navigateur affichent la même chose
+  const [base, setBase] = useState("");
+  useEffect(() => setBase(window.location.origin), []);
   const link = `${base}/r/${shareToken}`;
   async function copy() {
     try { await navigator.clipboard.writeText(link); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { window.prompt("Copiez le lien :", link); }

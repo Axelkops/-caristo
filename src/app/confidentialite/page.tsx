@@ -27,7 +27,7 @@ export default function Confidentialite() {
       <p>{COMPANY.name}, {COMPANY.formShort}, {COMPANY.rcs} n° {COMPANY.siren}, éditrice du service {SITE.name}. Contact pour toute question sur vos données : {mail}.</p>
 
       <h2 id="pc-2">2. Données traitées</h2>
-      <table>
+      <div className="overflow-x-auto -mx-1 px-1"><table className="min-w-[520px]">
         <thead><tr><th>Catégorie</th><th>Données</th><th>Origine</th></tr></thead>
         <tbody>
           <tr><td>Véhicule</td><td>Plaque d&apos;immatriculation ou VIN, kilométrage saisi, fiche technique obtenue</td><td>Vous, puis nos fournisseurs de données</td></tr>
@@ -37,11 +37,11 @@ export default function Confidentialite() {
           <tr><td>Rapport</td><td>Le contenu du rapport produit et son lien de partage</td><td>Produit par {SITE.name}</td></tr>
           <tr><td>Techniques</td><td>Adresse IP, type de navigateur, journaux de sécurité (limitation des abus)</td><td>Votre navigateur</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <p>Le nom du titulaire de la carte grise peut concerner une autre personne que vous (le vendeur). Vous ne devez le saisir que s&apos;il vous a été communiqué par cette personne ; il n&apos;est utilisé que pour la consultation de l&apos;historique officiel et n&apos;apparaît pas dans le rapport.</p>
 
       <h2 id="pc-3">3. Finalités et bases légales</h2>
-      <table>
+      <div className="overflow-x-auto -mx-1 px-1"><table className="min-w-[520px]">
         <thead><tr><th>Finalité</th><th>Base légale</th></tr></thead>
         <tbody>
           <tr><td>Identifier le véhicule, produire et livrer le rapport, gérer les packs et l&apos;espace « Mes rapports »</td><td>Exécution du contrat</td></tr>
@@ -50,7 +50,7 @@ export default function Confidentialite() {
           <tr><td>Sécuriser le service, limiter les tentatives d&apos;accès et les abus</td><td>Intérêt légitime</td></tr>
           <tr><td>Répondre aux demandes et réclamations</td><td>Exécution du contrat et intérêt légitime</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <p>Aucune décision produisant des effets juridiques à votre égard n&apos;est prise de manière entièrement automatisée. L&apos;indice de confiance et les mentions du rapport sont des indicateurs d&apos;information ; leur appréciation vous appartient. Nous n&apos;envoyons aucune communication commerciale sans votre accord préalable.</p>
 
       <h2 id="pc-4">4. Destinataires et sous-traitants</h2>
@@ -67,7 +67,7 @@ export default function Confidentialite() {
       <p>Le site et sa base de données sont hébergés en France. Certains prestataires (paiement, envoi d&apos;e-mails) peuvent traiter des données aux États-Unis ; ces transferts sont encadrés par le cadre de protection des données UE–États-Unis ou par les clauses contractuelles types de la Commission européenne.</p>
 
       <h2 id="pc-6">6. Durées de conservation</h2>
-      <table>
+      <div className="overflow-x-auto -mx-1 px-1"><table className="min-w-[520px]">
         <thead><tr><th>Données</th><th>Durée</th></tr></thead>
         <tbody>
           <tr><td>Rapport, lien de partage, kilométrage et fiche véhicule</td><td>12 mois après la production du rapport</td></tr>
@@ -79,7 +79,7 @@ export default function Confidentialite() {
           <tr><td>Journaux techniques</td><td>12 mois</td></tr>
           <tr><td>Données de facturation</td><td>10 ans (obligation comptable)</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2 id="pc-7">7. Vos droits</h2>
       <p>Vous disposez d&apos;un droit d&apos;accès, de rectification, d&apos;effacement, de limitation, de portabilité et d&apos;opposition, ainsi que du droit de définir des directives sur le sort de vos données après votre décès. Pour les exercer, écrivez à {mail} depuis l&apos;adresse e-mail utilisée pour vos commandes (ou joignez un justificatif). Nous répondons sous un mois. Vous pouvez aussi introduire une réclamation auprès de la CNIL (cnil.fr).</p>

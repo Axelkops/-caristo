@@ -220,7 +220,7 @@ function HeroExample() {
         <div className="flex flex-col gap-1"><span className="display text-[21px] font-bold">Peugeot 3008 1.5 BlueHDi</span><span className="text-[13px] text-muteddark">AB-123-CD · 2019 · 118 000 km · Diesel · Boîte auto</span></div>
         <div className="flex flex-col items-center gap-1"><span className="w-16 h-16 rounded-full border-[5px] border-emerald-500 flex items-center justify-center display text-[17px] font-bold text-emerald-400" style={{ boxShadow: "0 0 18px rgba(16,185,129,0.4)" }}>88 %</span><span className="text-[11px] font-semibold text-emerald-400">Risque faible</span></div>
       </div>
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 min-[400px]:grid-cols-4 gap-2">
         {[["Kilométrage", "Cohérent", "text-emerald-400"], ["Sinistres", "Aucun", "text-emerald-400"], ["Gage / vol", "Aucun", "text-emerald-400"], ["Origine", "Importée", "text-amber-300"]].map(([a, b, c]) => (
           <div key={a} className="bg-white/5 rounded-xl px-2 py-2.5 flex flex-col gap-1 items-center text-center"><span className="text-[10px] text-[#7C8798] uppercase tracking-wider">{a}</span><span className={`text-[13px] font-semibold ${c}`}>{b}</span></div>
         ))}
