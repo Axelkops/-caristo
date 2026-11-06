@@ -12,7 +12,7 @@ export default function Mentions() {
         <li><strong>Société</strong> : {COMPANY.name}, {COMPANY.form}</li>
         <li><strong>Immatriculation</strong> : {COMPANY.rcs} n° {COMPANY.siren}</li>
         <li><strong>N° de TVA intracommunautaire</strong> : {COMPANY.vat}</li>
-        <li><strong>Siège</strong> : {COMPANY.city} ; l&apos;adresse postale complète est communiquée sur simple demande par e-mail</li>
+        <li><strong>Siège social</strong> : {COMPANY.address}</li>
         <li><strong>Directeur de la publication</strong> : {COMPANY.manager}, gérant</li>
         <li><strong>Contact</strong> : <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a> (réponse sous 24 h ouvrées)</li>
       </ul>

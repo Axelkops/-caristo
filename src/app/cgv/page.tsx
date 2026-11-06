@@ -16,7 +16,7 @@ export default function CGV() {
   return (
     <LegalPage title="Conditions générales de vente et d'utilisation" updated={SITE.legalUpdated} intro={`Les présentes conditions régissent l'utilisation du site ${SITE.domain} et l'achat des rapports ${SITE.name}. En commandant un rapport, vous les acceptez sans réserve.`} toc={TOC}>
       <h2 id="cgv-1">1. Éditeur et champ d&apos;application</h2>
-      <p>Le service {SITE.name} est édité par {COMPANY.name}, {COMPANY.form}, {COMPANY.rcs} n° {COMPANY.siren} (ci-après « {SITE.name} » ou « nous »). Contact : {mail}. Les présentes conditions s&apos;appliquent à toute commande passée sur {SITE.domain}, par un consommateur ou un professionnel. Elles prévalent sur tout autre document.</p>
+      <p>Le service {SITE.name} est édité par {COMPANY.name}, {COMPANY.form}, {COMPANY.rcs} n° {COMPANY.siren}, siège social : {COMPANY.address} (ci-après « {SITE.name} » ou « nous »). Contact : {mail}. Les présentes conditions s&apos;appliquent à toute commande passée sur {SITE.domain}, par un consommateur ou un professionnel. Elles prévalent sur tout autre document.</p>
 
       <h2 id="cgv-2">2. Définitions</h2>
       <ul>

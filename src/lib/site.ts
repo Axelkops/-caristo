@@ -18,8 +18,8 @@ export const COMPANY = {
   siren: "932 297 526",
   vat: "FR22932297526",
   manager: "Axel Douillard",
-  /** Lieu du siège : ville seulement sur le site (adresse complète communiquée sur demande). */
   city: "Nivillac (Morbihan)",
+  address: "3 rue de Mésange, 56130 Nivillac",
 };
 
 export const HOST = {
