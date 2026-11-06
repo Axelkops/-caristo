@@ -57,6 +57,8 @@ export async function getVehicleProvider(): Promise<VehicleProvider> {
 
 export async function getHistoryProvider(): Promise<HistoryProvider> {
   if (isDemo()) return (await import("./history-mock")).mockHistoryProvider;
+  const p = (process.env.HISTORY_PROVIDER ?? "none").toLowerCase();
+  if (p === "histovec" || p === "auto") return (await import("./history-histovec")).histovecHistoryProvider;
   return (await import("./history-none")).noneHistoryProvider;
 }
 
