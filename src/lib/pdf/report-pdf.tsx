@@ -412,9 +412,9 @@ export function Pdf({ r }: { r: ReportData }) {
         <View style={{ flexDirection: "row", gap: 8, marginBottom: 10 }}>
           {r.maintenance.horizons.map((hz) => (
             <View key={hz.key} style={[s.tile, { backgroundColor: hz.key === "now" && hz.items.length ? TINT.warn : GROUND }]}>
-              <Text style={s.tileLabel}>{hz.key === "now" ? "Maintenant" : `Dans ${hz.key} mois · env. ${km(Math.round(hz.projectedKm / 1000) * 1000)}`}</Text>
+              <Text style={s.tileLabel}>{hz.key === "now" ? "Maintenant" : `Dans ${hz.key} mois`}</Text>
               <Text style={[s.tileValue, { color: hz.items.length ? NAVY : MUTED2 }]}>{hz.items.length ? `env. ${eur(approxCost(hz.costMin, hz.costMax))}` : "Rien de prévu"}</Text>
-              {hz.items.length > 0 && <Text style={{ fontSize: 7.5, color: MUTED, marginTop: 2 }}>{clean(hz.items.join(", "))}</Text>}
+              {hz.items.length > 0 && <Text style={{ fontSize: 7.5, color: MUTED, marginTop: 2 }}>{clean(hz.items.length === 1 ? hz.items[0] : `${hz.items.length} interventions : ${hz.items.slice(0, 2).map((x) => x.toLowerCase()).join(", ")}${hz.items.length > 2 ? "…" : ""}`)}</Text>}
             </View>
           ))}
         </View>
@@ -423,7 +423,10 @@ export function Pdf({ r }: { r: ReportData }) {
         {r.maintenance.items.map((m) => (
           <View key={m.label} style={s.tr} wrap={false}>
             <Text style={[s.td, { flex: 2, fontWeight: 600 }]}>{clean(m.label)}</Text>
-            <Text style={[s.td, { flex: 2, color: m.horizon === "now" ? WARN : TEXT, fontWeight: m.horizon === "now" ? 600 : 400 }]}>{m.horizon === "now" ? "Maintenant" : [m.dueKm ? km(m.dueKm) : "", m.dueDate ? fd(m.dueDate) : ""].filter(Boolean).join(", ") || "—"}</Text>
+            <View style={{ flex: 2, paddingHorizontal: 5 }}>
+              <Text style={{ fontSize: 8.8, fontWeight: 600, color: m.status === "todo" ? BAD : m.status === "check" ? WARN : TEXT }}>{clean(m.when ?? (m.horizon === "now" ? "Maintenant" : [m.dueKm ? km(m.dueKm) : "", m.dueDate ? fd(m.dueDate) : ""].filter(Boolean).join(", ") || "—"))}</Text>
+              {m.whenDetail && <Text style={{ fontSize: 7.5, color: MUTED }}>{clean(m.whenDetail)}</Text>}
+            </View>
             <Text style={[s.td, { width: 90, textAlign: "right" }]}>{approxCost(m.costMin, m.costMax) !== undefined ? `env. ${eur(approxCost(m.costMin, m.costMax))}` : "—"}</Text>
           </View>
         ))}

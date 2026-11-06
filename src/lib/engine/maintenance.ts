@@ -57,6 +57,33 @@ export function estimateAnnualKm(vehicle: Vehicle, mileage: number | undefined, 
   return 15000;
 }
 
+const MONTHS_FR = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+export function fmtMonthYear(iso: string): string {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso : `${MONTHS_FR[d.getMonth()]} ${d.getFullYear()}`;
+}
+function fmtMonths(m: number): string {
+  if (m < 1) return "moins d'un mois";
+  if (m < 23) return `${Math.round(m)} mois`;
+  const y = Math.round(m / 12);
+  return `${y} an${y > 1 ? "s" : ""}`;
+}
+
+/** Échéance en clair : ce qui arrive en premier (kilométrage ou date), puis la précision absolue. */
+export function describeWhen(a: { status: MaintenanceItem["status"]; beltDue?: boolean; dueKm?: number; dueDate?: string; kmToDue?: number; monthsToDate?: number; monthsByKm?: number; unknown: boolean }): { when: string; whenDetail?: string } {
+  if (a.beltDue) return { when: "Maintenant", whenDetail: "Sans facture, à faire dès l'achat" };
+  if (a.status === "todo") {
+    const over = a.kmToDue !== undefined && a.kmToDue < 0 ? `dépassée de ${fmtKm(-a.kmToDue)}` : a.monthsToDate !== undefined && a.monthsToDate < 0 ? `dépassée de ${fmtMonths(-a.monthsToDate)}` : undefined;
+    return { when: "Maintenant", whenDetail: over ? `Échéance ${over}` : "Échéance atteinte" };
+  }
+  const noInvoice = a.unknown ? " · sans facture, à confirmer" : "";
+  const byKm = a.kmToDue !== undefined && a.monthsByKm !== undefined && (a.monthsToDate === undefined || a.monthsByKm <= a.monthsToDate);
+  if (byKm && a.dueKm !== undefined) return { when: `Dans ${fmtKm(a.kmToDue!)}`, whenDetail: `Vers ${fmtKm(a.dueKm)}${a.dueDate ? `, au plus tard ${fmtMonthYear(a.dueDate)}` : ""}${noInvoice}` };
+  if (a.dueDate && a.monthsToDate !== undefined) return { when: `Dans ${fmtMonths(a.monthsToDate)}`, whenDetail: `${fmtMonthYear(a.dueDate).replace(/^./, (c) => c.toUpperCase())}${a.dueKm !== undefined ? `, ou vers ${fmtKm(a.dueKm)}` : ""}${noInvoice}` };
+  if (a.status === "check") return { when: "À vérifier", whenDetail: "Aucune facture : demander au vendeur si c'est fait" };
+  return { when: "À planifier" };
+}
+
 export function buildMaintenanceSchedule(input: MaintenanceInput): MaintenanceSchedule {
   const now = input.now ?? new Date();
   const { vehicle, history } = input;
@@ -115,7 +142,8 @@ export function buildMaintenanceSchedule(input: MaintenanceInput): MaintenanceSc
     else if (monthsLeft <= 36) { horizon = "36"; status = "ok"; }
     else { horizon = "later"; status = "later"; }
 
-    items.push({ label: rule.label, rule: rule.rule, lastDoneLabel: last?.label ?? (unknown ? "Inconnu" : undefined), dueKm, dueDate, horizon, status, costMin: rule.costMin, costMax: rule.costMax });
+    const { when, whenDetail } = describeWhen({ status, beltDue, dueKm, dueDate, kmToDue, monthsToDate, monthsByKm, unknown });
+    items.push({ label: rule.label, rule: rule.rule, lastDoneLabel: last?.label ?? (unknown ? "Inconnu" : undefined), dueKm, dueDate, when, whenDetail, horizon, status, costMin: rule.costMin, costMax: rule.costMax });
   }
 
   const horizons = (["now", "12", "24", "36"] as const).map((key) => {

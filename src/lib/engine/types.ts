@@ -111,6 +111,10 @@ export interface MaintenanceItem {
   lastDoneLabel?: string;
   dueKm?: number;
   dueDate?: string;
+  /** échéance en clair, relative au véhicule : « Dans 2 000 km », « Maintenant »… */
+  when?: string;
+  /** précision : « vers 120 000 km, au plus tard mars 2027 » */
+  whenDetail?: string;
   horizon: "now" | "12" | "24" | "36" | "later";
   status: "todo" | "check" | "ok" | "later";
   costMin?: number;

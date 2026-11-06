@@ -10,6 +10,8 @@ import { buildChecklist } from "@/lib/engine/checklist";
  * Un seul élément fort : le cadran de risque en tête. Le reste est calme et lisible.
  */
 
+/** Échéance en clair (rapports anciens : reconstruite depuis les champs bruts). */
+const whenOf = (m: ReportData["maintenance"]["items"][number]) => m.when ?? (m.horizon === "now" ? "Maintenant" : [m.dueKm ? fmtKm(m.dueKm) : "", m.dueDate ? fmtDateFr(m.dueDate) : ""].filter(Boolean).join(", ") || "—");
 const plural = (n: number, one: string, many?: string) => `${n} ${n > 1 ? (many ?? one + "s") : one}`;
 const euros = (n?: number) => (n === undefined ? "" : `${n.toLocaleString("fr-FR")} €`);
 const range = (a?: number, b?: number) => (a === undefined && b === undefined ? "" : a === b ? euros(a) : `${(a ?? 0).toLocaleString("fr-FR")} – ${(b ?? 0).toLocaleString("fr-FR")} €`);
@@ -231,11 +233,10 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
                       <div className="flex flex-col items-center gap-2">
                         <span className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "#070F1F", border: `2px solid ${C[tone]}`, boxShadow: `0 0 12px ${C[tone]}` }}><Led tone={tone} size={8} /></span>
                         <span className="text-[14px] font-bold">{hz.key === "now" ? "Maintenant" : `Dans ${hz.key} mois`}</span>
-                        {hz.key !== "now" && <span className="text-[12px] text-[#8E9AAF] -mt-1.5">≈ {fmtKm(Math.round(hz.projectedKm / 1000) * 1000)}</span>}
                       </div>
-                      <div className="rounded-2xl p-4 flex flex-col gap-2.5 flex-1" style={{ background: INSET.background, border: `1px solid ${EDGE[tone]}` }}>
+                      <div className="rounded-2xl p-4 flex flex-col gap-1.5 flex-1" style={{ background: INSET.background, border: `1px solid ${EDGE[tone]}` }}>
                         <span className="display text-[22px] font-bold" style={{ color: its.length ? "#E5E9F0" : C.ok }}>{its.length ? `≈ ${euros(approxCost(hz.costMin, hz.costMax))}` : hz.key === "now" ? "Rien d'urgent" : "Rien de prévu"}</span>
-                        {its.length > 0 && <ul className="m-0 p-0 list-none flex flex-col gap-1.5 text-[13px] text-[#C8D0DC]">{its.map((m) => <li key={m.label} className="flex items-center gap-2"><Led tone={m.status === "todo" ? "bad" : m.status === "check" ? "warn" : "ok"} size={7} />{m.label}</li>)}</ul>}
+                        {its.length > 0 && <span className="text-[13px] text-[#AEB6C4] leading-snug">{its.length === 1 ? its[0].label : `${its.length} interventions : ${its.slice(0, 2).map((m) => m.label.toLowerCase()).join(", ")}${its.length > 2 ? "…" : ""}`}</span>}
                       </div>
                     </div>
                   );
@@ -248,7 +249,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
                 <table className="w-full border-collapse text-[14px] min-w-[420px]">
                   <thead><tr className="text-left text-[#8E9AAF] text-[12px]">{["Intervention", "Quand", "Coût environ"].map((t) => <th key={t} className="px-3 py-2.5 border-b border-white/10 font-semibold">{t}</th>)}</tr></thead>
                   <tbody>{r.maintenance.items.map((m) => (
-                    <tr key={m.label}><td className="px-3 py-3 border-b border-white/5 font-semibold">{m.label}</td><td className="px-3 py-3 border-b border-white/5">{m.horizon === "now" ? "Maintenant" : [m.dueKm ? fmtKm(m.dueKm) : "", m.dueDate ? fmtDateFr(m.dueDate) : ""].filter(Boolean).join(", ") || "—"}</td><td className="px-3 py-3 border-b border-white/5 text-[#AEB6C4]">{approxCost(m.costMin, m.costMax) !== undefined ? `≈ ${euros(approxCost(m.costMin, m.costMax))}` : "—"}</td></tr>
+                    <tr key={m.label}><td className="px-3 py-3 border-b border-white/5 font-semibold">{m.label}</td><td className="px-3 py-3 border-b border-white/5"><span className="font-semibold" style={{ color: m.status === "todo" ? C.bad : m.status === "check" ? C.warn : "#E5E9F0" }}>{whenOf(m)}</span>{m.whenDetail && <span className="block text-[12px] text-[#8E9AAF]">{m.whenDetail}</span>}</td><td className="px-3 py-3 border-b border-white/5 text-[#AEB6C4]">{approxCost(m.costMin, m.costMax) !== undefined ? `≈ ${euros(approxCost(m.costMin, m.costMax))}` : "—"}</td></tr>
                   ))}</tbody>
                 </table>
               </div>
