@@ -9,8 +9,10 @@ import { siteUrl } from "./payments";
  * Sans configuration, l'e-mail est affiché dans les journaux. Retourne true si réellement envoyé.
  */
 export async function sendEmail(args: { to: string; subject: string; text: string }): Promise<boolean> {
-  const from = process.env.EMAIL_FROM ?? "Caristo <contact@rapportcaristo.com>";
+  let from = process.env.EMAIL_FROM ?? "Caristo <contact@rapportcaristo.com>";
   if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    // une boîte SMTP n'accepte d'envoyer que depuis sa propre adresse
+    from = `Caristo <${process.env.SMTP_USER}>`;
     const nodemailer = (await import("nodemailer")).default;
     const port = Number(process.env.SMTP_PORT ?? 465);
     const transport = nodemailer.createTransport({ host: process.env.SMTP_HOST, port, secure: port === 465, auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }, connectionTimeout: 10000 });
