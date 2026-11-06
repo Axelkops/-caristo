@@ -198,7 +198,7 @@ export const histovecHistoryProvider: HistoryProvider = {
         r = await callHistovec(payload);
       } catch (e) {
         const msg = e instanceof Error && e.name === "AbortError" ? "délai dépassé" : "service injoignable";
-        return unavailable(`Le service officiel (HistoVec) n'a pas répondu (${msg}). L'historique pourra être demandé au vendeur.`);
+        return unavailable(`Le service officiel n'a pas répondu (${msg}). L'historique pourra être demandé au vendeur.`);
       }
       if (r.status === 200 && r.json?.vehicule) {
         const h = mapResponse(r.json);
@@ -207,8 +207,8 @@ export const histovecHistoryProvider: HistoryProvider = {
       }
       if (r.status === 404) { notFound = true; continue; }
       if (r.status === 400) { notFound = true; continue; }
-      if (r.status === 403 || r.status === 429) return unavailable("Le service officiel (HistoVec) a refusé la consultation automatique. L'historique pourra être demandé au vendeur.");
-      return unavailable(`Le service officiel (HistoVec) a répondu avec une erreur (${r.status}). L'historique pourra être demandé au vendeur.`);
+      if (r.status === 403 || r.status === 429) return unavailable("Le service officiel n'a pas pu être consulté. L'historique pourra être demandé au vendeur.");
+      return unavailable(`Le service officiel a répondu avec une erreur (${r.status}). L'historique pourra être demandé au vendeur.`);
     }
     return unavailable(notFound
       ? "Le service officiel ne reconnaît pas la combinaison titulaire + immatriculation + numéro de formule saisie. Vérifiez qu'elle correspond exactement à la carte grise actuelle (nom du titulaire tel qu'inscrit en C.1, formule de la carte grise en cours)."

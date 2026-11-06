@@ -84,6 +84,10 @@ describe("points à vérifier : trois parties courtes, différentes selon le vé
     expect(c.total).toBe(c.sections.flatMap((s) => s.items).length);
     expect(c.essential).toBeGreaterThan(5);
   });
+  it("ne renvoie jamais vers un autre service d'historique", () => {
+    const c = buildChecklist({ vehicle: mk("diesel", "manuelle"), mileage: 120000, now, history: { available: false, inspections: [], mileageReadings: [], claims: [] } });
+    expect(JSON.stringify(c)).not.toMatch(/histovec/i);
+  });
   it("devine la technologie de boîte automatique", () => {
     expect(detectAutoGearbox(mk("essence", "automatique", 3, "2.0 TDI DSG7"))).toBe("double_embrayage");
     expect(detectAutoGearbox(mk("essence", "automatique", 3, "1.2 PureTech EAT8"))).toBe("convertisseur");

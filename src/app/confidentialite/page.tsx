@@ -57,7 +57,7 @@ export default function Confidentialite() {
       <ul>
         <li><strong>Hébergement</strong> : {HOST.name}, {HOST.note}.</li>
         <li><strong>Fournisseurs de données véhicule</strong> : ils reçoivent la plaque ou le VIN, uniquement pour identifier le véhicule.</li>
-        <li><strong>Historique officiel</strong> : le service public HistoVec (ministère de l&apos;Intérieur) reçoit la plaque et les informations de la carte grise, uniquement pour répondre à la consultation.</li>
+        <li><strong>Historique officiel</strong> : le service public d&apos;historique des véhicules du ministère de l&apos;Intérieur reçoit la plaque et les informations de la carte grise, uniquement pour répondre à la consultation.</li>
         <li><strong>Paiement</strong> : Stripe (données de paiement, traitées sous sa propre responsabilité).</li>
         <li><strong>E-mails</strong> : notre prestataire d&apos;envoi reçoit votre adresse et le contenu des e-mails du service.</li>
         <li><strong>Autorités</strong> : uniquement sur réquisition légale.</li>

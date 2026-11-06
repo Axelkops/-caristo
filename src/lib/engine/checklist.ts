@@ -107,7 +107,7 @@ export function buildChecklist(input: ChecklistInput): Checklist {
   if (age >= 4 || hist?.inspections.length) add(papers, "ct", "Contrôle technique de moins de 6 mois, procès-verbal lu en entier.", "essentiel", undefined, "Plus de 4 ans");
   else add(papers, "ct-jeune", "Moins de 4 ans : pas de contrôle technique, demander le dernier compte rendu d'atelier.", "conseille", undefined, "Véhicule récent");
   add(papers, "csa", "Certificat de situation administrative (non-gage) de moins de 15 jours.", "essentiel", "Gratuit sur le site de l'ANTS.");
-  if (hist && !hist.available) add(papers, "hist-abs", "Historique officiel non consulté : demander au vendeur son rapport HistoVec (gratuit).", "essentiel", undefined, "Historique officiel non disponible");
+  if (hist && !hist.available) add(papers, "hist-abs", "Historique officiel non consulté : procès-verbaux des derniers contrôles techniques et factures.", "essentiel", undefined, "Historique officiel non disponible");
   if (hist?.pledge) add(papers, "gage", "Gage inscrit : exiger la main-levée du créancier avant de payer.", "essentiel", undefined, "Gage signalé");
   if (hist?.opposition) add(papers, "oppo", "Opposition en cours : ne pas acheter tant qu'elle n'est pas levée.", "essentiel", undefined, "Opposition signalée");
   if (hist?.damagedProcedure) add(papers, "ve", "Procédure « véhicule endommagé » : rapport d'expertise et preuve de levée.", "essentiel", undefined, "Procédure VE");

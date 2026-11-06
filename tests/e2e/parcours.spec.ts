@@ -92,6 +92,7 @@ test("parcours complet : rapport, PDF, partage", async ({ page, request }) => {
   // contenu
   await expect(page.locator("#cote")).toContainText("Prix de l'annonce");
   await expect(page.locator("#cote")).toContainText(/19.900/);
+  expect(await page.locator("body").innerText()).not.toMatch(/histovec/i);
   for (const h of ["Vue d'ensemble", "Pannes connues du modèle", "Entretien à prévoir", "Historique officiel", "Rappels constructeur", "Cote estimée du véhicule", "À vérifier avant l'achat"]) {
     await expect(page.getByRole("heading", { name: h, exact: true })).toBeVisible();
   }
@@ -222,6 +223,14 @@ test("erreurs de saisie carte grise", async ({ page }) => {
   await page.getByLabel("Votre e-mail *").fill("pasunemail");
   await page.getByRole("button", { name: /Payer/ }).click();
   await expect(alert(page)).toContainText("e-mail invalide");
+});
+
+test("aucune page ne cite ni ne renvoie vers HistoVec", async ({ page }) => {
+  for (const path of ["/", "/cgv", "/confidentialite", "/mentions-legales", "/connexion", "/verification/manuel"]) {
+    await page.goto(path);
+    expect(await page.locator("body").innerText(), path).not.toMatch(/histovec/i);
+    expect(await page.locator('a[href*="histovec"]').count(), path).toBe(0);
+  }
 });
 
 test("pages légales et 404", async ({ page }) => {

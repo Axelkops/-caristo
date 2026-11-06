@@ -83,6 +83,7 @@ describe("HistoVec : lecture de la réponse", () => {
 describe("HistoVec : appel réseau", () => {
   afterEach(() => vi.unstubAllGlobals());
   const reply = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
+  const reply403 = async () => reply(403, {}); const reply404 = async () => reply(404, {}); const reply500 = async () => reply(500, {});
 
   it("renvoie l'historique quand le service répond", async () => {
     const fetchMock = vi.fn().mockResolvedValue(reply(200, sample));
@@ -108,13 +109,20 @@ describe("HistoVec : appel réseau", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(reply(403, {})));
     const h = await histovecHistoryProvider.fetchHistory(input);
     expect(h.available).toBe(false);
-    expect(h.reason).toContain("refusé");
+    expect(h.reason).toContain("pas pu être consulté");
   });
   it("explique une panne réseau", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("fetch failed")));
     const h = await histovecHistoryProvider.fetchHistory(input);
     expect(h.available).toBe(false);
     expect(h.reason).toContain("n'a pas répondu");
+  });
+  it("ne cite jamais le nom du service dans les messages destinés au client", async () => {
+    for (const reply of [() => reply403(), () => Promise.reject(new TypeError("fetch failed")), () => reply500(), () => reply404()]) {
+      vi.stubGlobal("fetch", vi.fn().mockImplementation(reply));
+      const h = await histovecHistoryProvider.fetchHistory(input);
+      expect(h.reason ?? "").not.toMatch(/histovec/i);
+    }
   });
   it("ne consulte pas pour un véhicule étranger", async () => {
     const fetchMock = vi.fn();
