@@ -115,6 +115,8 @@ export interface MaintenanceItem {
   when?: string;
   /** précision : « vers 120 000 km, au plus tard mars 2027 » */
   whenDetail?: string;
+  /** échéance estimée en mois (négatif = dépassée), sert au tri chronologique */
+  dueInMonths?: number;
   horizon: "now" | "12" | "24" | "36" | "later";
   status: "todo" | "check" | "ok" | "later";
   costMin?: number;

@@ -71,16 +71,16 @@ function fmtMonths(m: number): string {
 
 /** Échéance en clair : ce qui arrive en premier (kilométrage ou date), puis la précision absolue. */
 export function describeWhen(a: { status: MaintenanceItem["status"]; beltDue?: boolean; dueKm?: number; dueDate?: string; kmToDue?: number; monthsToDate?: number; monthsByKm?: number; unknown: boolean }): { when: string; whenDetail?: string } {
-  if (a.beltDue) return { when: "Maintenant", whenDetail: "Sans facture, à faire dès l'achat" };
+  if (a.beltDue) return { when: "Maintenant", whenDetail: "À faire dès l'achat si aucune preuve de remplacement" };
   if (a.status === "todo") {
     const over = a.kmToDue !== undefined && a.kmToDue < 0 ? `dépassée de ${fmtKm(-a.kmToDue)}` : a.monthsToDate !== undefined && a.monthsToDate < 0 ? `dépassée de ${fmtMonths(-a.monthsToDate)}` : undefined;
     return { when: "Maintenant", whenDetail: over ? `Échéance ${over}` : "Échéance atteinte" };
   }
-  const noInvoice = a.unknown ? " · sans facture, à confirmer" : "";
+  const noInvoice = a.unknown && a.status === "check" ? " · à confirmer avec votre garagiste" : "";
   const byKm = a.kmToDue !== undefined && a.monthsByKm !== undefined && (a.monthsToDate === undefined || a.monthsByKm <= a.monthsToDate);
   if (byKm && a.dueKm !== undefined) return { when: `Dans ${fmtKm(a.kmToDue!)}`, whenDetail: `Vers ${fmtKm(a.dueKm)}${a.dueDate ? `, au plus tard ${fmtMonthYear(a.dueDate)}` : ""}${noInvoice}` };
   if (a.dueDate && a.monthsToDate !== undefined) return { when: `Dans ${fmtMonths(a.monthsToDate)}`, whenDetail: `${fmtMonthYear(a.dueDate).replace(/^./, (c) => c.toUpperCase())}${a.dueKm !== undefined ? `, ou vers ${fmtKm(a.dueKm)}` : ""}${noInvoice}` };
-  if (a.status === "check") return { when: "À vérifier", whenDetail: "Aucune facture : demander au vendeur si c'est fait" };
+  if (a.status === "check") return { when: "À vérifier", whenDetail: "À confirmer avec votre garagiste" };
   return { when: "À planifier" };
 }
 
@@ -143,8 +143,11 @@ export function buildMaintenanceSchedule(input: MaintenanceInput): MaintenanceSc
     else { horizon = "later"; status = "later"; }
 
     const { when, whenDetail } = describeWhen({ status, beltDue, dueKm, dueDate, kmToDue, monthsToDate, monthsByKm, unknown });
-    items.push({ label: rule.label, rule: rule.rule, lastDoneLabel: last?.label ?? (unknown ? "Inconnu" : undefined), dueKm, dueDate, when, whenDetail, horizon, status, costMin: rule.costMin, costMax: rule.costMax });
+    items.push({ label: rule.label, rule: rule.rule, lastDoneLabel: last?.label ?? (unknown ? "Inconnu" : undefined), dueKm, dueDate, when, whenDetail, dueInMonths: beltDue ? -1 : Number.isFinite(monthsLeft) ? Math.round(monthsLeft * 10) / 10 : undefined, horizon, status, costMin: rule.costMin, costMax: rule.costMax });
   }
+
+  // du plus urgent au plus lointain
+  items.sort((a, b) => (a.dueInMonths ?? Infinity) - (b.dueInMonths ?? Infinity));
 
   const horizons = (["now", "12", "24", "36"] as const).map((key) => {
     const months = key === "now" ? 0 : Number(key);
@@ -162,7 +165,7 @@ export function buildMaintenanceSchedule(input: MaintenanceInput): MaintenanceSc
     annualKm,
     horizons,
     items,
-    note: "Coûts indicatifs en garage indépendant. L'usage réel peut décaler les échéances.",
+    note: "Coûts indicatifs en garage indépendant. Échéances calculées sur les intervalles constructeur et l'usage estimé : à confirmer avec votre garagiste.",
   };
 }
 

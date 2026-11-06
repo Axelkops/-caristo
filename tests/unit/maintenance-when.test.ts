@@ -11,8 +11,15 @@ describe("échéances d'entretien en clair", () => {
   it("décrit le retard et l'inconnu", () => {
     expect(describeWhen({ status: "todo", dueKm: 110000, kmToDue: -8000, unknown: false })).toEqual({ when: "Maintenant", whenDetail: "Échéance dépassée de 8 000 km" });
     expect(describeWhen({ status: "check", unknown: true }).when).toBe("À vérifier");
-    expect(describeWhen({ status: "check", dueKm: 120000, kmToDue: 2000, monthsByKm: 1.2, unknown: true })).toEqual({ when: "Dans 2 000 km", whenDetail: "Vers 120 000 km · sans facture, à confirmer" });
-    expect(describeWhen({ status: "todo", beltDue: true, unknown: true }).whenDetail).toContain("Sans facture");
+    expect(describeWhen({ status: "check", dueKm: 120000, kmToDue: 2000, monthsByKm: 1.2, unknown: true })).toEqual({ when: "Dans 2 000 km", whenDetail: "Vers 120 000 km · à confirmer avec votre garagiste" });
+    expect(describeWhen({ status: "todo", beltDue: true, unknown: true }).whenDetail).toContain("dès l'achat");
+  });
+  it("trie les interventions du plus urgent au plus lointain", async () => {
+    const { buildMaintenanceSchedule } = await import("@/lib/engine/maintenance");
+    const sched = buildMaintenanceSchedule({ vehicle: { make: "Test", model: "M", country: "FR", firstRegistration: "2019-03-12", fuel: "diesel", gearbox: "automatique", category: "voiture" }, mileage: 118000, history: { available: false, inspections: [], mileageReadings: [], claims: [] }, knownIssues: [], now: new Date("2026-11-06T12:00:00Z") });
+    const months = sched.items.map((i) => i.dueInMonths ?? Infinity);
+    for (let k = 1; k < months.length; k++) expect(months[k]).toBeGreaterThanOrEqual(months[k - 1]);
+    expect(sched.items.every((i) => !/sans facture/i.test(i.whenDetail ?? ""))).toBe(true);
   });
   it("formate les années", () => {
     expect(describeWhen({ status: "ok", dueDate: "2029-03-12", monthsToDate: 28, unknown: false }).when).toBe("Dans 2 ans");
