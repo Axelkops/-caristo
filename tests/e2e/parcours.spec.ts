@@ -89,10 +89,16 @@ test("parcours complet : rapport, PDF, partage", async ({ page, request }) => {
   await expect(page.getByText("Partager ce rapport")).toHaveCount(0);
 });
 
-test("sans carte grise : rapport produit, historique signalé indisponible", async ({ page }) => {
-  await goToReport(page, "CD-456-EF", { withCarteGrise: false });
-  await expect(page.locator("#historique")).toContainText("Informations de la carte grise manquantes");
-  await expect(page.getByRole("heading", { name: "Pannes connues du modèle", exact: true })).toBeVisible();
+test("sans carte grise : impossible de payer pour un véhicule français", async ({ page }) => {
+  await page.goto("/");
+  await page.getByLabel("Plaque d'immatriculation").fill("CD-456-EF");
+  await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
+  await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
+  await page.getByLabel("Kilométrage actuel *").fill("80000");
+  await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
+  await page.getByRole("button", { name: /Payer/ }).click();
+  await expect(alert(page)).toContainText("carte grise");
+  await expect(page).toHaveURL(/\/verification\//);
 });
 
 async function login(page: Page, email: string) {
@@ -150,6 +156,9 @@ test("pack 3 : crédits utilisés automatiquement depuis le compte, puis épuis�
     await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
     await expect(page.getByTestId("account-pack")).toContainText("restant");
     await page.getByLabel("Kilométrage actuel *").fill("80000");
+    await page.getByLabel("Numéro de formule").fill("2021AB12345");
+    await page.getByLabel("Nom du titulaire").fill("Dupont Jean");
+    await page.getByLabel("Date de 1re immatriculation").fill("12/03/2019");
     await page.getByRole("button", { name: /Utiliser un crédit/ }).click();
     await expect(page).toHaveURL(/\/rapport\//, { timeout: 15000 });
     await expect(page.getByRole("heading", { name: "Vue d'ensemble" })).toBeVisible({ timeout: 30000 });
@@ -175,14 +184,16 @@ test("erreurs de saisie carte grise", async ({ page }) => {
   await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
   await page.getByLabel("Kilométrage actuel *").fill("118000");
   await page.getByLabel("Numéro de formule").fill("1234");
+  await page.getByLabel("Nom du titulaire").fill("Dupont Jean");
+  await page.getByLabel("Date de 1re immatriculation").fill("12/03/2019");
   await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
   await page.getByRole("button", { name: /Payer/ }).click();
   await expect(alert(page)).toContainText("Numéro de formule invalide");
-  await page.getByLabel("Numéro de formule").fill("");
+  await page.getByLabel("Numéro de formule").fill("2021AB12345");
   await page.getByLabel("Date de 1re immatriculation").fill("31/02/2019");
   await page.getByRole("button", { name: /Payer/ }).click();
   await expect(alert(page)).toContainText("Date de première immatriculation invalide");
-  await page.getByLabel("Date de 1re immatriculation").fill("");
+  await page.getByLabel("Date de 1re immatriculation").fill("12/03/2019");
   await page.getByLabel("Votre e-mail *").fill("pasunemail");
   await page.getByRole("button", { name: /Payer/ }).click();
   await expect(alert(page)).toContainText("e-mail invalide");
@@ -220,6 +231,9 @@ test("saisie manuelle du véhicule → rapport complet", async ({ page }) => {
   await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
   await expect(page.getByText("Peugeot 308 1.2 PureTech 130")).toBeVisible();
   await page.getByLabel("Kilométrage actuel *").fill("95000");
+  await page.getByLabel("Numéro de formule").fill("2019AB12345");
+  await page.getByLabel("Nom du titulaire").fill("Dupont Jean");
+  await page.getByLabel("Date de 1re immatriculation").fill("15/06/2019");
   await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
   await page.getByRole("button", { name: /Payer/ }).click();
   await page.getByRole("button", { name: "Payer (simulation)" }).click();

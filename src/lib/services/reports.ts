@@ -81,14 +81,16 @@ export async function saveDetails(reportId: string, d: DetailsInput, accountEmai
   const update: Partial<typeof schema.reports.$inferInsert> = { mileage, email, offer: d.offer, updatedAt: new Date() };
   const v = r.vehicle as Vehicle;
   if (v.country === "FR") {
-    const formula = d.formulaNumber ? parseFormulaNumber(d.formulaNumber) : null;
-    const date = d.firstRegDate ? parseDate(d.firstRegDate) : null;
     const holder = (d.holderName ?? "").trim();
-    if (d.formulaNumber && !formula) throw new UserError("Numéro de formule invalide : il commence par l’année (4 chiffres), puis 2 lettres et des chiffres (ex. 2021AB12345).");
-    if (d.firstRegDate && !date) throw new UserError("Date de première immatriculation invalide (JJ/MM/AAAA).");
-    update.formulaNumber = formula ?? null;
-    update.firstRegDate = date ?? null;
-    update.holderName = holder || null;
+    if (!d.formulaNumber?.trim() || !holder || !d.firstRegDate?.trim()) throw new UserError("Les trois informations de la carte grise sont nécessaires pour produire le rapport.");
+    const formula = parseFormulaNumber(d.formulaNumber);
+    const date = parseDate(d.firstRegDate);
+    if (!formula) throw new UserError("Numéro de formule invalide : il commence par l’année (4 chiffres), puis 2 lettres et des chiffres (ex. 2021AB12345).");
+    if (!date) throw new UserError("Date de première immatriculation invalide (JJ/MM/AAAA).");
+    if (holder.length < 2) throw new UserError("Indiquez le nom du titulaire tel qu'il figure sur la carte grise (case C.1).");
+    update.formulaNumber = formula;
+    update.firstRegDate = date;
+    update.holderName = holder;
   }
   if (d.listingUrl) {
     const u = d.listingUrl.trim();

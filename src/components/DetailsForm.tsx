@@ -36,6 +36,7 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
     e.preventDefault();
     setError(null);
     if (!form.mileage.trim()) return setError("Indiquez le kilométrage actuel.");
+    if (isFr && (!form.formulaNumber.trim() || !form.holderName.trim() || !form.firstRegDate.trim())) return setError("Les trois informations de la carte grise sont nécessaires pour produire le rapport.");
     if (!form.email.trim()) return setError("Indiquez votre e-mail : le rapport vous y sera envoyé.");
     setLoading(true);
     try {
@@ -71,26 +72,26 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
       {isFr ? (
         <fieldset className="border-0 p-0 m-0 flex flex-col gap-4">
           <legend className="display text-xl font-bold mb-1">La carte grise</legend>
-          <p className="m-0 text-sm text-[#4B5563]">Trois informations de la carte grise ouvrent l&apos;historique officiel (contrôles techniques, kilométrages, sinistres, situation administrative). Acheteur : demandez une photo de la carte grise au vendeur. Le schéma montre où les trouver.</p>
+          <p className="m-0 text-sm text-[#4B5563]">Trois informations de la carte grise sont nécessaires pour l&apos;historique officiel (contrôles techniques, kilométrages, sinistres, situation administrative). Acheteur : demandez une photo de la carte grise au vendeur. Le schéma montre où les trouver.</p>
           <CarteGriseGuide />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="formulaNumber" className={labelCls}>Numéro de formule</label>
+              <label htmlFor="formulaNumber" className={labelCls}>Numéro de formule *</label>
               <input id="formulaNumber" placeholder="2021AB12345" autoCapitalize="characters" value={form.formulaNumber} onChange={set("formulaNumber")} className={`${fieldCls} uppercase`} />
               <span className={help}>Repère 1 : en gras sous le titre, 11 caractères (année + 2 lettres + 5 chiffres).</span>
             </div>
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="holderName" className={labelCls}>Nom du titulaire</label>
+              <label htmlFor="holderName" className={labelCls}>Nom du titulaire *</label>
               <input id="holderName" placeholder="DUPONT MARIE" autoComplete="off" value={form.holderName} onChange={set("holderName")} className={fieldCls} />
               <span className={help}>Repère 2 : case C.1, tel qu&apos;écrit sur la carte grise.</span>
             </div>
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="firstRegDate" className={labelCls}>Date de 1re immatriculation</label>
+              <label htmlFor="firstRegDate" className={labelCls}>Date de 1re immatriculation *</label>
               <input id="firstRegDate" placeholder="27/02/2020" inputMode="numeric" value={form.firstRegDate} onChange={set("firstRegDate")} className={fieldCls} />
               <span className={help}>Repère 3 : case B, sous la plaque d&apos;immatriculation.</span>
             </div>
           </div>
-          <p className="m-0 text-xs text-muted">Sans ces informations, le rapport est produit avec tout le reste et indique clairement les sections non renseignées.</p>
+          <p className="m-0 text-xs text-muted">Ces trois informations sont nécessaires pour produire le rapport. Elles ne servent qu&apos;à la consultation de l&apos;historique et sont effacées 30 jours après.</p>
         </fieldset>
       ) : (
         <div className="bg-warnbg border border-[#FDD9A8] rounded-xl px-4 py-3 text-sm text-warntext">Véhicule immatriculé hors de France : le rapport contiendra la fiche technique, les pannes connues, la cote et l&apos;échéancier. L&apos;historique officiel (contrôles techniques, sinistres, gage) n&apos;est disponible que pour les véhicules immatriculés en France.</div>
