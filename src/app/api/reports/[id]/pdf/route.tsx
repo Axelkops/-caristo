@@ -114,6 +114,6 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
     if (!r || r.status !== "ready" || !r.report) throw new UserError("Rapport introuvable ou non finalisé.", 404);
     const report = r.report as ReportData;
     const buf = await renderToBuffer(<Pdf r={report} />);
-    return new NextResponse(new Uint8Array(buf), { headers: { "Content-Type": "application/pdf", "Content-Disposition": `attachment; filename="caristo-${report.reference}.pdf"`, "Cache-Control": "private, no-store" } });
+    return new NextResponse(new Uint8Array(buf), { headers: { "Content-Type": "application/pdf", "Content-Disposition": `inline; filename="caristo-${report.reference}.pdf"`, "Cache-Control": "private, no-store" } });
   } catch (e) { return handleError(e); }
 }

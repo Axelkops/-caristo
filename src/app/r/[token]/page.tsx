@@ -13,5 +13,5 @@ export default async function SharedReport({ params }: { params: Promise<{ token
   if (!r || r.status !== "ready" || !r.report) notFound();
   const expired = r.readyAt && Date.now() - new Date(r.readyAt).getTime() > 365 * 86400000;
   if (expired) notFound();
-  return <ReportView report={r.report as ReportData} reportId={r.id} readonly />;
+  return <ReportView report={r.report as ReportData} reportId="" readonly />;
 }

@@ -109,7 +109,10 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
         <div className="max-w-[1200px] mx-auto flex flex-col gap-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-center">
             <div className="flex flex-col gap-5 min-w-0">
-              <span className="text-[13px] text-[#8E9AAF]">Rapport {r.reference}, établi le {issued.toLocaleDateString("fr-FR")}</span>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="text-[13px] text-[#8E9AAF]">Rapport {r.reference}, établi le {issued.toLocaleDateString("fr-FR")}</span>
+                {!readonly && <a href={`/api/reports/${reportId}/pdf`} target="_blank" rel="noopener" data-testid="pdf-top" className="no-print inline-flex items-center gap-2 bg-accent text-white px-4 py-2.5 rounded-[10px] text-sm font-semibold no-underline led"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>Télécharger le PDF</a>}
+              </div>
               <div className="flex flex-col gap-2">
                 <h1 className="m-0 text-[36px] sm:text-[52px] leading-[1.02] font-bold">{v.make} {v.model}</h1>
                 {v.version && <span className="text-[17px] text-[#AEB6C4]">{v.version}</span>}
