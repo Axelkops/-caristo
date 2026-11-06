@@ -27,6 +27,8 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
     packCode: "",
   });
   const [buyInstead, setBuyInstead] = useState(false);
+  const [showCg, setShowCg] = useState(false);
+  const [showPrice, setShowPrice] = useState(false);
   const usePack = !!account?.pack && !buyInstead;
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -60,52 +62,69 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
 
   return (
     <form onSubmit={submit} className="flex flex-col gap-7" noValidate>
-      <fieldset className="border-0 p-0 m-0 flex flex-col gap-4">
-        <legend className="display text-xl font-bold mb-1">Le véhicule</legend>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="mileage" className={labelCls}>Kilométrage actuel *</label>
-            <input id="mileage" inputMode="numeric" placeholder="118 000" value={form.mileage} onChange={set("mileage")} className={fieldCls} required />
-            <span className={help}>Celui du compteur, ou celui de l&apos;annonce si vous êtes acheteur.</span>
+      <div className="flex flex-col gap-1">
+        <h2 className="m-0 text-[22px] font-bold">Lancer le rapport</h2>
+        <p className="m-0 text-sm text-muted">Deux informations suffisent. Le reste est facultatif.</p>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="mileage" className={labelCls}>Kilométrage actuel *</label>
+        <input id="mileage" inputMode="numeric" placeholder="118 000" value={form.mileage} onChange={set("mileage")} className={fieldCls} required />
+        <span className={help}>Celui du compteur, ou celui de l&apos;annonce si vous êtes acheteur.</span>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        {isFr ? (
+          <div className={`rounded-2xl border ${showCg ? "border-navy/30 bg-ground" : "border-line bg-white"}`}>
+            <button type="button" aria-expanded={showCg} onClick={() => setShowCg(!showCg)} className="w-full text-left px-4 py-3.5 flex items-center justify-between gap-3 bg-transparent border-0 cursor-pointer">
+              <span className="flex flex-col gap-0.5"><span className="font-semibold text-[15px]">Ajouter la carte grise <span className="text-[11px] font-semibold uppercase tracking-wider text-[#1D4ED8] ml-1">Recommandé</span></span><span className="text-[13px] text-muted">Inclut l&apos;historique officiel : contrôles techniques, kilométrages, sinistres, gage, vol.</span></span>
+              <span aria-hidden="true" className={`text-xl text-navy transition-transform ${showCg ? "rotate-45" : ""}`}>+</span>
+            </button>
+            {showCg && (
+              <div className="px-4 pb-4 flex flex-col gap-4">
+                <p className="m-0 text-[13px] text-[#4B5563]">Acheteur : demandez une photo de la carte grise au vendeur. Vous pourrez aussi l&apos;ajouter plus tard depuis le rapport, sans repayer.</p>
+                <CarteGriseGuide />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="flex flex-col gap-1.5">
+                    <label htmlFor="formulaNumber" className={labelCls}>Numéro de formule</label>
+                    <input id="formulaNumber" placeholder="2021AB12345" autoCapitalize="characters" value={form.formulaNumber} onChange={set("formulaNumber")} className={`${fieldCls} uppercase`} />
+                    <span className={help}>Repère 1 : 11 caractères.</span>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label htmlFor="holderName" className={labelCls}>Nom du titulaire</label>
+                    <input id="holderName" placeholder="DUPONT MARIE" autoComplete="off" value={form.holderName} onChange={set("holderName")} className={fieldCls} />
+                    <span className={help}>Repère 2 : case C.1.</span>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label htmlFor="firstRegDate" className={labelCls}>Date de 1re immatriculation</label>
+                    <input id="firstRegDate" placeholder="27/02/2020" inputMode="numeric" value={form.firstRegDate} onChange={set("firstRegDate")} className={fieldCls} />
+                    <span className={help}>Repère 3 : case B.</span>
+                  </div>
+                </div>
+                <p className="m-0 text-xs text-muted">Ces informations ne servent qu&apos;à la consultation de l&apos;historique officiel et sont effacées 30 jours après.</p>
+              </div>
+            )}
           </div>
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="listingPrice" className={labelCls}>Prix de l&apos;annonce <span className="font-medium text-muted">(facultatif)</span></label>
-            <div className="relative"><input id="listingPrice" inputMode="numeric" placeholder="13 200" value={form.listingPrice} onChange={set("listingPrice")} className={`${fieldCls} pr-9`} /><span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted text-sm">€</span></div>
-            <span className={help}>Le rapport dit s&apos;il est dans la cote, au-dessus ou en dessous.</span>
-          </div>
+        ) : (
+          <div className="bg-warnbg border border-[#FDD9A8] rounded-xl px-4 py-3 text-sm text-warntext">Véhicule immatriculé hors de France : l&apos;historique officiel (contrôles techniques, sinistres, gage) n&apos;est pas disponible. Le rapport contient tout le reste.</div>
+        )}
+
+        <div className={`rounded-2xl border ${showPrice ? "border-navy/30 bg-ground" : "border-line bg-white"}`}>
+          <button type="button" aria-expanded={showPrice} onClick={() => setShowPrice(!showPrice)} className="w-full text-left px-4 py-3.5 flex items-center justify-between gap-3 bg-transparent border-0 cursor-pointer">
+            <span className="flex flex-col gap-0.5"><span className="font-semibold text-[15px]">Ajouter le prix de l&apos;annonce</span><span className="text-[13px] text-muted">Le rapport dit s&apos;il est dans la cote, au-dessus ou en dessous.</span></span>
+            <span aria-hidden="true" className={`text-xl text-navy transition-transform ${showPrice ? "rotate-45" : ""}`}>+</span>
+          </button>
+          {showPrice && (
+            <div className="px-4 pb-4 flex flex-col gap-1.5 max-w-[260px]">
+              <label htmlFor="listingPrice" className={labelCls}>Prix de l&apos;annonce</label>
+              <div className="relative"><input id="listingPrice" inputMode="numeric" placeholder="13 200" value={form.listingPrice} onChange={set("listingPrice")} className={`${fieldCls} pr-9`} /><span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted text-sm">€</span></div>
+            </div>
+          )}
         </div>
-      </fieldset>
-
-      {isFr ? (
-        <fieldset className="border-0 p-0 m-0 flex flex-col gap-4">
-          <legend className="display text-xl font-bold mb-1">La carte grise <span className="text-sm font-medium text-muted">(facultatif, recommandé)</span></legend>
-          <p className="m-0 text-sm text-[#4B5563]">Avec ces trois informations, le rapport inclut l&apos;historique officiel : contrôles techniques, kilométrages relevés, sinistres, gage et vol. Sans elles, vous avez tout le reste, et vous pourrez les ajouter plus tard depuis le rapport, sans repayer. Acheteur : demandez une photo de la carte grise au vendeur. Le schéma montre où les trouver.</p>
-          <CarteGriseGuide />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="formulaNumber" className={labelCls}>Numéro de formule</label>
-              <input id="formulaNumber" placeholder="2021AB12345" autoCapitalize="characters" value={form.formulaNumber} onChange={set("formulaNumber")} className={`${fieldCls} uppercase`} />
-              <span className={help}>Repère 1 : en gras sous le titre, 11 caractères (année + 2 lettres + 5 chiffres).</span>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="holderName" className={labelCls}>Nom du titulaire</label>
-              <input id="holderName" placeholder="DUPONT MARIE" autoComplete="off" value={form.holderName} onChange={set("holderName")} className={fieldCls} />
-              <span className={help}>Repère 2 : case C.1, tel qu&apos;écrit sur la carte grise.</span>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="firstRegDate" className={labelCls}>Date de 1re immatriculation</label>
-              <input id="firstRegDate" placeholder="27/02/2020" inputMode="numeric" value={form.firstRegDate} onChange={set("firstRegDate")} className={fieldCls} />
-              <span className={help}>Repère 3 : case B, sous la plaque d&apos;immatriculation.</span>
-            </div>
-          </div>
-          <p className="m-0 text-xs text-muted">Ces informations ne servent qu&apos;à la consultation de l&apos;historique officiel et sont effacées 30 jours après.</p>
-        </fieldset>
-      ) : (
-        <div className="bg-warnbg border border-[#FDD9A8] rounded-xl px-4 py-3 text-sm text-warntext">Véhicule immatriculé hors de France : le rapport contiendra la fiche technique, les pannes connues, la cote et l&apos;échéancier. L&apos;historique officiel (contrôles techniques, sinistres, gage) n&apos;est disponible que pour les véhicules immatriculés en France.</div>
-      )}
+      </div>
 
       <fieldset className="border-0 p-0 m-0 flex flex-col gap-4">
-        <legend className="display text-xl font-bold mb-1">Votre rapport</legend>
+        <legend className="sr-only">Votre rapport</legend>
         {account ? (
           <div className="flex flex-col gap-1.5 max-w-md">
             <span className={labelCls}>Votre e-mail</span>
@@ -131,7 +150,7 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
         )}
 
         {!usePack && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3" role="radiogroup" aria-label="Offre">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label="Offre">
             {(Object.keys(OFFERS) as Offer[]).map((k) => {
               const o = OFFERS[k];
               const active = form.offer === k;
@@ -150,12 +169,12 @@ export function DetailsForm({ reportId, vehicle, defaults, account }: { reportId
 
       {error && <p role="alert" className="m-0 bg-badbg text-badtext rounded-xl px-4 py-3 text-sm">{error}</p>}
 
-      <div className="flex flex-wrap items-center gap-4">
-        <button type="submit" disabled={loading} className="h-14 px-7 rounded-xl bg-accent text-ink font-semibold text-[15px] led disabled:opacity-70 inline-flex items-center gap-2.5">
+      <div className="flex flex-col gap-3">
+        <button type="submit" disabled={loading} className="h-14 px-7 w-full rounded-xl bg-accent text-ink font-semibold text-[16px] led disabled:opacity-70 inline-flex items-center justify-center gap-2.5">
           {loading && <span className="spinner" aria-hidden="true" />}
           {usePack ? "Utiliser un crédit et lancer le rapport" : `Payer ${formatEuros(OFFERS[form.offer].priceCents)} et lancer le rapport`}
         </button>
-        <span className="text-xs text-muted max-w-[46ch]">Paiement sécurisé. Le rapport est produit pour la plaque saisie : remboursé si aucun véhicule n&apos;y correspond. En validant, vous acceptez les <Link href="/cgv" className="text-navy">conditions générales</Link> et demandez la production immédiate du rapport.</span>
+        <span className="text-xs text-muted text-center">Paiement sécurisé. Le rapport est produit pour la plaque saisie : remboursé si aucun véhicule n&apos;y correspond. En validant, vous acceptez les <Link href="/cgv" className="text-navy">conditions générales</Link> et demandez la production immédiate du rapport.</span>
       </div>
     </form>
   );
