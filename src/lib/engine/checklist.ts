@@ -24,8 +24,8 @@ export interface ChecklistItem {
 export type ChecklistParty = "vendeur" | "acheteur";
 
 export const PARTY_LABEL: Record<ChecklistParty, { title: string; sub: string }> = {
-  vendeur: { title: "Côté vendeur", sub: "Ce que le vendeur doit fournir ou expliquer." },
-  acheteur: { title: "Côté acheteur", sub: "Ce que vous contrôlez vous-même, sur place et à l'essai." },
+  vendeur: { title: "Côté vendeur", sub: "Ce que le vendeur doit fournir, en règle, avant de payer." },
+  acheteur: { title: "Côté acheteur", sub: "Ce que vous lui demandez, puis ce que vous contrôlez vous-même." },
 };
 
 export interface ChecklistSection {
@@ -97,7 +97,7 @@ export function buildChecklist(input: ChecklistInput): Checklist {
   if (isAwd(v)) profile.push("4 roues motrices");
 
   const papers: ChecklistSection = { id: "papiers", party: "vendeur", title: "Papiers à fournir", sub: "À avoir en règle avant de payer.", items: [] };
-  const seller: ChecklistSection = { id: "vendeur", party: "vendeur", title: "À lui demander", sub: "Les questions et documents qui révèlent l'entretien réel.", items: [] };
+  const seller: ChecklistSection = { id: "vendeur", party: "acheteur", title: "À demander au vendeur", sub: "Les questions et documents qui révèlent l'entretien réel.", items: [] };
   const buyer: ChecklistSection = { id: "acheteur", party: "acheteur", title: "À vérifier vous-même", sub: "Sur place, puis à l'essai (20 minutes, moteur froid au départ).", items: [] };
   const add = (sec: ChecklistSection, id: string, text: string, priority: ChecklistPriority, how?: string, because?: string) => sec.items.push({ id, text, how, priority, because });
 

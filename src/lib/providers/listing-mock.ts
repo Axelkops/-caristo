@@ -9,7 +9,7 @@ export const mockListingProvider: ListingProvider = {
     const asking = Math.round((val.high + 500) / 50) * 50;
     const declared = mileage ?? 100000;
     const claims: ListingAnalysis["claims"] = [
-      { text: `Prix demandé : ${asking.toLocaleString("fr-FR")} €`, status: asking > val.high ? "warning" : "ok", detail: asking > val.high ? `Le prix est ${(asking - val.high).toLocaleString("fr-FR")} € au-dessus de la cote estimée : demander ce qui le justifie.` : undefined },
+      { text: `Prix de l'annonce : ${asking.toLocaleString("fr-FR")} €`, status: asking > val.high ? "warning" : "ok", detail: asking > val.high ? `Le prix est ${(asking - val.high).toLocaleString("fr-FR")} € au-dessus de la cote estimée : demander ce qui le justifie.` : undefined },
       { text: `Kilométrage annoncé : ${declared.toLocaleString("fr-FR")} km`, status: "ok" },
       { text: "« Jamais accidentée »", status: "ok", detail: "Aucun sinistre expertisé dans l'historique officiel." },
     ];

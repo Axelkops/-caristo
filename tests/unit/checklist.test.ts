@@ -78,6 +78,8 @@ describe("points à vérifier : trois parties courtes, différentes selon le vé
     expect(by("acheteur")).toContain("issue-x");
     expect(by("acheteur")).not.toContain("issue-y");
     expect(by("vendeur").some((i) => i.startsWith("recall-"))).toBe(true);
+    expect(c.sections.find((s) => s.id === "vendeur")!.party).toBe("acheteur");
+    expect(c.sections.find((s) => s.id === "papiers")!.party).toBe("vendeur");
     expect(by("papiers")).toContain("gage");
     expect(c.total).toBe(c.sections.flatMap((s) => s.items).length);
     expect(c.essential).toBeGreaterThan(5);

@@ -30,7 +30,7 @@ function firstNumber(t: string, re: RegExp, min: number, max: number): number | 
 export function buildClaims(ex: { price?: number; mileage?: number; flags: string[] }, vehicle: Vehicle, mileage?: number): ListingAnalysis["claims"] {
   const claims: ListingAnalysis["claims"] = [];
   const val = estimateValuation(vehicle, mileage ?? ex.mileage, ex.price);
-  if (ex.price) claims.push({ text: `Prix demandé : ${ex.price.toLocaleString("fr-FR")} €`, status: val.verdict === "au_dessus" ? "warning" : "ok", detail: val.verdict === "au_dessus" ? `Le prix est ${(val.deltaToHigh ?? 0).toLocaleString("fr-FR")} € au-dessus de la cote estimée : demander ce qui le justifie.` : undefined });
+  if (ex.price) claims.push({ text: `Prix de l'annonce : ${ex.price.toLocaleString("fr-FR")} €`, status: val.verdict === "au_dessus" ? "warning" : "ok", detail: val.verdict === "au_dessus" ? `Le prix est ${(val.deltaToHigh ?? 0).toLocaleString("fr-FR")} € au-dessus de la cote estimée : demander ce qui le justifie.` : undefined });
   else claims.push({ text: "Prix non trouvé dans l'annonce", status: "missing" });
   if (ex.mileage) {
     const diff = mileage ? Math.abs(ex.mileage - mileage) : 0;

@@ -102,10 +102,10 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
     { label: "Sinistres", value: !h.available ? "Non vérifié" : h.claims.length || h.damagedProcedure ? plural(h.claims.length || 1, "enregistré") : "Aucun enregistré", tone: !h.available ? "neutral" : h.claims.length || h.damagedProcedure ? "warn" : "ok" },
     { label: "Pannes connues", value: inZoneHigh.length ? `${inZoneHigh.length} à vérifier en priorité` : inZone.length ? `${plural(inZone.length, "point")} à contrôler` : "Rien de notable", tone: inZoneHigh.length ? "bad" : inZone.length ? "warn" : "ok" },
     { label: "Origine", value: v.imported ? "Importé" : v.country === "FR" ? "France depuis l'origine" : `Immatriculé : ${v.country}`, tone: v.imported ? "warn" : "ok", sub: v.imported && v.firstRegistrationInCountry ? `En France depuis ${fmtDateFr(v.firstRegistrationInCountry)}` : undefined },
-    { label: "Prix et cote", value: r.valuation?.verdict === "au_dessus" ? `${euros(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Annonce : ${euros(r.valuation.askingPrice)}` : "Cote estimée" },
+    { label: "Cote estimée", value: r.valuation?.verdict === "au_dessus" ? `${euros(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Annonce : ${euros(r.valuation.askingPrice)}` : "Cote estimée" },
   ];
 
-  const nav = [["apercu", "Vue d'ensemble"], ["verifier", "À vérifier"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote et prix"]];
+  const nav = [["apercu", "Vue d'ensemble"], ["verifier", "À vérifier"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote estimée"]];
   const specs = [FUEL_LABEL[v.fuel], GEARBOX_LABEL[v.gearbox], v.powerHp ? `${v.powerHp} ch` : "", v.firstRegistration ? `Mise en circulation ${fmtDateFr(v.firstRegistration)}` : "", r.mileage !== undefined ? fmtKm(r.mileage) : "", v.critAir ? `Crit'Air ${v.critAir}` : ""].filter(Boolean);
 
   return (
@@ -318,7 +318,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
 
           {/* ===== Cote ===== */}
           {r.valuation && (
-            <Panel id="cote" title="Cote et prix" tone={r.valuation.verdict === "au_dessus" ? "warn" : "info"} badge={<Tag tone={r.valuation.verdict === "au_dessus" ? "warn" : r.valuation.verdict ? "ok" : "info"}>{r.valuation.verdict === "au_dessus" ? "Au-dessus de la cote" : r.valuation.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation.verdict === "dans_la_cote" ? "Dans la cote" : "Estimation"}</Tag>}>
+            <Panel id="cote" title="Cote estimée du véhicule" tone={r.valuation.verdict === "au_dessus" ? "warn" : "info"} badge={<Tag tone={r.valuation.verdict === "au_dessus" ? "warn" : r.valuation.verdict ? "ok" : "info"}>{r.valuation.verdict === "au_dessus" ? "Au-dessus de la cote" : r.valuation.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation.verdict === "dans_la_cote" ? "Dans la cote" : "Estimation"}</Tag>}>
               <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 items-center">
                 <div className="flex flex-col gap-7">
                   <span className="display text-[40px] sm:text-[48px] font-bold leading-none">{range(r.valuation.low, r.valuation.high)}</span>
@@ -331,7 +331,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
                       <div className="absolute h-full rounded-full" style={{ left: "28%", width: "44%", background: "linear-gradient(90deg, #2563EB, #60A5FA)" }} />
                       {[28, 72].map((x) => <span key={x} className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white" style={{ left: `${x}%`, boxShadow: "0 0 0 3px #070F1F" }} />)}
                       <span className="absolute -top-2 -translate-x-1/2 w-[2px] h-6 rounded" style={{ left: "50%", background: "rgba(255,255,255,0.55)" }} />
-                      {r.valuation.askingPrice && <span className="absolute -top-3 -translate-x-1/2 w-[3px] h-8 rounded" style={{ left: `${Math.min(97, Math.max(3, 28 + ((r.valuation.askingPrice - r.valuation.low) / Math.max(1, r.valuation.high - r.valuation.low)) * 44))}%`, background: C.warn }} title="Prix demandé" />}
+                      {r.valuation.askingPrice && <span className="absolute -top-3 -translate-x-1/2 w-[3px] h-8 rounded" style={{ left: `${Math.min(97, Math.max(3, 28 + ((r.valuation.askingPrice - r.valuation.low) / Math.max(1, r.valuation.high - r.valuation.low)) * 44))}%`, background: C.warn }} title="Prix de l'annonce" />}
                     </div>
                     <span className="absolute bottom-0 -translate-x-1/2 text-[12px] text-[#AEB6C4] whitespace-nowrap" style={{ left: "50%" }}>Cote moyenne {euros(r.valuation.mid)}</span>
                     <span className="absolute bottom-0 left-0 text-[11px] text-[#5B6779]">{euros(Math.round(r.valuation.low * 0.9))}</span>
@@ -339,7 +339,8 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
                   </div>
                 </div>
                 <div className="text-[15px] leading-relaxed text-[#C8D0DC] max-w-[50ch]">
-                  {r.valuation.askingPrice ? <p className="m-0">Prix demandé : <strong className="text-white">{euros(r.valuation.askingPrice)}</strong>, {r.valuation.verdict === "au_dessus" ? `soit ${euros(r.valuation.deltaToHigh)} au-dessus du haut de la fourchette. Marge de négociation plausible.` : r.valuation.verdict === "sous_la_cote" ? "sous la fourchette : vérifier pourquoi (état, sinistre, urgence)." : "dans la fourchette."}</p> : null}
+                  {!r.valuation.askingPrice && <p className="m-0">Fourchette de prix réaliste pour ce véhicule, kilométrage et âge compris. Un prix au-dessus du haut de la fourchette se négocie ; un prix nettement en dessous mérite une explication.</p>}
+                  {r.valuation.askingPrice ? <p className="m-0">Prix de l&apos;annonce : <strong className="text-white">{euros(r.valuation.askingPrice)}</strong>, {r.valuation.verdict === "au_dessus" ? `soit ${euros(r.valuation.deltaToHigh)} au-dessus du haut de la fourchette. Marge de négociation plausible.` : r.valuation.verdict === "sous_la_cote" ? "sous la fourchette : vérifier pourquoi (état, sinistre, urgence)." : "dans la fourchette."}</p> : null}
                   <p className="mt-2 mb-0 text-[13px] text-[#8E9AAF]">{r.valuation.basis}</p>
                 </div>
               </div>

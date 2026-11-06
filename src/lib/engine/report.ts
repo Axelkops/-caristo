@@ -59,7 +59,7 @@ export function computeScore(args: { history: OfficialHistory; mileageCheck: Rep
   if (highInZone.length) { points += 20; reasons.push(`${highInZone.length} point${highInZone.length > 1 ? "s" : ""} à vérifier en priorité (${highInZone.map((i) => i.title.toLowerCase()).join(", ")}).`); }
   const openRecalls = args.recalls.filter((r) => r.status === "open");
   if (openRecalls.length) { points += 10; reasons.push(`${openRecalls.length} rappel${openRecalls.length > 1 ? "s" : ""} constructeur ouvert${openRecalls.length > 1 ? "s" : ""}.`); }
-  if (args.valuation?.verdict === "au_dessus") { points += 5; reasons.push("Prix demandé au-dessus de la cote."); }
+  if (args.valuation?.verdict === "au_dessus") { points += 5; reasons.push("Prix de l'annonce au-dessus de la cote."); }
   const warn = args.listing.claims.filter((c) => c.status === "warning").length;
   if (warn) { points += 5 * warn; reasons.push("L'annonce contient des affirmations à vérifier."); }
   if (args.vehicle.imported) { points += 5; reasons.push("Véhicule importé : les premières années ne sont pas couvertes par l'historique français."); }
