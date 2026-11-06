@@ -25,7 +25,9 @@ export function findKnownIssues(vehicle: Vehicle, mileage: number | undefined, n
     const makeOk = fam.makes.length === 0 || fam.makes.some((m) => make.includes(norm(m)));
     const fuelOk = !fam.fuel || fam.fuel.includes(vehicle.fuel);
     const kwOk = fam.keywords.some((k) => hay.includes(norm(k)));
-    if (!(makeOk && fuelOk && kwOk)) continue;
+    const year = vehicle.firstRegistration ? Number(vehicle.firstRegistration.slice(0, 4)) : undefined;
+    const yearOk = !fam.years || year === undefined || ((fam.years.from === undefined || year >= fam.years.from) && (fam.years.to === undefined || year <= fam.years.to));
+    if (!(makeOk && fuelOk && kwOk && yearOk)) continue;
     for (const issue of fam.issues) {
       if (seen.has(issue.id)) continue;
       seen.add(issue.id);

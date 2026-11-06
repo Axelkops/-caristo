@@ -14,6 +14,8 @@ export interface IssueFamily {
   /** marques concernées (minuscules), vide = toutes */
   makes: string[];
   fuel?: Fuel[];
+  /** années de 1re immatriculation concernées (génération du modèle), bornes incluses */
+  years?: { from?: number; to?: number };
   issues: Omit<KnownIssue, "applies" | "inZone">[];
 }
 
