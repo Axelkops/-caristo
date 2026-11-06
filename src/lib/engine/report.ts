@@ -112,7 +112,7 @@ export function buildReport(input: ReportInputs): ReportData {
     { label: "Fiche technique", status: "ok" },
     { label: "Historique officiel (contrôles techniques, kilométrage, sinistres, situation administrative)", status: history.available ? "ok" : "none", detail: history.available ? undefined : history.reason },
     { label: "Rappels constructeur", status: "ok", detail: input.recalls.length ? `${input.recalls.length} rappel(s) trouvé(s)` : "Aucun rappel trouvé" },
-    { label: "Pannes connues (base Caristo)", status: knownIssues.length ? "ok" : "partial", detail: `${knownIssues.length} point(s)` },
+    { label: "Pannes connues du modèle", status: knownIssues.length ? "ok" : "partial", detail: `${knownIssues.length} point(s)` },
     { label: "Cote du marché", status: "ok", detail: "estimation" },
     { label: "Annonce", status: input.listing.available ? "ok" : "none", detail: input.listing.available ? undefined : "Aucun lien d'annonce fourni" },
   ];

@@ -134,8 +134,16 @@ export function buildMaintenanceSchedule(input: MaintenanceInput): MaintenanceSc
     annualKm,
     horizons,
     items,
-    note: "Échéancier indicatif, calculé à partir des préconisations constructeur, du kilométrage et de l'âge. Les intervalles varient selon l'usage réel : rapprochez-vous de votre garagiste pour confirmer.",
+    note: "Coûts indicatifs en garage indépendant. L'usage réel peut décaler les échéances.",
   };
+}
+
+/** Coût « environ » : milieu de la fourchette, arrondi (à 50 € au-delà de 100 €, à 10 € en dessous). */
+export function approxCost(min?: number, max?: number): number | undefined {
+  if (min === undefined && max === undefined) return undefined;
+  const mid = ((min ?? max ?? 0) + (max ?? min ?? 0)) / 2;
+  const step = mid >= 100 ? 50 : 10;
+  return Math.round(mid / step) * step;
 }
 
 export function fmtKm(n: number): string {

@@ -2,7 +2,8 @@ import React from "react";
 import path from "node:path";
 import { Document, Page, Text, View, StyleSheet, Font, Svg, Path, Circle, Line, Rect, Polyline, Text as SvgText, renderToBuffer } from "@react-pdf/renderer";
 import type { ReportData, Inspection } from "../engine/types";
-import { buildChecklist, type Checklist } from "../engine/checklist";
+import { buildChecklist, PARTY_LABEL, type Checklist } from "../engine/checklist";
+import { approxCost } from "../engine/maintenance";
 import { FUEL_LABEL, GEARBOX_LABEL } from "../engine/labels";
 import { SITE } from "../site";
 
@@ -407,24 +408,23 @@ export function Pdf({ r }: { r: ReportData }) {
 
         <View style={s.section}>
         <View wrap={false}>
-        <SectionHead title="Entretien à prévoir" sub={`Préconisations constructeur, kilométrage et âge. Rythme estimé : ${nf(r.maintenance.annualKm)} km par an.`} />
+        <SectionHead title="Entretien à prévoir" sub={`Ce qu'il faudra faire et à peu près combien ça coûte, sur la base de ${nf(r.maintenance.annualKm)} km par an.`} />
         <View style={{ flexDirection: "row", gap: 8, marginBottom: 10 }}>
           {r.maintenance.horizons.map((hz) => (
             <View key={hz.key} style={[s.tile, { backgroundColor: hz.key === "now" && hz.items.length ? TINT.warn : GROUND }]}>
-              <Text style={s.tileLabel}>{hz.key === "now" ? "Maintenant" : `Dans ${hz.key} mois · env. ${km(hz.projectedKm)}`}</Text>
-              <Text style={[s.tileValue, { color: hz.items.length ? NAVY : MUTED2 }]}>{hz.items.length ? `env. ${range(hz.costMin, hz.costMax)}` : "Rien de prévu"}</Text>
+              <Text style={s.tileLabel}>{hz.key === "now" ? "Maintenant" : `Dans ${hz.key} mois · env. ${km(Math.round(hz.projectedKm / 1000) * 1000)}`}</Text>
+              <Text style={[s.tileValue, { color: hz.items.length ? NAVY : MUTED2 }]}>{hz.items.length ? `env. ${eur(approxCost(hz.costMin, hz.costMax))}` : "Rien de prévu"}</Text>
               {hz.items.length > 0 && <Text style={{ fontSize: 7.5, color: MUTED, marginTop: 2 }}>{clean(hz.items.join(", "))}</Text>}
             </View>
           ))}
         </View>
-        <View style={s.trHead}><Text style={[s.th, { flex: 2 }]}>Intervention</Text><Text style={[s.th, { flex: 2.4 }]}>Préconisation</Text><Text style={[s.th, { flex: 1.6 }]}>Prochaine échéance</Text><Text style={[s.th, { width: 80, textAlign: "right" }]}>Coût estimé</Text></View>
+        <View style={s.trHead}><Text style={[s.th, { flex: 2 }]}>Intervention</Text><Text style={[s.th, { flex: 2 }]}>Quand</Text><Text style={[s.th, { width: 90, textAlign: "right" }]}>Coût environ</Text></View>
         </View>
         {r.maintenance.items.map((m) => (
           <View key={m.label} style={s.tr} wrap={false}>
             <Text style={[s.td, { flex: 2, fontWeight: 600 }]}>{clean(m.label)}</Text>
-            <Text style={[s.td, { flex: 2.4, color: "#374151" }]}>{clean(m.rule)}</Text>
-            <Text style={[s.td, { flex: 1.6, color: m.horizon === "now" ? WARN : TEXT, fontWeight: m.horizon === "now" ? 600 : 400 }]}>{m.horizon === "now" ? "Maintenant" : [m.dueKm ? km(m.dueKm) : "", m.dueDate ? fd(m.dueDate) : ""].filter(Boolean).join(", ") || "—"}</Text>
-            <Text style={[s.td, { width: 80, textAlign: "right" }]}>{range(m.costMin, m.costMax) || "—"}</Text>
+            <Text style={[s.td, { flex: 2, color: m.horizon === "now" ? WARN : TEXT, fontWeight: m.horizon === "now" ? 600 : 400 }]}>{m.horizon === "now" ? "Maintenant" : [m.dueKm ? km(m.dueKm) : "", m.dueDate ? fd(m.dueDate) : ""].filter(Boolean).join(", ") || "—"}</Text>
+            <Text style={[s.td, { width: 90, textAlign: "right" }]}>{approxCost(m.costMin, m.costMax) !== undefined ? `env. ${eur(approxCost(m.costMin, m.costMax))}` : "—"}</Text>
           </View>
         ))}
         <Text style={[s.small, { marginTop: 6 }]}>{clean(r.maintenance.note)}</Text>
@@ -457,19 +457,36 @@ export function Pdf({ r }: { r: ReportData }) {
         <SectionHead title="À vérifier avant l'achat" sub="Liste construite pour ce véhicule : énergie, boîte, âge, kilométrage et points connus du modèle. À cocher pendant la visite et l'essai." badge={<Tag tone="info">{checklist.essential} essentiels · {checklist.total} points</Tag>} />
         <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 6 }}>{checklist.profile.map((p) => <Text key={p} style={[s.tag, { color: INFO, backgroundColor: TINT.info, marginRight: 5, marginBottom: 5 }]}>{clean(p)}</Text>)}</View>
         </View>
-        {checklist.sections.map((sec) => (
-          <View key={sec.id} style={{ marginTop: 8 }}>
-            <View wrap={false}>
-            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5 }}>
-              <View style={{ width: 3, height: 12, backgroundColor: ACCENT, borderRadius: 2, marginRight: 6 }} />
-              <Text style={s.h3}>{sec.title}</Text>
-              <Text style={[s.small, { marginLeft: 6 }]}>{`· ${sec.sub}`}</Text>
+        {(["vendeur", "acheteur"] as const).map((party) => {
+          const color = party === "vendeur" ? WARN : INFO;
+          const tint = party === "vendeur" ? TINT.warn : TINT.info;
+          const secs = checklist.sections.filter((x) => x.party === party);
+          return (
+            <View key={party} style={{ marginTop: 12, borderWidth: 0.8, borderColor: color, borderRadius: 8, overflow: "hidden" }}>
+              <View wrap={false}>
+                <View style={{ backgroundColor: tint, paddingVertical: 7, paddingHorizontal: 10, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  <View>
+                    <Text style={{ fontSize: 7, fontWeight: 700, letterSpacing: 1.2, color: party === "vendeur" ? "#B45309" : "#1D4ED8", textTransform: "uppercase" }}>{party}</Text>
+                    <Text style={{ fontFamily: "Manrope", fontWeight: 800, fontSize: 12, color: NAVY }}>{PARTY_LABEL[party].title}</Text>
+                  </View>
+                  <Text style={{ fontSize: 8, color: MUTED, maxWidth: 240, textAlign: "right" }}>{clean(PARTY_LABEL[party].sub)}</Text>
+                </View>
+                {secs.slice(0, 1).map((sec) => (
+                  <View key={sec.id} style={{ paddingHorizontal: 10, paddingTop: 8 }}>
+                    {secs.length > 1 && <Text style={[s.h3, { marginBottom: 4, fontSize: 10 }]}>{sec.title}</Text>}
+                    {sec.items.slice(0, 1).map(checkItem)}
+                  </View>
+                ))}
+              </View>
+              {secs.map((sec, k) => (
+                <View key={sec.id} style={{ paddingHorizontal: 10, paddingTop: k === 0 ? 0 : 6, paddingBottom: k === secs.length - 1 ? 6 : 0 }}>
+                  {k > 0 && <View wrap={false}>{secs.length > 1 && <Text style={[s.h3, { marginBottom: 4, fontSize: 10 }]}>{sec.title}</Text>}{sec.items.slice(0, 1).map(checkItem)}</View>}
+                  {sec.items.slice(1).map(checkItem)}
+                </View>
+              ))}
             </View>
-            {sec.items.slice(0, 1).map(checkItem)}
-            </View>
-            {sec.items.slice(1).map(checkItem)}
-          </View>
-        ))}
+          );
+        })}
         </View>
 
         <View style={s.section}>

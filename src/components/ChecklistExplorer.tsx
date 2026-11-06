@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { buildChecklist } from "@/lib/engine/checklist";
+import { buildChecklist, PARTY_LABEL, type ChecklistParty } from "@/lib/engine/checklist";
 import type { Fuel, Gearbox, Vehicle } from "@/lib/engine/types";
 
 /*
@@ -16,6 +16,10 @@ const GEARS: { v: Gearbox; l: string; version: string }[] = [
   { v: "manuelle", l: "Manuelle", version: "" }, { v: "automatique", l: "Auto. double embrayage", version: "DSG" }, { v: "automatique", l: "Auto. convertisseur", version: "EAT8" }, { v: "automatique", l: "Auto. CVT", version: "CVT" },
 ];
 const AGES = [1, 3, 6, 10, 15];
+const PARTY_STYLE: Record<ChecklistParty, { color: string; tint: string; edge: string }> = {
+  vendeur: { color: "#FBBF24", tint: "rgba(251,191,36,0.08)", edge: "rgba(251,191,36,0.35)" },
+  acheteur: { color: "#60A5FA", tint: "rgba(96,165,250,0.08)", edge: "rgba(96,165,250,0.35)" },
+};
 const KMS = [15000, 60000, 110000, 170000, 240000];
 
 export function ChecklistExplorer({ compact = false }: { compact?: boolean }) {
@@ -36,7 +40,6 @@ export function ChecklistExplorer({ compact = false }: { compact?: boolean }) {
     <button type="button" onClick={onClick} className="text-[13px] font-semibold px-3.5 py-2 rounded-full cursor-pointer transition-colors" style={{ background: on ? "#2563EB" : "rgba(255,255,255,0.06)", color: on ? "#fff" : "#C8D0DC", border: `1px solid ${on ? "#2563EB" : "rgba(147,197,253,0.2)"}` }}>{children}</button>
   );
 
-  const sections = compact ? checklist.sections.filter((s) => ["vendeur", "acheteur"].includes(s.id)) : checklist.sections;
 
   return (
     <div className="flex flex-col gap-6 text-white" data-testid="checklist-explorer">
@@ -52,26 +55,47 @@ export function ChecklistExplorer({ compact = false }: { compact?: boolean }) {
         <span className="text-[13px] text-[#AEB6C4]" data-testid="explorer-count">{checklist.essential} essentiels · {checklist.total} points</span>
       </div>
 
-      <div className={`grid grid-cols-1 ${compact ? "md:grid-cols-2" : "lg:grid-cols-3"} gap-4`}>
-        {sections.map((s) => (
-          <div key={s.id} className="rounded-2xl p-5 flex flex-col gap-3 bg-white/[0.04] border border-white/10">
-            <h3 className="m-0 text-[15px] font-bold">{s.title} <span className="text-[12px] font-medium text-[#8E9AAF]">· {s.items.length}</span></h3>
-            <p className="m-0 -mt-1 text-[12.5px] text-[#8E9AAF]">{s.sub}</p>
-            <ul className="m-0 p-0 list-none flex flex-col gap-2">
-              {(compact ? s.items.slice(0, 5) : s.items).map((i) => (
-                <li key={i.id} className="flex gap-3 items-start">
-                  <span aria-hidden="true" className="mt-[5px] w-[14px] h-[14px] rounded-[4px] border border-[#8E9AAF]/60 shrink-0" />
-                  <span className="flex flex-col gap-0.5 min-w-0">
-                    <span className="text-[14px] leading-snug text-[#E5E9F0]">{i.text}</span>
-                    {!compact && i.how && <span className="text-[12.5px] leading-snug text-[#8E9AAF]">{i.how}</span>}
-                    <span className="flex flex-wrap gap-1.5"><span className="text-[11px] font-semibold" style={{ color: i.priority === "essentiel" ? "#FBBF24" : "#8E9AAF" }}>{i.priority === "essentiel" ? "Essentiel" : "Conseillé"}</span>{i.because && <span className="text-[11px] text-[#AEB6C4]">· {i.because}</span>}</span>
-                  </span>
-                </li>
-              ))}
-              {compact && s.items.length > 5 && <li className="text-[12px] text-[#8E9AAF]">+ {s.items.length - 5} autres points dans le rapport</li>}
-            </ul>
-          </div>
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+        {(["vendeur", "acheteur"] as const).map((party) => {
+          const P = PARTY_STYLE[party];
+          const secs = checklist.sections.filter((s) => s.party === party);
+          const count = secs.reduce((n, s) => n + s.items.length, 0);
+          return (
+            <section key={party} className="rounded-2xl overflow-hidden flex flex-col" style={{ border: `1px solid ${P.edge}`, background: "rgba(255,255,255,0.03)" }}>
+              <header className="flex items-center justify-between gap-3 px-5 py-4" style={{ background: P.tint, borderBottom: `1px solid ${P.edge}` }}>
+                <div className="flex flex-col">
+                  <span className="text-[11px] font-bold tracking-[1.6px] uppercase" style={{ color: P.color }}>{party}</span>
+                  <span className="text-[16px] font-bold leading-tight">{PARTY_LABEL[party].title}</span>
+                </div>
+                <span className="text-[13px] font-semibold" style={{ color: P.color }}>{count} point{count > 1 ? "s" : ""}</span>
+              </header>
+              <p className="m-0 px-5 pt-4 text-[13px] text-[#8E9AAF]">{PARTY_LABEL[party].sub}</p>
+              <div className="flex flex-col gap-5 p-5">
+                {secs.map((s) => {
+                  const list = compact ? s.items.slice(0, 4) : s.items;
+                  return (
+                    <div key={s.id} className="flex flex-col gap-2">
+                      {secs.length > 1 && <h3 className="m-0 text-[14px] font-bold flex items-center gap-2"><span aria-hidden="true" className="w-1.5 h-1.5 rounded-full" style={{ background: P.color }} />{s.title}</h3>}
+                      <ul className="m-0 p-0 list-none flex flex-col gap-2">
+                        {list.map((i) => (
+                          <li key={i.id} className="flex gap-3 items-start">
+                            <span aria-hidden="true" className="mt-[5px] w-[14px] h-[14px] rounded-[4px] border shrink-0" style={{ borderColor: P.edge }} />
+                            <span className="flex flex-col gap-0.5 min-w-0">
+                              <span className="text-[14px] leading-snug text-[#E5E9F0]">{i.text}</span>
+                              {!compact && i.how && <span className="text-[12.5px] leading-snug text-[#8E9AAF]">{i.how}</span>}
+                              <span className="flex flex-wrap gap-1.5"><span className="text-[11px] font-semibold" style={{ color: i.priority === "essentiel" ? "#FBBF24" : "#8E9AAF" }}>{i.priority === "essentiel" ? "Essentiel" : "Conseillé"}</span>{i.because && <span className="text-[11px] text-[#AEB6C4]">· {i.because}</span>}</span>
+                            </span>
+                          </li>
+                        ))}
+                        {compact && s.items.length > 4 && <li className="text-[12px] text-[#8E9AAF]">+ {s.items.length - 4} autres points dans le rapport</li>}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
       </div>
       {compact && <Link href="/points-a-verifier" className="self-start text-sm font-semibold text-accentsoft no-underline hover:underline">Voir la liste complète pour ce profil →</Link>}
     </div>
