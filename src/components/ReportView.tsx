@@ -2,6 +2,7 @@ import type { ReportData } from "@/lib/engine/types";
 import { FUEL_LABEL, GEARBOX_LABEL, fmtDateFr } from "./VehicleCard";
 import { approxCost, fmtKm } from "@/lib/engine/maintenance";
 import { ShareBox } from "./ShareBox";
+import { AddCarteGrise } from "./AddCarteGrise";
 import { ChecklistPanel } from "./ChecklistPanel";
 import { buildChecklist } from "@/lib/engine/checklist";
 
@@ -258,11 +259,14 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
           </Panel>
 
           {/* ===== Historique officiel ===== */}
-          <Panel id="historique" title="Historique officiel" sub="Contrôles techniques, kilométrages relevés, sinistres, situation administrative, propriétaires." tone={h.available ? "ok" : "neutral"} badge={<Tag tone={h.available ? "ok" : "neutral"}>{h.available ? `Consulté le ${h.retrievedAt ? new Date(h.retrievedAt).toLocaleDateString("fr-FR") : ""}` : "Non disponible"}</Tag>}>
+          <Panel id="historique" title="Historique officiel" sub="Contrôles techniques, kilométrages relevés, sinistres, situation administrative, propriétaires." tone={h.available ? "ok" : "neutral"} badge={<Tag tone={h.available ? "ok" : "neutral"}>{h.available ? `Consulté le ${h.retrievedAt ? new Date(h.retrievedAt).toLocaleDateString("fr-FR") : ""}` : h.notRequested ? "Non inclus" : "Non disponible"}</Tag>}>
             {!h.available ? (
-              <div className="rounded-2xl p-5 flex flex-col gap-1.5 text-[14px] text-[#AEB6C4] max-w-[80ch]" style={{ background: INSET.background, border: "1px solid rgba(142,154,175,0.2)" }}>
-                <span className="font-semibold text-[#E5E9F0]">{h.reason}</span>
-                <span>Le reste du rapport est produit avec la fiche technique, les pannes connues du modèle et la cote. Demandez au vendeur le dernier procès-verbal de contrôle technique et le certificat de situation administrative.</span>
+              <div className="flex flex-col gap-4">
+                <div className="rounded-2xl p-5 flex flex-col gap-1.5 text-[14px] text-[#AEB6C4] max-w-[80ch]" style={{ background: INSET.background, border: "1px solid rgba(142,154,175,0.2)" }}>
+                  <span className="font-semibold text-[#E5E9F0]">{h.reason}</span>
+                  <span>{h.notRequested ? "Le reste du rapport est complet. Ajoutez les trois informations de la carte grise pour y inclure les contrôles techniques, les kilométrages relevés, les sinistres et la situation administrative." : "Le reste du rapport est produit avec la fiche technique, les pannes connues du modèle et la cote. Demandez au vendeur le dernier procès-verbal de contrôle technique et le certificat de situation administrative."}</span>
+                </div>
+                {!readonly && v.country === "FR" && <AddCarteGrise reportId={reportId} />}
               </div>
             ) : (
               <div className="flex flex-col gap-6">

@@ -358,9 +358,9 @@ export function Pdf({ r }: { r: ReportData }) {
 
         <View style={s.section}>
         <View wrap={false}>
-        <SectionHead title="Historique officiel" sub="Contrôles techniques, kilométrages relevés, sinistres, situation administrative, propriétaires." badge={<Tag tone={h.available ? "ok" : "neutral"}>{h.available ? `Consulté le ${fd(h.retrievedAt)}` : "Non disponible"}</Tag>} />
+        <SectionHead title="Historique officiel" sub="Contrôles techniques, kilométrages relevés, sinistres, situation administrative, propriétaires." badge={<Tag tone={h.available ? "ok" : "neutral"}>{h.available ? `Consulté le ${fd(h.retrievedAt)}` : h.notRequested ? "Non inclus" : "Non disponible"}</Tag>} />
         {!h.available ? (
-          <View style={[s.card, { backgroundColor: GROUND }]}><Text style={{ fontSize: 9 }}>{clean(h.reason ?? "Historique officiel indisponible.")}</Text><Text style={[s.small, { marginTop: 4 }]}>Demander au vendeur le dernier procès-verbal de contrôle technique et un certificat de situation administrative de moins de 15 jours.</Text></View>
+          <View style={[s.card, { backgroundColor: GROUND }]}><Text style={{ fontSize: 9 }}>{clean(h.reason ?? "Historique officiel indisponible.")}</Text><Text style={[s.small, { marginTop: 4 }]}>{h.notRequested ? "La carte grise peut être ajoutée depuis le rapport en ligne pour inclure l'historique officiel." : "Demander au vendeur le dernier procès-verbal de contrôle technique et un certificat de situation administrative de moins de 15 jours."}</Text></View>
         ) : (
             <View style={{ flexDirection: "row", gap: 8, marginBottom: 12 }}>
               {([

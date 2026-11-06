@@ -57,6 +57,8 @@ export interface Claim {
 export interface OfficialHistory {
   available: boolean;
   reason?: string; // pourquoi indisponible
+  /** true quand le client n'a pas fourni la carte grise : historique non demandé (pas une panne) */
+  notRequested?: boolean;
   ownersCount?: number;
   pledge?: boolean; // gage
   opposition?: boolean;

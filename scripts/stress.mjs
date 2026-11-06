@@ -57,8 +57,9 @@ async function phaseDetails(ids) {
       if (!res.json?.next) problems.push({ what: "details 200 sans next", body, json: res.json });
       else valid.push({ id, next: res.json.next, body, country });
     } else if (res.status !== 400) problems.push({ what: "details statut inattendu", id, body, status: res.status, json: res.json });
-    // règle : carte grise obligatoire en France
-    if (res.status === 200 && country === "FR" && (!body.formulaNumber || !body.holderName || !body.firstRegDate)) problems.push({ what: "FR accepté sans carte grise complète", body });
+    // règle : carte grise facultative, mais jamais partielle
+    const cgCount = [body.formulaNumber, body.holderName, body.firstRegDate].filter((x) => String(x ?? "").trim()).length;
+    if (res.status === 200 && country === "FR" && cgCount > 0 && cgCount < 3) problems.push({ what: "FR accepté avec une carte grise partielle", body });
   }
   return valid;
 }
@@ -138,6 +139,9 @@ async function phaseMisc() {
     const res = await call("POST", "/api/auth/verify", bad);
     if (res.status >= 500) problems.push({ what: "verify 500", bad });
   }
+  // ajout de carte grise : refusé sur un rapport inexistant ou non payé
+  const cgBad = await call("POST", "/api/reports/nexistepas/carte-grise", { formulaNumber: "2021AB12345", holderName: "X", firstRegDate: "12/03/2019" });
+  if (cgBad.status !== 404) problems.push({ what: "ajout carte grise accepté sur rapport inexistant", status: cgBad.status });
   // utilisation d'un pack sans être connecté
   const id = (await call("POST", "/api/identify", { input: plateFR() })).json?.reportId;
   if (id) {

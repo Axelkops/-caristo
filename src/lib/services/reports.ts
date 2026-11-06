@@ -1,7 +1,7 @@
 import { and, eq, gt, sql } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { getDb, schema } from "../db";
-import type { ListingAnalysis, ReportData, Vehicle } from "../engine/types";
+import type { OfficialHistory, ListingAnalysis, ReportData, Vehicle } from "../engine/types";
 import { buildReport } from "../engine/report";
 import { parseDate, parseFormulaNumber, parseMileage, parsePlate, parseVin } from "../engine/identifiers";
 import { getHistoryProvider, getListingProvider, getRecallsProvider, getVehicleProvider, identifyAfterPayment, plateCountrySupported } from "../providers";
@@ -77,7 +77,23 @@ export interface DetailsInput {
   useAccountPack?: boolean;
 }
 
-/** Étape 2 : enregistrer kilométrage, carte grise, e-mail, offre. */
+/**
+ * Carte grise facultative : rien saisi → null (rapport sans historique officiel) ;
+ * saisie partielle ou invalide → erreur explicite ; saisie complète → valeurs normalisées.
+ */
+export function parseCarteGrise(d: { formulaNumber?: string; holderName?: string; firstRegDate?: string }): { formulaNumber: string; holderName: string; firstRegDate: string } | null {
+  const f = (d.formulaNumber ?? "").trim(), h = (d.holderName ?? "").trim(), dt = (d.firstRegDate ?? "").trim();
+  if (!f && !h && !dt) return null;
+  if (!f || !h || !dt) throw new UserError("Carte grise : renseignez les trois informations (numéro de formule, titulaire, date), ou laissez les trois vides.");
+  const formula = parseFormulaNumber(f);
+  const date = parseDate(dt);
+  if (!formula) throw new UserError("Numéro de formule invalide : il commence par l’année (4 chiffres), puis 2 lettres et des chiffres (ex. 2021AB12345).");
+  if (!date) throw new UserError("Date de première immatriculation invalide (JJ/MM/AAAA).");
+  if (h.length < 2) throw new UserError("Indiquez le nom du titulaire tel qu'il figure sur la carte grise (case C.1).");
+  return { formulaNumber: formula, holderName: h, firstRegDate: date };
+}
+
+/** Étape 2 : enregistrer kilométrage, carte grise (facultative), e-mail, offre. */
 export async function saveDetails(reportId: string, d: DetailsInput, accountEmail?: string | null): Promise<{ status: string; needsPayment: boolean }> {
   const db = await getDb();
   const [r] = await db.select().from(schema.reports).where(eq(schema.reports.id, reportId)).limit(1);
@@ -92,16 +108,8 @@ export async function saveDetails(reportId: string, d: DetailsInput, accountEmai
   const update: Partial<typeof schema.reports.$inferInsert> = { mileage, email, offer: d.offer, updatedAt: new Date() };
   const v = r.vehicle as Vehicle;
   if (v.country === "FR") {
-    const holder = (d.holderName ?? "").trim();
-    if (!d.formulaNumber?.trim() || !holder || !d.firstRegDate?.trim()) throw new UserError("Les trois informations de la carte grise sont nécessaires pour produire le rapport.");
-    const formula = parseFormulaNumber(d.formulaNumber);
-    const date = parseDate(d.firstRegDate);
-    if (!formula) throw new UserError("Numéro de formule invalide : il commence par l’année (4 chiffres), puis 2 lettres et des chiffres (ex. 2021AB12345).");
-    if (!date) throw new UserError("Date de première immatriculation invalide (JJ/MM/AAAA).");
-    if (holder.length < 2) throw new UserError("Indiquez le nom du titulaire tel qu'il figure sur la carte grise (case C.1).");
-    update.formulaNumber = formula;
-    update.firstRegDate = date;
-    update.holderName = holder;
+    const cg = parseCarteGrise(d);
+    if (cg) Object.assign(update, cg);
   }
   if (d.listingUrl && d.listingUrl.trim()) {
     const u = d.listingUrl.trim();
@@ -159,7 +167,7 @@ export async function markPaid(reportId: string, stripeSessionId: string | null)
 }
 
 /** Génère le rapport complet (après paiement). Tolérant : chaque source peut échouer sans bloquer. */
-export async function generateReport(reportId: string): Promise<ReportData> {
+export async function generateReport(reportId: string, opts: { silent?: boolean } = {}): Promise<ReportData> {
   const db = await getDb();
   const [r] = await db.select().from(schema.reports).where(eq(schema.reports.id, reportId)).limit(1);
   if (!r) throw new UserError("Rapport introuvable.", 404);
@@ -188,7 +196,9 @@ export async function generateReport(reportId: string): Promise<ReportData> {
   try {
     const [historyP, recallsP, listingP] = await Promise.all([getHistoryProvider(), getRecallsProvider(), getListingProvider()]);
     const [history, recalls, listingRaw] = await Promise.all([
-      historyP.fetchHistory({ vehicle, plate: r.inputKind === "plate" ? r.inputValue : vehicle.plate, holderName: r.holderName ?? undefined, formulaNumber: r.formulaNumber ?? undefined, firstRegDate: r.firstRegDate ?? undefined }).catch((e: Error) => ({ available: false, reason: `Historique officiel indisponible (${e.message}).`, inspections: [], mileageReadings: [], claims: [] })),
+      vehicle.country === "FR" && !r.formulaNumber
+        ? Promise.resolve<OfficialHistory>({ available: false, notRequested: true, reason: "Historique officiel non inclus : la carte grise n'a pas été fournie.", inspections: [], mileageReadings: [], claims: [] })
+        : historyP.fetchHistory({ vehicle, plate: r.inputKind === "plate" ? r.inputValue : vehicle.plate, holderName: r.holderName ?? undefined, formulaNumber: r.formulaNumber ?? undefined, firstRegDate: r.firstRegDate ?? undefined }).catch((e: Error): OfficialHistory => ({ available: false, reason: `Historique officiel indisponible (${e.message}).`, inspections: [], mileageReadings: [], claims: [] })),
       recallsP.fetchRecalls(vehicle).catch(() => []),
       r.listingUrl ? listingP.analyze(r.listingUrl, vehicle, r.mileage ?? undefined).catch((): ListingAnalysis => ({ available: false, url: r.listingUrl!, claims: [] })) : Promise.resolve<ListingAnalysis>({ available: false, claims: [] }),
     ]);
@@ -202,7 +212,7 @@ export async function generateReport(reportId: string): Promise<ReportData> {
     }
     await db.update(schema.reports).set({ report, score: report.score, status: "ready", readyAt: new Date(), updatedAt: new Date(), error: null }).where(eq(schema.reports.id, reportId));
     const [pack] = r.packId ? await db.select().from(schema.packs).where(eq(schema.packs.id, r.packId)).limit(1) : [];
-    if (r.email) void sendReportReadyEmail({ to: r.email, reportId: r.id, shareToken: r.shareToken, reference, vehicle, packRemaining: pack ? pack.creditsTotal - pack.creditsUsed : undefined }).catch(() => undefined);
+    if (r.email && !opts.silent) void sendReportReadyEmail({ to: r.email, reportId: r.id, shareToken: r.shareToken, reference, vehicle, packRemaining: pack ? pack.creditsTotal - pack.creditsUsed : undefined }).catch(() => undefined);
     return report;
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
@@ -234,7 +244,31 @@ export async function getReportByToken(token: string) {
 export async function regenerate(reportId: string): Promise<ReportData> {
   const db = await getDb();
   await db.update(schema.reports).set({ status: "paid", report: null }).where(eq(schema.reports.id, reportId));
-  return generateReport(reportId);
+  return generateReport(reportId, { silent: true });
+}
+
+/**
+ * Ajout de la carte grise sur un rapport déjà payé : l'historique officiel est consulté et le rapport
+ * mis à jour, sans nouveau paiement ni nouvelle identification (le véhicule est déjà connu).
+ */
+export async function addCarteGrise(reportId: string, d: { formulaNumber?: string; holderName?: string; firstRegDate?: string }): Promise<ReportData> {
+  const db = await getDb();
+  const [r] = await db.select().from(schema.reports).where(eq(schema.reports.id, reportId)).limit(1);
+  if (!r || r.status !== "ready" || !r.report) throw new UserError("Rapport introuvable ou non finalisé.", 404);
+  const v = r.vehicle as Vehicle;
+  if (v.country !== "FR") throw new UserError("L'historique officiel n'existe que pour les véhicules immatriculés en France.");
+  if ((r.report as ReportData).history.available) throw new UserError("L'historique officiel est déjà inclus dans ce rapport.", 409);
+  const cg = parseCarteGrise(d);
+  if (!cg) throw new UserError("Renseignez les trois informations de la carte grise.");
+  const previous = { report: r.report, score: r.score, readyAt: r.readyAt, formulaNumber: r.formulaNumber, holderName: r.holderName, firstRegDate: r.firstRegDate };
+  await db.update(schema.reports).set({ ...cg, updatedAt: new Date() }).where(eq(schema.reports.id, reportId));
+  const report = await regenerate(reportId);
+  if (!report.history.available) {
+    // échec (informations qui ne correspondent pas, service indisponible) : on rend le rapport tel qu'il était
+    await db.update(schema.reports).set({ ...previous, status: "ready", updatedAt: new Date() }).where(eq(schema.reports.id, reportId));
+    throw new UserError(report.history.reason ?? "L'historique officiel n'a pas pu être consulté. Vérifiez les informations saisies.");
+  }
+  return report;
 }
 
 export async function addMaintenanceEntry(reportId: string, e: { date: string; mileage?: string | number; label: string; cost?: string | number; kind?: string }) {

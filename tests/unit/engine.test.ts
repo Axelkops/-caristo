@@ -139,3 +139,23 @@ describe("kilométrage saisi arrondi", () => {
     expect(checkMileage2(hist, 110000, veh, new Date("2026-11-06")).consistent).toBe(false);
   });
 });
+
+
+import { parseCarteGrise } from "@/lib/services/reports";
+describe("carte grise facultative", () => {
+  it("accepte trois champs vides, refuse une saisie partielle", () => {
+    expect(parseCarteGrise({})).toBeNull();
+    expect(parseCarteGrise({ formulaNumber: " ", holderName: "", firstRegDate: "" })).toBeNull();
+    expect(() => parseCarteGrise({ formulaNumber: "2021AB12345" })).toThrow(/trois informations/);
+    expect(parseCarteGrise({ formulaNumber: "2021 ab 12345", holderName: "Dupont Jean", firstRegDate: "12/03/2019" })).toEqual({ formulaNumber: "2021AB12345", holderName: "Dupont Jean", firstRegDate: "2019-03-12" });
+  });
+  it("ne pénalise pas l'indice quand l'historique n'a pas été demandé", () => {
+    const vehicle = { make: "T", model: "M", country: "FR", fuel: "essence", gearbox: "manuelle", category: "voiture" } as const;
+    const base = { mileageCheck: { consistent: null, comment: "" }, knownIssues: [], recalls: [], listing: { available: false, claims: [] }, vehicle };
+    const notReq = computeScore({ ...base, history: { available: false, notRequested: true, inspections: [], mileageReadings: [], claims: [] } });
+    const failed = computeScore({ ...base, history: { available: false, inspections: [], mileageReadings: [], claims: [] } });
+    expect(notReq.percent).toBe(100);
+    expect(failed.percent).toBe(85);
+    expect(notReq.reasons.join(" ")).toContain("carte grise");
+  });
+});

@@ -115,15 +115,33 @@ test("parcours complet : rapport, PDF, partage", async ({ page, request }) => {
   await expect(page.getByText("Partager ce rapport")).toHaveCount(0);
 });
 
-test("sans carte grise : impossible de payer pour un véhicule français", async ({ page }) => {
+test("sans carte grise : rapport produit, puis historique ajouté sans repayer", async ({ page }) => {
+  await goToReport(page, "CD-456-EF", { withCarteGrise: false });
+  const hist = page.locator("#historique");
+  await expect(hist).toContainText("Non inclus");
+  await expect(page.getByTestId("add-carte-grise")).toBeVisible();
+  // saisie partielle : refusée
+  await page.getByLabel("Numéro de formule").fill("2021AB12345");
+  await page.getByRole("button", { name: "Ajouter l'historique officiel" }).click();
+  await expect(page.getByTestId("add-carte-grise").getByRole("alert")).toContainText("trois informations");
+  // saisie complète : l'historique s'ajoute
+  await page.getByLabel("Nom du titulaire").fill("Dupont Jean");
+  await page.getByLabel("Date de 1re immatriculation").fill("12/03/2019");
+  await page.getByRole("button", { name: "Ajouter l'historique officiel" }).click();
+  await expect(hist).toContainText("Consulté le", { timeout: 20000 });
+  await expect(page.getByTestId("add-carte-grise")).toHaveCount(0);
+});
+
+test("carte grise partielle : refusée avant paiement", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel("Plaque d'immatriculation").fill("CD-456-EF");
   await page.getByRole("button", { name: /Obtenir le rapport/ }).click();
   await expect(page).toHaveURL(/\/verification\//, { timeout: 15000 });
   await page.getByLabel("Kilométrage actuel *").fill("80000");
+  await page.getByLabel("Numéro de formule").fill("2021AB12345");
   await page.getByLabel("Votre e-mail *").fill("test@exemple.fr");
   await page.getByRole("button", { name: /Payer/ }).click();
-  await expect(alert(page)).toContainText("carte grise");
+  await expect(alert(page)).toContainText("trois informations");
   await expect(page).toHaveURL(/\/verification\//);
 });
 

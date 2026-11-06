@@ -55,6 +55,8 @@ export function computeScore(args: { history: OfficialHistory; mileageCheck: Rep
     if (h.claims.length > 0) { points += 15 * Math.min(3, h.claims.length); reasons.push(`${h.claims.length} sinistre${h.claims.length > 1 ? "s" : ""} expertisé${h.claims.length > 1 ? "s" : ""}.`); }
     const counterVisits = h.inspections.filter((i) => i.result === "defavorable" || i.result === "contre_visite").length;
     if (counterVisits >= 2) { points += 10; reasons.push(`${counterVisits} contrôles techniques défavorables.`); }
+  } else if (h.notRequested) {
+    reasons.push("Historique officiel non inclus : la carte grise n'a pas été fournie.");
   } else {
     points += 15;
     reasons.push("Historique officiel non disponible : une partie des vérifications manque.");
@@ -72,6 +74,9 @@ export function computeScore(args: { history: OfficialHistory; mileageCheck: Rep
   const score: ReportData["score"] = points >= 60 ? "E" : points >= 40 ? "D" : points >= 25 ? "C" : points >= 10 ? "B" : "A";
   const labels: Record<ReportData["score"], string> = { A: "Risque très faible", B: "Risque faible", C: "Risque modéré", D: "Risque élevé", E: "À éviter sans vérification approfondie" };
   if (reasons.length === 0) reasons.push("Aucune alerte dans les données disponibles.");
+  // la note « historique non inclus » n'est pas une alerte : on la place après les vraies alertes
+  const ni = reasons.findIndex((x) => x.startsWith("Historique officiel non inclus"));
+  if (ni === 0 && reasons.length > 1) reasons.push(reasons.splice(0, 1)[0]);
   // indice de confiance : 100 % sans aucune alerte, chaque alerte retire des points
   const percent = Math.max(0, Math.min(100, 100 - points));
   return { score, percent, label: labels[score], reasons };
