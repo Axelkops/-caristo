@@ -159,3 +159,19 @@ describe("carte grise facultative", () => {
     expect(notReq.reasons.join(" ")).toContain("carte grise");
   });
 });
+
+describe("correspondance des fiches de pannes", async () => {
+  const { modelMatches } = await import("@/lib/engine/known-issues");
+  it("distingue les modèles proches", () => {
+    expect(modelMatches("208", ["208"])).toBe(true);
+    expect(modelMatches("2008", ["208"])).toBe(false);
+    expect(modelMatches("C3 AIRCROSS", ["c3"])).toBe(false);
+    expect(modelMatches("C3 Picasso", ["c3"])).toBe(false);
+    expect(modelMatches("C3 II", ["c3"])).toBe(true);
+    expect(modelMatches("Grand Scénic", ["scenic"])).toBe(false);
+    expect(modelMatches("Grand Scénic", ["grand scenic"])).toBe(true);
+    expect(modelMatches("308 SW", ["308"])).toBe(true);
+    expect(modelMatches("Yaris Cross", ["yaris"])).toBe(false);
+    expect(modelMatches("Série 1", ["serie 1"])).toBe(true);
+  });
+});

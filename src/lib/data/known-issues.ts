@@ -16,6 +16,16 @@ export interface IssueFamily {
   fuel?: Fuel[];
   /** années de 1re immatriculation concernées (génération du modèle), bornes incluses */
   years?: { from?: number; to?: number };
+  /** cylindrée (cm³) qui identifie le moteur, bornes incluses */
+  cc?: [number, number];
+  /** puissance couverte (ch), pour départager deux moteurs de même cylindrée */
+  powerHp?: [number, number];
+  /** modèles concernés (minuscules, sans accent) : la fiche ne vaut que pour eux */
+  models?: string[];
+  /** boîte concernée */
+  gearbox?: "automatique" | "manuelle";
+  /** références consultées (non affichées) */
+  sources?: string[];
   issues: Omit<KnownIssue, "applies" | "inZone">[];
 }
 

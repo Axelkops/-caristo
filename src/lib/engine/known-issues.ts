@@ -1,4 +1,4 @@
-import { GENERIC_ISSUES, ISSUE_FAMILIES } from "../data/known-issues";
+import { GENERIC_ISSUES, ISSUE_FAMILIES, type IssueFamily } from "../data/known-issues";
 import type { KnownIssue, Vehicle } from "./types";
 
 function norm(s: string | undefined): string {
@@ -21,16 +21,15 @@ export function findKnownIssues(vehicle: Vehicle, mileage: number | undefined, n
   const out: KnownIssue[] = [];
   const seen = new Set<string>();
 
+  const year = vehicle.firstRegistration ? Number(vehicle.firstRegistration.slice(0, 4)) : undefined;
+  const titles = new Set<string>();
   for (const fam of ISSUE_FAMILIES) {
-    const makeOk = fam.makes.length === 0 || fam.makes.some((m) => make.includes(norm(m)));
-    const fuelOk = !fam.fuel || fam.fuel.includes(vehicle.fuel);
-    const kwOk = fam.keywords.some((k) => hay.includes(norm(k)));
-    const year = vehicle.firstRegistration ? Number(vehicle.firstRegistration.slice(0, 4)) : undefined;
-    const yearOk = !fam.years || year === undefined || ((fam.years.from === undefined || year >= fam.years.from) && (fam.years.to === undefined || year <= fam.years.to));
-    if (!(makeOk && fuelOk && kwOk && yearOk)) continue;
+    if (!familyMatches(fam, vehicle, hay, make, year)) continue;
     for (const issue of fam.issues) {
-      if (seen.has(issue.id)) continue;
+      const t = norm(issue.title);
+      if (seen.has(issue.id) || titles.has(t)) continue;
       seen.add(issue.id);
+      titles.add(t);
       out.push(withZone(issue, km, age));
     }
   }
@@ -59,4 +58,34 @@ function withZone(issue: Omit<KnownIssue, "applies" | "inZone">, km: number, age
   const ageZone = issue.fromYears !== undefined ? age >= issue.fromYears : false;
   const noThreshold = issue.fromKm === undefined && issue.fromYears === undefined;
   return { ...issue, applies: true, inZone: noThreshold ? issue.severity !== "info" : kmZone || ageZone };
+}
+
+/** Mots qui, placés après le nom d'un modèle, désignent un autre modèle (C3 Aircross n'est pas une C3). */
+const OTHER_MODEL = /^(aircross|picasso|cactus|cross|crossback|crossland|spacetourer|plus|max|grand|sportsvan|c-max|s-max|x\b|xr\b|e-tech electri|electric|courier|connect|van\b|l\b)/;
+
+/** Le véhicule correspond-il à un des modèles de la fiche ? « 208 » ne doit pas désigner une 2008, ni « c3 » une C3 Aircross. */
+export function modelMatches(vehicleModel: string, models: string[]): boolean {
+  const m0 = norm(vehicleModel).replace(/\s+/g, " ").trim();
+  return models.some((m1) => {
+    const m = norm(m1).trim();
+    if (m0 === m) return true;
+    if (!m0.startsWith(m + " ")) return false;
+    return !OTHER_MODEL.test(m0.slice(m.length + 1));
+  });
+}
+
+/** Règles de correspondance d'une fiche (voir src/lib/data/known-issues.ts). */
+export function familyMatches(fam: IssueFamily, vehicle: Vehicle, hay: string, make: string, year: number | undefined): boolean {
+  if (fam.makes.length && !fam.makes.some((m) => make.includes(norm(m)))) return false;
+  if (fam.fuel && !fam.fuel.includes(vehicle.fuel)) return false;
+  if (fam.years && year !== undefined && ((fam.years.from !== undefined && year < fam.years.from) || (fam.years.to !== undefined && year > fam.years.to))) return false;
+  if (fam.gearbox && vehicle.gearbox !== "inconnue" && vehicle.gearbox !== fam.gearbox) return false;
+  if (fam.models?.length && !modelMatches(vehicle.model, fam.models)) return false;
+  const kwOk = fam.keywords.some((k) => hay.includes(norm(k)));
+  const cc = vehicle.displacementCc;
+  const ccOk = !!fam.cc && !!cc && cc >= fam.cc[0] - 10 && cc <= fam.cc[1] + 10;
+  const hpOk = !fam.powerHp || !vehicle.powerHp || (vehicle.powerHp >= fam.powerHp[0] - 3 && vehicle.powerHp <= fam.powerHp[1] + 3);
+  // une fiche « modèle » (sans mot-clé ni cylindrée) est identifiée par le modèle seul
+  const modelOnly = !!fam.models?.length && fam.keywords.length === 0 && !fam.cc;
+  return (kwOk && hpOk) || (ccOk && hpOk) || modelOnly;
 }
