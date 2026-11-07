@@ -1,6 +1,7 @@
 """Fusionne les fiches vérifiées (au moins 2 sites différents) dans la base du projet."""
 import json, sys
-order = ["stellantis", "renault-nissan", "vag", "premium-ford-opel", "asia", "models-fr", "models-intl"]
+import os
+order = [f for f in ["stellantis", "renault-nissan", "vag", "premium-ford-opel", "asia", "asia2", "engines2", "ev-hybrid", "models-fr", "models-fr2", "models-intl", "models-intl-verified"] if os.path.exists(f"kbclean/{f}.json")]
 out, pending = [], []
 for f in order:
     for x in json.load(open(f"kbclean/{f}.json")):

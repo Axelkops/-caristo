@@ -5812,6 +5812,927 @@
   ]
  },
  {
+  "id": "evh-stellantis-ecmp-2019-2021",
+  "label": "Peugeot e-208 / e-2008, Opel Corsa-e / Mokka-e, DS 3 E-Tense, Citroën ë-C4 (2019-2021)",
+  "makes": [
+   "peugeot",
+   "opel",
+   "ds",
+   "citroen"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2019,
+   "to": 2021
+  },
+  "keywords": [],
+  "models": [
+   "208",
+   "e-208",
+   "2008",
+   "e-2008",
+   "corsa",
+   "corsa-e",
+   "corsa e",
+   "mokka",
+   "mokka-e",
+   "mokka e",
+   "ds 3",
+   "ds3",
+   "ds 3 crossback",
+   "ds3 crossback",
+   "c4",
+   "e-c4"
+  ],
+  "issues": [
+   {
+    "id": "evh-ecmp1-coupure",
+    "title": "Rappel : coupures de courant (produites 2019-2020)",
+    "severity": "medium",
+    "description": "Sur les e-208, e-2008, DS 3 E-Tense et Corsa-e de 2019-2020, une sécurité trop sensible peut couper le courant en roulant. Logiciel corrigé, parfois chargeur changé.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   },
+   {
+    "id": "evh-ecmp1-jeunesse",
+    "title": "Pannes électriques de jeunesse : refus de démarrer",
+    "severity": "high",
+    "fromYears": 1,
+    "description": "Refus de démarrer, perte de puissance, message « défaut chaîne de traction » : batterie 12 V et logiciel souvent en cause, parfois chargeur ou moteur à changer.",
+    "costMin": 150,
+    "costMax": 3000,
+    "whatToCheck": "Démarrer plusieurs fois : le voyant « Ready » doit s'allumer sans message d'alerte. Demander les factures des mises à jour et des pièces changées."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/peugeot-e-208-e-2008-ds-3-e-tense-un-rappel-de-5-761-exemplaires-20000286.html",
+   "https://www.largus.fr/actualite-automobile/opel-corsa-e-electrique-les-problemes-de-jeunesse-et-leurs-correctifs-10612399.html",
+   "https://www.whatcar.com/peugeot/e208/hatchback/used-review/n22819/advice"
+  ]
+ },
+ {
+  "id": "evh-stellantis-ecmp-2022-2023",
+  "label": "Stellantis électriques 100 kW (e-208, e-2008, Corsa-e, Mokka-e, ë-C4, DS 3, utilitaires, 2022-2023)",
+  "makes": [
+   "peugeot",
+   "opel",
+   "ds",
+   "citroen"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2022,
+   "to": 2023
+  },
+  "keywords": [],
+  "models": [
+   "208",
+   "e-208",
+   "2008",
+   "e-2008",
+   "corsa",
+   "corsa-e",
+   "corsa e",
+   "mokka",
+   "mokka-e",
+   "mokka e",
+   "ds 3",
+   "ds3",
+   "ds 3 crossback",
+   "ds3 crossback",
+   "c4",
+   "e-c4",
+   "c4 x",
+   "e-c4 x",
+   "berlingo",
+   "e-berlingo",
+   "rifter",
+   "e-rifter",
+   "partner",
+   "e-partner",
+   "combo",
+   "combo-e",
+   "combo e"
+  ],
+  "issues": [
+   {
+    "id": "evh-ecmp2-logiciel",
+    "title": "Rappel : logiciel de batterie qui coupe la traction",
+    "severity": "medium",
+    "description": "Sur les modèles produits en 2022 et début 2023, un défaut du logiciel de la batterie peut empêcher le démarrage ou couper la traction (message « no ready mode »).",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/rappel-stellantis-plusieurs-milliers-de-modeles-electriques-concernes-par-un-refus-de-demarrage-30040081.html",
+   "https://lautomobiliste.fr/20/04/2025/stellantis-rappelle-durgence-2-200-voitures-le-moteur-peut-sarreter-en-pleine-route/",
+   "https://www.electrive.com/2023/03/01/stellantis-toyota-launch-recall-due-to-battery-issues",
+   "https://www.auto-motor-und-sport.de/verkehr/e-fahrzeug-rueckruf-e-motor-koennte-ausfallen/"
+  ]
+ },
+ {
+  "id": "evh-stellantis-12-hybrid-48v",
+  "label": "Stellantis 1.2 Hybrid 48 V (100, 110, 136, 145 ch, boîte e-DCS6, 2023 et après)",
+  "makes": [
+   "peugeot",
+   "citroen",
+   "ds",
+   "opel",
+   "fiat",
+   "jeep",
+   "alfa romeo",
+   "lancia"
+  ],
+  "fuel": [
+   "hybride"
+  ],
+  "years": {
+   "from": 2023
+  },
+  "cc": [
+   1199,
+   1199
+  ],
+  "keywords": [
+   "hybrid 100",
+   "hybrid 110",
+   "hybrid 136",
+   "hybrid 145",
+   "e-dcs6",
+   "edcs6",
+   "48v",
+   "mhev",
+   "ibrida"
+  ],
+  "issues": [
+   {
+    "id": "evh-h48-capuchon",
+    "title": "Rappel : risque d'incendie sous le capot",
+    "severity": "medium",
+    "description": "Le capuchon de protection de l'alterno-démarreur est trop près d'un tuyau d'échappement : par temps humide, l'eau peut créer un arc électrique et un départ de feu.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   }
+  ],
+  "sources": [
+   "https://www.capcar.fr/blog/rappel-massif-stellantis-mars-2026-211-000-hybrides-concernees-pour-risque-dincendie",
+   "https://www.journaldugeek.com/2026/04/01/peugeot-citroen-fiat-opel-stellantis-rappelle-pour-la-enieme-fois-212-000-voitures-hybrides-en-france-pour-risque-dincendie/"
+  ]
+ },
+ {
+  "id": "evh-stellantis-phev-2019-2022",
+  "label": "Peugeot / Citroën / DS / Opel hybrides rechargeables 225 et 300 (Hybrid, Hybrid4, 2019-2022)",
+  "makes": [
+   "peugeot",
+   "citroen",
+   "ds",
+   "opel"
+  ],
+  "fuel": [
+   "hybride_rechargeable"
+  ],
+  "years": {
+   "from": 2019,
+   "to": 2022
+  },
+  "keywords": [],
+  "models": [
+   "3008",
+   "508",
+   "508 sw",
+   "c5 aircross",
+   "ds 7",
+   "ds7",
+   "ds 7 crossback",
+   "ds7 crossback",
+   "grandland",
+   "grandland x"
+  ],
+  "issues": [
+   {
+    "id": "evh-psaphev-batterie",
+    "title": "Rappels batterie : corrosion ou surchauffe",
+    "severity": "medium",
+    "description": "Plusieurs rappels sur la batterie haute tension : protection contre la rouille absente ou logiciel défaillant, avec risque de surchauffe. Mise à jour ou batterie neuve.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve de tous les rappels batterie (factures) ou les faire vérifier en concession avec le numéro de série (VIN)."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/guide-achat/Peugeot_3008-Hybrid4.html",
+   "https://fr.motor1.com/news/773253/stellantis-rappel-batterie-incendie/",
+   "https://www.caradvice.com.au/news/2021-2022-peugeot-3008-508-gt-plug-in-hybrid-recall/"
+  ]
+ },
+ {
+  "id": "evh-tesla-model-3-y-freins-eclairage",
+  "label": "Tesla Model 3 et Model Y : freins et éclairage (contrôle technique)",
+  "makes": [
+   "tesla"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2019
+  },
+  "keywords": [],
+  "models": [
+   "model 3",
+   "model y"
+  ],
+  "issues": [
+   {
+    "id": "evh-tesla-disques",
+    "title": "Disques de frein rouillés par manque d'usage",
+    "severity": "medium",
+    "fromYears": 2,
+    "description": "La voiture freine surtout avec son moteur : les freins servent peu, les disques rouillent et freinent moins bien. Défaut souvent relevé au contrôle technique.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Regarder les disques à travers les jantes : pas de rouille épaisse ni de sillons. À l'essai, freiner fort : la voiture doit freiner droit, sans vibration."
+   },
+   {
+    "id": "evh-tesla-eclairage",
+    "title": "Phares et feux défaillants plus souvent que la moyenne",
+    "severity": "low",
+    "description": "Les phares avant et les feux arrière tombent plus souvent en panne que la moyenne. Un rappel de 2022 a été corrigé par mise à jour à distance.",
+    "costMin": 0,
+    "costMax": 1200,
+    "whatToCheck": "Allumer tous les feux (codes, phares, clignotants, feux arrière et stop) et faire le tour de la voiture : tout doit s'allumer, sans buée."
+   }
+  ],
+  "sources": [
+   "https://www.auto-motor-und-sport.de/mittelklasse/gebrauchtwagen/gebrauchte-teslas-das-sind-die-hauptprobleme-von-model-3-und-y/",
+   "https://ecomento.de/2023/11/16/tesla-model-3-beim-tuev-report-2024-auf-dem-letzten-platz/",
+   "https://www.blick.ch/auto/tuev-report-2026-tesla-model-y-landet-erneut-auf-letztem-platz-id21451332.html"
+  ]
+ },
+ {
+  "id": "evh-dacia-spring-2021-2024",
+  "label": "Dacia Spring électrique (2021-2024)",
+  "makes": [
+   "dacia"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2021,
+   "to": 2024
+  },
+  "keywords": [],
+  "models": [
+   "spring"
+  ],
+  "issues": [
+   {
+    "id": "evh-spring-rouille",
+    "title": "Rouille précoce sous la voiture et sur les jantes",
+    "severity": "medium",
+    "fromYears": 2,
+    "description": "Essieu arrière, dessous de la batterie et jantes 14 pouces rouillent tôt. Avant sept. 2023, une fuite de la batterie 12 V peut aussi ronger l'avant droit.",
+    "costMin": 0,
+    "costMax": 1000,
+    "whatToCheck": "Regarder sous la voiture (essieu arrière, dessous de la batterie) et les jantes : pas de rouille ni de fissure. La garantie antirouille dure 6 ans."
+   },
+   {
+    "id": "evh-spring-charge",
+    "title": "Problèmes de charge et chargeur embarqué",
+    "severity": "medium",
+    "description": "Charge qui s'arrête, câble bloqué, refus de charger ou de démarrer avec « panne électrique danger » : souvent des mises à jour, parfois le chargeur à changer.",
+    "costMin": 0,
+    "costMax": 1500,
+    "whatToCheck": "Brancher la voiture pendant la visite : la charge doit démarrer et le câble se débrancher sans forcer. Demander la liste des mises à jour faites."
+   },
+   {
+    "id": "evh-spring-peinture",
+    "title": "Peinture fragile qui s'écaille",
+    "severity": "low",
+    "description": "La peinture est fine : éclats, bulles et décollements apparaissent vite sur les portes, le capot et les pare-chocs.",
+    "costMin": 0,
+    "costMax": 500,
+    "whatToCheck": "Faire le tour de la voiture en plein jour : chercher les éclats et les bulles de peinture, surtout sur le capot et le bas des portes."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/dacia-spring-la-citadine-electrique-rencontre-des-problemes-de-rouille-30039282.html",
+   "https://www.largus.fr/guide-achat-occasion/dacia/spring/avis-fiabilite-dacia-spring-i-bbg-30039762.html",
+   "https://www.fiches-auto.fr/fiabilite-dacia/fiabilite-673-pannes-dacia-spring.php"
+  ]
+ },
+ {
+  "id": "evh-nissan-leaf-1-2011-2017",
+  "label": "Nissan Leaf 1re génération (24 et 30 kWh, 2011-2017)",
+  "makes": [
+   "nissan"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2011,
+   "to": 2017
+  },
+  "keywords": [],
+  "models": [
+   "leaf"
+  ],
+  "issues": [
+   {
+    "id": "evh-leaf1-capacite",
+    "title": "Batterie qui perd de la capacité (sans refroidissement)",
+    "severity": "high",
+    "fromYears": 4,
+    "description": "La batterie n'est refroidie que par l'air : elle perd de la capacité avec l'âge, la chaleur et les recharges rapides. L'autonomie peut fondre de moitié.",
+    "costMin": 1500,
+    "costMax": 8000,
+    "whatToCheck": "Compter les barrettes de capacité à droite de la jauge (12 = neuve, 9 ou moins = usée). Demander un test récent de l'état de santé de la batterie."
+   },
+   {
+    "id": "evh-leaf1-30kwh",
+    "title": "Batterie 30 kWh (2016-2017) qui s'use trois fois plus vite",
+    "severity": "high",
+    "fromYears": 2,
+    "description": "Une étude a montré que la batterie 30 kWh des Leaf 2016-2017 perdait environ 10 % de capacité par an, trois fois plus que la 24 kWh.",
+    "costMin": 1500,
+    "costMax": 8000,
+    "whatToCheck": "Sur une 30 kWh, exiger un test récent de l'état de santé de la batterie et compter les barrettes de capacité : il en faut au moins 10 sur 12."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-nissan/fiabilite-728-pannes-nissan-leaf.php",
+   "https://www.greencarreports.com/news/1116020_nissan-leaf-30-kwh-battery-decline-3-times-that-of-earlier-electric-cars-study",
+   "https://www.clubic.com/actualite-620767-pourquoi-la-nissan-leaf-a-fait-peur-a-toute-l-industrie-automobile-electrique.html",
+   "https://rouleur-electrique.fr/degradation-des-batteries-de-voiture-electrique-la-faute-a-la-nissan-leaf/"
+  ]
+ },
+ {
+  "id": "evh-nissan-leaf-2-2018-2025",
+  "label": "Nissan Leaf 2e génération (40 et 62 kWh, 2018-2025)",
+  "makes": [
+   "nissan"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2018,
+   "to": 2025
+  },
+  "keywords": [],
+  "models": [
+   "leaf"
+  ],
+  "issues": [
+   {
+    "id": "evh-leaf2-recharge",
+    "title": "Recharge rapide ralentie quand la batterie chauffe",
+    "severity": "info",
+    "description": "Sans refroidissement par liquide, la batterie chauffe après une ou deux recharges rapides : la voiture réduit alors fortement la puissance de recharge.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Si vous faites de longs trajets, prévoir des recharges plus lentes. Demander si les mises à jour du logiciel de batterie ont été faites."
+   },
+   {
+    "id": "evh-leaf2-usure",
+    "title": "Batterie à surveiller : refroidie seulement par l'air",
+    "severity": "medium",
+    "fromYears": 5,
+    "description": "Comme sur la 1re génération, la batterie n'a pas de refroidissement par liquide : elle s'use plus vite en cas de chaleur et de recharges rapides fréquentes.",
+    "costMin": 1500,
+    "costMax": 9000,
+    "whatToCheck": "Demander un test récent de l'état de santé de la batterie. Compter les barrettes de capacité à droite de la jauge (12 = neuve)."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/articles-auto/batterie-et-recharge-ve/s-4234-rapidgate-quand-la-batterie-surchauffe-trop-.php",
+   "https://www.electrive.com/2018/04/08/leaf-drivers-complain-of-rapidgate",
+   "https://www.clubic.com/actualite-620767-pourquoi-la-nissan-leaf-a-fait-peur-a-toute-l-industrie-automobile-electrique.html"
+  ]
+ },
+ {
+  "id": "evh-hyundai-kona-ioniq-ev-2018-2020",
+  "label": "Hyundai Kona électrique et Ioniq électrique (produits août 2018 - mars 2020)",
+  "makes": [
+   "hyundai"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2018,
+   "to": 2020
+  },
+  "keywords": [],
+  "models": [
+   "kona",
+   "ioniq"
+  ],
+  "issues": [
+   {
+    "id": "evh-kona-batterie",
+    "title": "Rappel : batterie à remplacer (risque d'incendie)",
+    "severity": "medium",
+    "description": "Sur les Kona et Ioniq électriques produits d'août 2018 à mars 2020, la batterie peut faire un court-circuit et prendre feu. Hyundai la remplace gratuitement.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve du remplacement de la batterie. Sinon, vérifier en concession Hyundai avec le numéro de série (VIN) et ne pas charger au-delà de 90 %."
+   }
+  ],
+  "sources": [
+   "https://www.automobile-propre.com/articles/batteries-hyundai-lance-sa-campagne-de-rappel-en-france/",
+   "https://www.clubic.com/pro/entreprises/lg/actualite-362995-sr-hyundai-rappelle-pres-de-82-000-voitures-electriques-en-raison-de-risques-d-incendie.html"
+  ]
+ },
+ {
+  "id": "evh-hyundai-kia-egmp-iccu",
+  "label": "Hyundai Ioniq 5 / Ioniq 6, Kia EV6, Genesis GV60 (2021-2025)",
+  "makes": [
+   "hyundai",
+   "kia",
+   "genesis"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2021,
+   "to": 2025
+  },
+  "keywords": [],
+  "models": [
+   "ioniq 5",
+   "ioniq5",
+   "ioniq 6",
+   "ioniq6",
+   "ev6",
+   "gv60"
+  ],
+  "issues": [
+   {
+    "id": "evh-egmp-boitier-charge",
+    "title": "Boîtier de charge qui lâche : perte de puissance",
+    "severity": "high",
+    "description": "Le boîtier qui recharge la batterie 12 V peut tomber en panne : alerte électrique, puissance réduite, voire arrêt. Rappels et remplacements gratuits sous garantie.",
+    "costMin": 0,
+    "costMax": 2500,
+    "whatToCheck": "Demander si le boîtier de charge (appelé ICCU) a été remplacé ou mis à jour. À l'essai, aucune alerte « vérifier système électrique » ne doit s'afficher."
+   }
+  ],
+  "sources": [
+   "https://www.cars.com/articles/208000-plus-hyundai-genesis-kia-evs-recalled-for-damaged-charging-unit-493101",
+   "https://rouleur-electrique.fr/rappel-massif-de-voitures-electriques-hyundai-kia-et-genesis-face-a-un-probleme-critique/"
+  ]
+ },
+ {
+  "id": "evh-vw-id-logiciel-2020-2022",
+  "label": "Volkswagen ID.3 / ID.4 / ID.5 premiers modèles (2020-2022)",
+  "makes": [
+   "volkswagen"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2020,
+   "to": 2022
+  },
+  "keywords": [],
+  "models": [
+   "id.3",
+   "id3",
+   "id. 3",
+   "id.4",
+   "id4",
+   "id. 4",
+   "id.5",
+   "id5",
+   "id. 5"
+  ],
+  "issues": [
+   {
+    "id": "evh-vwid-logiciel",
+    "title": "Logiciel bogué des premiers modèles",
+    "severity": "low",
+    "description": "Écran qui se fige ou s'éteint, menus lents, navigation qui se trompe, alertes sans raison. Des mises à jour en concession corrigent une grande partie des défauts.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la version du logiciel et les mises à jour faites. À l'essai, utiliser l'écran, la navigation et le téléphone : rien ne doit se figer."
+   }
+  ],
+  "sources": [
+   "https://fr.motor1.com/news/400963/volkswagen-id3-retard-production-problemes/",
+   "https://gebrauchtwagenberater.de/vw-id4-probleme-schwachstellen-rueckrufe/"
+  ]
+ },
+ {
+  "id": "evh-vw-cupra-meb-batterie-2022-2024",
+  "label": "Volkswagen ID.3 / ID.4 / ID.5 / ID. Buzz et Cupra Born (produits févr. 2022 - août 2024)",
+  "makes": [
+   "volkswagen",
+   "cupra"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2022,
+   "to": 2024
+  },
+  "keywords": [],
+  "models": [
+   "id.3",
+   "id3",
+   "id. 3",
+   "id.4",
+   "id4",
+   "id. 4",
+   "id.5",
+   "id5",
+   "id. 5",
+   "id. buzz",
+   "id.buzz",
+   "id buzz",
+   "born"
+  ],
+  "issues": [
+   {
+    "id": "evh-meb-modules",
+    "title": "Rappel : modules de batterie non conformes",
+    "severity": "medium",
+    "description": "Certains modules de batterie peuvent perdre leur charge : autonomie en baisse, voyant d'alerte, risque d'incendie. Mise à jour, contrôle et modules changés gratuitement.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   }
+  ],
+  "sources": [
+   "https://rouleur-electrique.fr/pres-de-100-000-volkswagen-electriques-rappelees-votre-id-est-elle-concernee/",
+   "https://www.presse-citron.net/100-000-voitures-electriques-volkswagen-et-cupra-rappelees-pour-un-probleme-de-batterie-attention-il-y-a-un-risque-dincendie/",
+   "https://gebrauchtwagenberater.de/vw-id4-probleme-schwachstellen-rueckrufe/"
+  ]
+ },
+ {
+  "id": "evh-mg-electriques-logiciel",
+  "label": "MG4 Electric et MG ZS EV (2019 et après)",
+  "makes": [
+   "mg"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2019
+  },
+  "keywords": [],
+  "models": [
+   "mg4",
+   "mg 4",
+   "mg4 electric",
+   "4",
+   "zs",
+   "zs ev",
+   "mg zs",
+   "mg zs ev"
+  ],
+  "issues": [
+   {
+    "id": "evh-mg-ecran",
+    "title": "Bugs d'écran et pannes électroniques",
+    "severity": "low",
+    "description": "L'écran central se fige ou redémarre seul, le téléphone se déconnecte, la caméra de recul s'éteint. Mises à jour ou remplacement de l'écran parfois nécessaires.",
+    "costMin": 0,
+    "costMax": 800,
+    "whatToCheck": "À l'essai, connecter son téléphone, lancer la navigation et passer la marche arrière : l'écran ne doit ni se figer ni redémarrer."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-mg/fiabilite-717-pannes-mg-mg4.php",
+   "https://www.fiches-auto.fr/fiabilite-mg/fiabilite-732-pannes-mg-zs.php",
+   "https://www.whatcar.com/mg-motor-uk/zs-ev/hatchback/used-review/n22835/advice"
+  ]
+ },
+ {
+  "id": "evh-fiat-500e-2020",
+  "label": "Fiat 500e et Abarth 500e électriques (2020 et après)",
+  "makes": [
+   "fiat",
+   "abarth"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2020
+  },
+  "keywords": [],
+  "models": [
+   "500",
+   "500e",
+   "500 e",
+   "500c",
+   "500 c"
+  ],
+  "issues": [
+   {
+    "id": "evh-500e-rappel-2021",
+    "title": "Rappel batterie (produites oct. 2020 - juil. 2021)",
+    "severity": "medium",
+    "description": "Sur les 500 électriques produites d'octobre 2020 à juillet 2021, des matériaux défectueux dans la batterie peuvent provoquer un court-circuit et un incendie.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   },
+   {
+    "id": "evh-500e-rappel-ecrou",
+    "title": "Rappel écrou de batterie (produites sept. 2021 - 2023)",
+    "severity": "medium",
+    "description": "Sur les 500 produites de sept. 2021 à nov. 2023 (Abarth jusqu'à janv. 2024), un écrou mal serré dans la batterie peut chauffer et provoquer un incendie.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   }
+  ],
+  "sources": [
+   "https://www.sicurauto.it/news/richiami-auto/fiat-500-elettrica-richiamata-rischio-incendio-batteria-al-litio/",
+   "https://www.italpassion.fr/fiat/fiat-500-essence-rappel-pour-risque-dincendie-quelles-annees-sont-concernees/",
+   "https://lautomobiliste.fr/10/12/2024/rappel-fiat-500-abarth-risque-incendie/"
+  ]
+ },
+ {
+  "id": "evh-bmw-i3-2013-2022",
+  "label": "BMW i3 et i3 REx (prolongateur d'autonomie, 2013-2022)",
+  "makes": [
+   "bmw"
+  ],
+  "fuel": [
+   "electrique",
+   "hybride_rechargeable"
+  ],
+  "years": {
+   "from": 2013,
+   "to": 2022
+  },
+  "keywords": [],
+  "models": [
+   "i3",
+   "i3s"
+  ],
+  "issues": [
+   {
+    "id": "evh-i3-supports",
+    "title": "Supports du moteur électrique qui cassent",
+    "severity": "medium",
+    "fromKm": 50000,
+    "description": "Les supports et vis du moteur électrique cassent facilement (surtout les premiers en plastique) : claquements et à-coups à l'accélération.",
+    "costMin": 400,
+    "costMax": 1500,
+    "whatToCheck": "À l'essai, accélérer franchement puis lever le pied plusieurs fois : pas de claquement ni d'à-coup venant de l'arrière."
+   },
+   {
+    "id": "evh-i3-rex",
+    "title": "Petit moteur à essence REx négligé",
+    "severity": "medium",
+    "description": "Sur la version REx, le petit moteur à essence tourne peu : essence qui vieillit, pompe à essence et injecteurs qui lâchent, vidanges oubliées.",
+    "costMin": 300,
+    "costMax": 1500,
+    "whatToCheck": "Demander les factures de vidange du moteur REx (tous les 2 ans). À l'essai, le faire tourner : pas de voyant ni de bruit anormal."
+   },
+   {
+    "id": "evh-i3-pneus",
+    "title": "Pneus étroits spécifiques, chers et fragiles",
+    "severity": "low",
+    "description": "Les pneus très étroits de 19 ou 20 pouces sont propres à l'i3 : ils crèvent assez facilement, coûtent cher et sont parfois difficiles à trouver.",
+    "costMin": 450,
+    "costMax": 800,
+    "whatToCheck": "Regarder l'usure des 4 pneus et la date de fabrication. Prévoir le coût d'un train complet s'ils sont usés. Il n'y a pas de roue de secours."
+   },
+   {
+    "id": "evh-i3-autonomie",
+    "title": "Batterie 22 kWh des premières i3 : autonomie courte",
+    "severity": "info",
+    "description": "Les i3 de 2013 à mi-2016 ont une petite batterie : autonomie courte qui baisse encore avec l'âge. Les versions 33 et 42 kWh sont nettement meilleures.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Vérifier sur la facture ou l'annonce la taille de batterie (60, 94 ou 120 Ah). Demander un test récent de l'état de santé de la batterie."
+   }
+  ],
+  "sources": [
+   "https://www.pistonheads.com/news/ph-buying-guides/bmw-i3-ph-used-buying-guide/44928",
+   "https://www.carmag.co.za/news/buying-used-cars/used-bmw-i3-2015-2021-reliability-common-problems-and-buying-guide/",
+   "https://www.drivingelectric.com/bmw/i3/1368/used-bmw-i3-buying-guide"
+  ]
+ },
+ {
+  "id": "evh-mercedes-eqa-eqb-2021-2024",
+  "label": "Mercedes EQA et EQB électriques (2021-2024)",
+  "makes": [
+   "mercedes",
+   "mercedes-benz"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2021,
+   "to": 2024
+  },
+  "keywords": [],
+  "models": [
+   "eqa",
+   "eqb"
+  ],
+  "issues": [
+   {
+    "id": "evh-eqa-batterie",
+    "title": "Rappel : batterie à risque d'incendie",
+    "severity": "medium",
+    "description": "Sur les EQA et EQB produits de 2021 à mi-2024, une cellule de batterie peut faire un court-circuit. Charge limitée à 80 %, puis mise à jour ou batterie neuve.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve de la mise à jour ou du remplacement de la batterie. Sinon, vérifier en concession avec le numéro de série (VIN)."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/rappel-eqa-et-eqb-pourquoi-mercedes-recommande-de-limiter-la-recharge-des-suv-electriques-30039915.html",
+   "https://heise.de/-11189030"
+  ]
+ },
+ {
+  "id": "evh-toyota-prius4-chr-2016-2018",
+  "label": "Toyota Prius 4, Prius rechargeable et C-HR hybride (produits juin 2015 - mai 2018)",
+  "makes": [
+   "toyota"
+  ],
+  "fuel": [
+   "hybride",
+   "hybride_rechargeable"
+  ],
+  "years": {
+   "from": 2016,
+   "to": 2018
+  },
+  "keywords": [],
+  "models": [
+   "prius",
+   "prius plug-in",
+   "prius rechargeable",
+   "c-hr",
+   "chr"
+  ],
+  "issues": [
+   {
+    "id": "evh-prius4-faisceau",
+    "title": "Rappel : câble du moteur électrique qui s'use",
+    "severity": "medium",
+    "description": "La gaine d'un câble du système hybride peut s'user avec la poussière et les vibrations : court-circuit et risque d'incendie. Câble contrôlé et protégé.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   }
+  ],
+  "sources": [
+   "https://next.ink/brief-article/risque-dincendie-toyota-rappelle-plus-dun-million-de-voitures-hybrides-dont-32-700-en-france/",
+   "https://www.rtbf.be/article/toyota-rappelle-plus-d-1-million-de-voitures-hybrides-dont-6700-en-belgique-10011001"
+  ]
+ },
+ {
+  "id": "evh-toyota-15-hybride-m15a",
+  "label": "Toyota 1.5 hybride (M15A-FXE : Yaris 4, Yaris Cross, 2020 et après)",
+  "makes": [
+   "toyota"
+  ],
+  "fuel": [
+   "hybride"
+  ],
+  "years": {
+   "from": 2020
+  },
+  "cc": [
+   1490,
+   1490
+  ],
+  "keywords": [
+   "m15a",
+   "m15a-fxe",
+   "116h",
+   "130h",
+   "hybrid 116",
+   "hybride 116",
+   "hybrid 130",
+   "hybride 130"
+  ],
+  "models": [
+   "yaris",
+   "yaris cross"
+  ],
+  "issues": [
+   {
+    "id": "evh-m15a-coupure",
+    "title": "Rappel : coupure du système hybride (juil.-nov. 2020)",
+    "severity": "medium",
+    "description": "Sur les Yaris hybrides produites de juillet à novembre 2020, le système hybride peut se couper en roulant lors d'une forte accélération. Logiciel corrigé.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   },
+   {
+    "id": "evh-m15a-12v",
+    "title": "Batterie 12 V qui se vide trop vite",
+    "severity": "low",
+    "description": "La petite batterie 12 V se décharge vite, surtout si la voiture reste plusieurs jours sans rouler : la voiture refuse alors de se mettre en marche.",
+    "costMin": 0,
+    "costMax": 250,
+    "whatToCheck": "Demander si la batterie 12 V a déjà été changée ou si la correction Toyota a été faite. La voiture doit passer en « Ready » du premier coup."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/rappel-toyota-yaris-2020-des-systemes-hybrides-a-reprogrammer-30022925.html",
+   "https://www.hella.com/techworld/be-fr/bi/pdf/toyota-yaris-coupure-du-systeme-hybride/toyota-yaris-coupure-du-systeme-hybride.pdf",
+   "https://www.largus.fr/guide-achat/Toyota_Yaris.html",
+   "https://www.fiches-auto.fr/fiabilite-toyota/fiabilite-703-pannes-toyota-yaris-cross.php"
+  ]
+ },
+ {
+  "id": "evh-toyota-rav4-phev-2020-2022",
+  "label": "Toyota RAV4 hybride rechargeable et Lexus NX 450h+ (produits nov. 2019 - juin 2022)",
+  "makes": [
+   "toyota",
+   "lexus"
+  ],
+  "fuel": [
+   "hybride_rechargeable"
+  ],
+  "years": {
+   "from": 2020,
+   "to": 2022
+  },
+  "keywords": [],
+  "models": [
+   "rav4",
+   "rav 4",
+   "nx"
+  ],
+  "issues": [
+   {
+    "id": "evh-rav4phev-convertisseur",
+    "title": "Rappel : convertisseur de courant qui surchauffe",
+    "severity": "medium",
+    "description": "Sur les RAV4 hybrides rechargeables produits de nov. 2019 à juin 2022 (et NX 450h+), le convertisseur de courant peut chauffer fort : risque d'incendie.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve que le rappel a été fait (lettre, facture) ou le faire vérifier en concession avec le numéro de série (VIN)."
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/toyota-rappelle-plus-de-2-800-rav4-207287.htm",
+   "https://www.fiches-auto.fr/rappels-toyota/r-633-rappels-toyota-rav4.php"
+  ]
+ },
+ {
+  "id": "evh-ford-kuga-phev-2019-2021",
+  "label": "Ford Kuga 2.5 hybride rechargeable (produit juillet 2019 - juillet 2020)",
+  "makes": [
+   "ford"
+  ],
+  "fuel": [
+   "hybride_rechargeable"
+  ],
+  "years": {
+   "from": 2019,
+   "to": 2021
+  },
+  "keywords": [],
+  "models": [
+   "kuga"
+  ],
+  "issues": [
+   {
+    "id": "evh-kuga-batterie",
+    "title": "Rappel : batterie remplacée (risque d'incendie)",
+    "severity": "medium",
+    "description": "Sur les Kuga hybrides rechargeables produits de juillet 2019 à juillet 2020, des impuretés dans la batterie pouvaient la faire surchauffer. Ford l'a remplacée.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve du remplacement de la batterie. Sinon, vérifier chez Ford avec le numéro de série (VIN) et ne pas recharger la voiture avant."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/rappel-ford-kuga-hybride-rechargeable-risque-dincendie-10389393.html",
+   "https://www.autoexpress.co.uk/news/353611/ford-kuga-recall-ford-finds-fix-faulty-phev-battery-pack"
+  ]
+ },
+ {
   "id": "mfr-peugeot-206",
   "label": "Peugeot 206 (1998-2012)",
   "makes": [
@@ -6750,6 +7671,886 @@
   "sources": [
    "https://www.fiches-auto.fr/fiabilite-volkswagen/fiabilite-172-pannes-volkswagen-touran.php",
    "https://www.whatcar.com/volkswagen/touran/mpv/used-review/n728/reliability"
+  ]
+ },
+ {
+  "id": "mint-audi-a3-8p",
+  "label": "Audi A3 (8P, 2003-2012)",
+  "makes": [
+   "audi"
+  ],
+  "years": {
+   "from": 2003,
+   "to": 2012
+  },
+  "keywords": [],
+  "models": [
+   "a3"
+  ],
+  "issues": [
+   {
+    "id": "mint-a3-8p-locks",
+    "title": "Serrures et verrouillage centralisé",
+    "severity": "low",
+    "fromYears": 8,
+    "description": "Le contacteur de serrure des portes peut lâcher : portes qui se verrouillent au hasard, parfois clés enfermées dans la voiture.",
+    "costMin": 150,
+    "costMax": 350,
+    "whatToCheck": "Verrouiller et déverrouiller plusieurs fois avec la télécommande puis avec la clé : portes et coffre doivent réagir."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-audi/fiabilite-112-pannes-audi-a3.php",
+   "https://www.autoexpress.co.uk/audi/a3/36947/used-audi-a3-review/page/0/1"
+  ]
+ },
+ {
+  "id": "mint-seat-ibiza-6j",
+  "label": "Seat Ibiza IV (6J, 2008-2017)",
+  "makes": [
+   "seat"
+  ],
+  "years": {
+   "from": 2008,
+   "to": 2017
+  },
+  "keywords": [],
+  "models": [
+   "ibiza"
+  ],
+  "issues": [
+   {
+    "id": "mint-ibiza4-windows",
+    "title": "Vitres électriques capricieuses",
+    "severity": "low",
+    "fromYears": 6,
+    "description": "Les moteurs de vitres électriques lâchent assez souvent : vitre qui ne bouge plus, ou qui bouge toute seule.",
+    "costMin": 150,
+    "costMax": 400,
+    "whatToCheck": "Monter et descendre chaque vitre électrique deux fois : elle doit aller vite, sans bruit, sans à-coup et sans s'arrêter en route."
+   },
+   {
+    "id": "mint-ibiza4-ac",
+    "title": "Clim : condenseur qui fuit",
+    "severity": "low",
+    "fromYears": 6,
+    "description": "La climatisation peut perdre son froid, souvent par une fuite du condenseur : sifflement à l'avant, air qui reste tiède.",
+    "costMin": 150,
+    "costMax": 600,
+    "whatToCheck": "Mettre la clim au maximum 5 minutes : l'air doit sortir bien froid aux aérateurs, sans sifflement ni grondement à l'avant."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-seat/fiabilite-204-pannes-seat-ibiza.php",
+   "https://www.autoexpress.co.uk/seat/ibiza/357674/used-seat-ibiza-mk4-2008-2017-what-should-you-look-out",
+   "https://www.autocar.co.uk/car-review/seat/ibiza-2008-2017/reliability"
+  ]
+ },
+ {
+  "id": "mint-skoda-fabia-2",
+  "label": "Skoda Fabia II (2012-2014, rappel airbag)",
+  "makes": [
+   "skoda"
+  ],
+  "years": {
+   "from": 2012,
+   "to": 2014
+  },
+  "keywords": [],
+  "models": [
+   "fabia"
+  ],
+  "issues": [
+   {
+    "id": "mint-fabia2-takata",
+    "title": "Rappel airbag Takata (fabriquées 2012-2014)",
+    "severity": "medium",
+    "description": "Rappel 69KH : l'airbag conducteur des Fabia sorties d'usine du 24 septembre 2012 au 27 juin 2014 peut se dégrader. Remplacement gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander la preuve du rappel airbag 69KH, ou vérifier avec le numéro de série auprès d'un garage Skoda."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-skoda/fiabilite-199-pannes-skoda-fabia-2.php",
+   "https://www.caradisiac.com/skoda-ecrit-un-nouvel-episode-du-feuilleton-des-rappels-takata-213256.htm",
+   "https://lautomobiliste.fr/14/09/2024/skoda-100-000-vehicules-rappeles-en-france-pour-airbags-defectueux-risque-de-blessures-graves-au-visage/"
+  ]
+ },
+ {
+  "id": "mint-bmw-serie-1-e87",
+  "label": "BMW Série 1 (E87, 2004-2011)",
+  "makes": [
+   "bmw"
+  ],
+  "years": {
+   "from": 2004,
+   "to": 2011
+  },
+  "keywords": [],
+  "models": [
+   "serie 1"
+  ],
+  "issues": [
+   {
+    "id": "mint-e87-windows",
+    "title": "Vitres électriques qui se bloquent",
+    "severity": "low",
+    "fromYears": 8,
+    "description": "Les lève-vitres, à l'avant comme à l'arrière, lâchent souvent : vitre bloquée, qui ne remonte plus ou qui tombe.",
+    "costMin": 200,
+    "costMax": 450,
+    "whatToCheck": "Monter et descendre chaque vitre électrique deux fois : elle doit aller vite, sans bruit, sans à-coup et sans s'arrêter en route."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-bmw/fiabilite-113-pannes-bmw-serie-1.php",
+   "https://www.whatcar.com/bmw/1-series/hatchback/used-review/n17384/advice"
+  ]
+ },
+ {
+  "id": "mint-mercedes-classe-c-w204",
+  "label": "Mercedes Classe C (W204, 2007-2014)",
+  "makes": [
+   "mercedes",
+   "mercedes-benz"
+  ],
+  "years": {
+   "from": 2007,
+   "to": 2014
+  },
+  "keywords": [],
+  "models": [
+   "classe c"
+  ],
+  "issues": [
+   {
+    "id": "mint-w204-elv",
+    "title": "Verrou électronique de direction bloqué",
+    "severity": "medium",
+    "description": "Le verrou électronique de la colonne peut rester bloqué ou la clé ne plus être reconnue : la voiture refuse de démarrer.",
+    "costMin": 400,
+    "costMax": 1000,
+    "whatToCheck": "Démarrer et couper le moteur plusieurs fois. Demander si le verrou de colonne a déjà été changé."
+   },
+   {
+    "id": "mint-w204-rust",
+    "title": "Rouille du berceau arrière",
+    "severity": "medium",
+    "fromYears": 10,
+    "description": "Le berceau arrière (support de la suspension) rouille plus que le reste de la caisse avec l'âge, et sa réparation coûte cher.",
+    "costMin": 300,
+    "costMax": 1200,
+    "whatToCheck": "Regarder sous l'arrière de la voiture : pas de rouille qui gonfle ou s'effrite sur le berceau et les bras."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-mercedes/fiabilite-186-pannes-mercedes-classe-c.php",
+   "https://parkers.co.uk/mercedes-benz/c-class/saloon-2007/used-review",
+   "https://mbworld.org/how-tos/a/mercedes-benz-c-class-buying-guide-387058"
+  ]
+ },
+ {
+  "id": "mint-mercedes-classe-a-w176",
+  "label": "Mercedes Classe A (W176, 2012-2018)",
+  "makes": [
+   "mercedes",
+   "mercedes-benz"
+  ],
+  "years": {
+   "from": 2012,
+   "to": 2018
+  },
+  "keywords": [],
+  "models": [
+   "classe a"
+  ],
+  "issues": [
+   {
+    "id": "mint-w176-steering",
+    "title": "Rappel arbre de direction (2016-2017)",
+    "severity": "medium",
+    "description": "Rappel de 2021 : une pièce de l'articulation de l'arbre de direction, sur des voitures fabriquées de novembre 2016 à juillet 2017, peut être défectueuse.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Donner le numéro de série (carte grise, case E) à un garage de la marque et demander que tous les rappels soient faits."
+   },
+   {
+    "id": "mint-w176-other-recalls",
+    "title": "Rappels boîte à fusibles et eCall",
+    "severity": "low",
+    "description": "Autres rappels gratuits selon la date de fabrication : fusibles de la boîte intérieure qui se desserrent, appel d'urgence eCall (mise à jour).",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Donner le numéro de série (carte grise, case E) à un garage de la marque et demander que tous les rappels soient faits."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-mercedes/fiabilite-372-pannes-mercedes-classe-a.php",
+   "https://australiancar.reviews/recalls-faults-mercedes-benz-w176-a-class-2013-18/"
+  ]
+ },
+ {
+  "id": "mint-ford-fiesta-6",
+  "label": "Ford Fiesta VI (2008-2017)",
+  "makes": [
+   "ford"
+  ],
+  "years": {
+   "from": 2008,
+   "to": 2017
+  },
+  "keywords": [],
+  "models": [
+   "fiesta"
+  ],
+  "issues": [
+   {
+    "id": "mint-fiesta6-blower",
+    "title": "Ventilation en panne (résistance)",
+    "severity": "low",
+    "description": "La ventilation peut tomber en panne, souvent par la résistance de soufflerie : elle ne marche plus qu'à fond, ou plus du tout.",
+    "costMin": 50,
+    "costMax": 200,
+    "whatToCheck": "Tester chaque vitesse de ventilation, de la plus faible à la plus forte : chacune doit fonctionner."
+   },
+   {
+    "id": "mint-fiesta6-steering",
+    "title": "Crémaillère et rotules de direction peu durables",
+    "severity": "medium",
+    "fromKm": 80000,
+    "description": "La crémaillère de direction et les rotules s'usent tôt : craquements, jeu ou point dur dans le volant.",
+    "costMin": 200,
+    "costMax": 900,
+    "whatToCheck": "Tourner le volant à fond à l'arrêt et en roulant doucement : pas de craquement ni de point dur."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-ford/fiabilite-276-pannes-ford-fiesta.php",
+   "https://www.autoexpress.co.uk/ford/fiesta/356270/used-ford-fiesta-mk7-2008-2017-problems-recalls",
+   "https://www.whatcar.com/ford/fiesta/hatchback/used-review/n340/reliability"
+  ]
+ },
+ {
+  "id": "mint-ford-focus-3",
+  "label": "Ford Focus III (2011-2018)",
+  "makes": [
+   "ford"
+  ],
+  "years": {
+   "from": 2011,
+   "to": 2018
+  },
+  "keywords": [],
+  "models": [
+   "focus"
+  ],
+  "issues": [
+   {
+    "id": "mint-focus3-clutch",
+    "title": "Embrayage qui s'use tôt (boîte manuelle)",
+    "severity": "medium",
+    "fromKm": 50000,
+    "description": "L'embrayage est le point faible le plus cité : il patine ou broute parfois avant 60 000 km. Des rappels ont visé le plateau d'embrayage.",
+    "costMin": 700,
+    "costMax": 1400,
+    "whatToCheck": "Accélérer fort en 4e à bas régime : le moteur ne doit pas s'emballer. Démarrer en côte sans broutement. Demander si les rappels sont faits."
+   },
+   {
+    "id": "mint-focus3-keyless",
+    "title": "Ouverture sans clé : poignées qui prennent l'eau",
+    "severity": "low",
+    "fromYears": 5,
+    "description": "Sur les versions à ouverture sans clé, l'eau et le sel entrent dans les poignées avant : la porte ne s'ouvre ou ne se verrouille plus sans clé.",
+    "costMin": 100,
+    "costMax": 350,
+    "whatToCheck": "Clé en poche, ouvrir puis verrouiller par chaque poignée avant : la porte doit réagir à chaque fois."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-ford/fiabilite-326-pannes-ford-focus-3.php",
+   "https://www.carbuyer.co.uk/reviews/ford/focus/hatchback/143875/reliability",
+   "https://completecar.ie/used-car-reviews/review/10041/Ford-Focus-Mk3-2011-2018-used-car-buying-guide/reliability-recalls-warranty.html",
+   "https://parkers.co.uk/used-cars/ford-focus-mk3-buying-guide",
+   "https://uk.haynes.com/blogs/tips-tutorials/ford-focus-common-problems-2011-2018"
+  ]
+ },
+ {
+  "id": "mint-ford-c-max-2",
+  "label": "Ford C-Max II et Grand C-Max (2010-2019)",
+  "makes": [
+   "ford"
+  ],
+  "years": {
+   "from": 2010,
+   "to": 2019
+  },
+  "keywords": [],
+  "models": [
+   "c-max",
+   "grand c-max"
+  ],
+  "issues": [
+   {
+    "id": "mint-cmax2-clutch",
+    "title": "Embrayage et volant moteur fragiles",
+    "severity": "medium",
+    "fromKm": 80000,
+    "description": "Embrayage et volant moteur souffrent sur ce monospace lourd : broutement, sifflement en 1re ou patinage. Un rappel a visé le plateau (EcoBoost).",
+    "costMin": 700,
+    "costMax": 1400,
+    "whatToCheck": "Accélérer fort en 4e à bas régime : le moteur ne doit pas s'emballer. Démarrer en 1re sans broutement ni sifflement."
+   },
+   {
+    "id": "mint-cmax2-water",
+    "title": "Infiltrations d'eau",
+    "severity": "low",
+    "description": "L'eau peut entrer par certains joints (portes, rétroviseurs) et mouiller les moquettes avant ; les feux arrière prennent parfois l'eau.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Toucher les moquettes avant et soulever le tapis du coffre : tout doit être sec, sans odeur. Pas de buée dans les feux arrière."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-ford/fiabilite-318-pannes-ford-c-max.php",
+   "https://uk.haynes.com/blogs/tips-tutorials/ford-c-max-mk2-common-problems-2011-2019",
+   "https://www.motorcheck.ie/blog/used-car-guide-ford-c-max-and-grand-c-max/"
+  ]
+ },
+ {
+  "id": "mint-opel-corsa-c",
+  "label": "Opel Corsa C (2000-2006)",
+  "makes": [
+   "opel"
+  ],
+  "years": {
+   "from": 2000,
+   "to": 2006
+  },
+  "keywords": [],
+  "models": [
+   "corsa"
+  ],
+  "issues": [
+   {
+    "id": "mint-corsac-eps",
+    "title": "Direction assistée électrique qui lâche",
+    "severity": "medium",
+    "description": "La direction assistée électrique peut se couper d'un coup (boîtier de commande ou colonne) : le volant devient dur.",
+    "costMin": 300,
+    "costMax": 900,
+    "whatToCheck": "Tourner le volant à fond des deux côtés à l'arrêt : il doit rester léger, sans point dur ni voyant."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-opel/fiabilite-85-pannes-opel-corsa-3.php",
+   "https://uk.haynes.com/blogs/tips-tutorials/haynes-buying-guide-corsa-01-06"
+  ]
+ },
+ {
+  "id": "mint-opel-corsa-d",
+  "label": "Opel Corsa D (2007-2014)",
+  "makes": [
+   "opel"
+  ],
+  "years": {
+   "from": 2007,
+   "to": 2014
+  },
+  "keywords": [],
+  "models": [
+   "corsa"
+  ],
+  "issues": [
+   {
+    "id": "mint-corsad-gearbox",
+    "title": "Boîte manuelle bruyante ou qui accroche",
+    "severity": "medium",
+    "fromKm": 100000,
+    "description": "La boîte manuelle manque d'endurance : roulements qui grondent (surtout en 6 vitesses), raclement, vitesses qui accrochent.",
+    "costMin": 800,
+    "costMax": 1600,
+    "whatToCheck": "Écouter en 4e et 5e en accélérant puis en lâchant : pas de grondement ni de sifflement qui suit la vitesse."
+   },
+   {
+    "id": "mint-corsad-eps",
+    "title": "Direction assistée électrique",
+    "severity": "medium",
+    "description": "Le moteur de la direction assistée électrique tombe souvent en panne : assistance coupée ou bruyante, volant dur.",
+    "costMin": 300,
+    "costMax": 900,
+    "whatToCheck": "Tourner le volant à fond des deux côtés à l'arrêt : léger, sans bruit ni voyant de direction."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-opel/fiabilite-126-pannes-opel-corsa-4.php",
+   "https://www.parkers.co.uk/used-cars/vauxhall-corsa-2006-buying-guide",
+   "https://www.whatcar.com/vauxhall/corsa/hatchback/used-review/n755/reliability",
+   "https://uk.haynes.com/blogs/tips-tutorials/vauxhall-corsa-d-common-problems-2006-2014"
+  ]
+ },
+ {
+  "id": "mint-opel-corsa-e",
+  "label": "Opel Corsa E (2015-2019)",
+  "makes": [
+   "opel"
+  ],
+  "years": {
+   "from": 2015,
+   "to": 2019
+  },
+  "keywords": [],
+  "models": [
+   "corsa"
+  ],
+  "issues": [
+   {
+    "id": "mint-corsae-recalls",
+    "title": "Rappels : frein à main, direction, airbags",
+    "severity": "medium",
+    "description": "Rappels gratuits : boîtier de direction (fabriquées fin 2014-début 2015), airbags rideaux (fin 2016), frein à main (août 2016-janvier 2017).",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Donner le numéro de série (carte grise, case E) à un garage de la marque et demander que tous les rappels soient faits."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-opel/fiabilite-502-pannes-opel-corsa-5.php",
+   "https://whatcar.com/vauxhall/corsa/hatchback/used-review/n799/advice"
+  ]
+ },
+ {
+  "id": "mint-opel-astra-h",
+  "label": "Opel Astra H (2004-2009)",
+  "makes": [
+   "opel"
+  ],
+  "years": {
+   "from": 2004,
+   "to": 2009
+  },
+  "keywords": [],
+  "models": [
+   "astra"
+  ],
+  "issues": [
+   {
+    "id": "mint-astrah-electronics",
+    "title": "Pannes électroniques diverses",
+    "severity": "low",
+    "description": "L'électronique est la catégorie de pannes la plus citée : compteur qui donne de fausses infos, verrouillage, jauge ou vitres qui déraillent.",
+    "costMin": 100,
+    "costMax": 600,
+    "whatToCheck": "Moteur tournant, aucun voyant allumé. Tester compteur, verrouillage, clignotants, essuie-glaces, feux et autoradio."
+   },
+   {
+    "id": "mint-astrah-windows",
+    "title": "Lève-vitres",
+    "severity": "low",
+    "fromYears": 8,
+    "description": "Les lève-vitres électriques tombent assez souvent en panne.",
+    "costMin": 150,
+    "costMax": 400,
+    "whatToCheck": "Monter et descendre chaque vitre électrique deux fois : elle doit aller vite, sans bruit, sans à-coup et sans s'arrêter en route."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-opel/fiabilite-117-pannes-opel-astra.php",
+   "https://www.whatcar.com/vauxhall/astra/hatchback/used-review/n683/advice",
+   "https://australiancar.reviews/?p=46830"
+  ]
+ },
+ {
+  "id": "mint-opel-astra-j",
+  "label": "Opel Astra J (2010-2015)",
+  "makes": [
+   "opel"
+  ],
+  "years": {
+   "from": 2010,
+   "to": 2015
+  },
+  "keywords": [],
+  "models": [
+   "astra"
+  ],
+  "issues": [
+   {
+    "id": "mint-astraj-m32",
+    "title": "Boîte manuelle 6 vitesses (M32) fragile",
+    "severity": "high",
+    "fromKm": 80000,
+    "description": "La boîte manuelle 6 vitesses M32 est un gros point faible : roulements qui grondent, puis vitesses qui sautent et casse.",
+    "costMin": 1000,
+    "costMax": 2000,
+    "whatToCheck": "Écouter en 5e et 6e en accélérant puis en lâchant : un grondement annonce des roulements usés. Le levier ne doit pas bouger seul."
+   },
+   {
+    "id": "mint-astraj-water",
+    "title": "Infiltrations d'eau (coffre, plancher avant)",
+    "severity": "low",
+    "description": "L'eau peut entrer par le joint du 3e feu stop (coffre) ou sous le pare-brise et détremper les moquettes.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Toucher les moquettes avant et arrière et soulever le tapis du coffre : tout doit être sec."
+   },
+   {
+    "id": "mint-astraj-electronics",
+    "title": "Boîtier électronique mouillé : pannes diverses",
+    "severity": "low",
+    "description": "Si l'eau atteint le boîtier de commande sous la console, feux, essuie-glaces, verrouillage et voyants s'affolent.",
+    "costMin": 100,
+    "costMax": 500,
+    "whatToCheck": "Moteur tournant, aucun voyant allumé. Tester feux, essuie-glaces, verrouillage et écran. Les moquettes doivent être sèches."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-opel/fiabilite-265-pannes-opel-astra.php",
+   "https://uk.haynes.com/blogs/tips-tutorials/vauxhall-astra-mk6-common-problems-2009-2016",
+   "https://www.zr.ru/content/articles/981214-opel-astra-pokoleniya-j-neispravnosti/",
+   "https://www.whatcar.com/vauxhall/corsa/hatchback/used-review/n755/reliability",
+   "https://australiancar.reviews/?p=46830"
+  ]
+ },
+ {
+  "id": "mint-fiat-500",
+  "label": "Fiat 500 (2007 et après, thermique)",
+  "makes": [
+   "fiat"
+  ],
+  "fuel": [
+   "essence",
+   "diesel",
+   "hybride",
+   "gpl"
+  ],
+  "years": {
+   "from": 2007
+  },
+  "keywords": [],
+  "models": [
+   "500"
+  ],
+  "issues": [
+   {
+    "id": "mint-500-steering-recall",
+    "title": "Rappel colonne de direction (fabriquées fin 2009)",
+    "severity": "medium",
+    "description": "Rappel de novembre 2010 : la colonne de direction de 500 fabriquées d'octobre à décembre 2009 pouvait devoir être remplacée. Gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Donner le numéro de série (carte grise, case E) à un garage de la marque et demander que tous les rappels soient faits."
+   },
+   {
+    "id": "mint-500-paint",
+    "title": "Peinture fragile (gravillons)",
+    "severity": "low",
+    "description": "La peinture craint les gravillons, surtout en rouge et en noir (bas de caisse, bas de portes) ; les éclats peuvent rouiller.",
+    "costMin": 200,
+    "costMax": 800,
+    "whatToCheck": "Regarder bas de caisse, bas de portes, capot et hayon à la lumière : pas d'éclats rouillés ni de vernis qui pèle."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-fiat/fiabilite-188-pannes-fiat-500.php",
+   "https://www.caradisiac.com/Fiat-40429.htm",
+   "https://newcarnet.co.uk/buying-guides-content/category/Fiat",
+   "https://www.largus.fr/actualite-automobile/voiture-d-occasion-quelle-fiat-500-acheter-2925372.html",
+   "https://www.autoexpress.co.uk/fiat/500/66782/used-fiat-500-review"
+  ]
+ },
+ {
+  "id": "mint-fiat-panda-2",
+  "label": "Fiat Panda II (2003-2012)",
+  "makes": [
+   "fiat"
+  ],
+  "years": {
+   "from": 2003,
+   "to": 2012
+  },
+  "keywords": [],
+  "models": [
+   "panda"
+  ],
+  "issues": [
+   {
+    "id": "mint-panda2-eps",
+    "title": "Direction assistée électrique en panne",
+    "severity": "medium",
+    "description": "C'est le défaut le plus typique de cette Panda : l'assistance électrique peut lâcher et le volant devient dur.",
+    "costMin": 300,
+    "costMax": 900,
+    "whatToCheck": "Tourner le volant à fond des deux côtés à l'arrêt, avec et sans le mode City : léger, sans point dur ni voyant."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-fiat/fiabilite-211-pannes-fiat-panda.php",
+   "https://newcarnet.co.uk/buying-guides-content/category/Fiat"
+  ]
+ },
+ {
+  "id": "mint-fiat-punto",
+  "label": "Fiat Grande Punto / Punto Evo / Punto (2006-2018)",
+  "makes": [
+   "fiat"
+  ],
+  "years": {
+   "from": 2006,
+   "to": 2018
+  },
+  "keywords": [],
+  "models": [
+   "punto",
+   "grande punto",
+   "punto evo"
+  ],
+  "issues": [
+   {
+    "id": "mint-punto-eps",
+    "title": "Direction assistée électrique qui durcit",
+    "severity": "medium",
+    "description": "L'assistance électrique peut lâcher et le volant devenir dur d'un coup. Un rappel a visé une perte d'assistance de direction.",
+    "costMin": 300,
+    "costMax": 900,
+    "whatToCheck": "Tourner le volant à fond des deux côtés à l'arrêt, avec et sans le mode City : léger, sans point dur ni voyant."
+   },
+   {
+    "id": "mint-punto-locks",
+    "title": "Serrures, ouverture des portes et du hayon",
+    "severity": "low",
+    "fromYears": 6,
+    "description": "Ouverture des portes, serrure du hayon et verrouillage deviennent souvent capricieux : porte qui ne s'ouvre plus, coffre qui reste fermé.",
+    "costMin": 150,
+    "costMax": 400,
+    "whatToCheck": "Tester chaque vitre, le verrouillage à la télécommande et l'ouverture du coffre et des portes arrière."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-fiat/fiabilite-174-pannes-fiat-punto.php",
+   "https://www.autoexpress.co.uk/fiat/punto/106040/used-fiat-grande-punto-review",
+   "https://www.whatcar.com/fiat/grande-punto/hatchback/used-review/n328/reliability"
+  ]
+ },
+ {
+  "id": "mint-toyota-aygo-1",
+  "label": "Toyota Aygo I (2005-2010, rappel pédale)",
+  "makes": [
+   "toyota"
+  ],
+  "years": {
+   "from": 2005,
+   "to": 2010
+  },
+  "keywords": [],
+  "models": [
+   "aygo"
+  ],
+  "issues": [
+   {
+    "id": "mint-aygo1-pedal",
+    "title": "Rappel pédale d'accélérateur (2005-2009)",
+    "severity": "medium",
+    "description": "La pédale d'accélérateur pouvait coller (Aygo fabriquées de février 2005 à août 2009). Rappel gratuit chez Toyota.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Donner le numéro de série (carte grise, case E) à un garage de la marque et demander que tous les rappels soient faits."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-toyota/fiabilite-238-pannes-toyota-aygo.php",
+   "https://www.autoexpress.co.uk/toyota/aygo/60466/used-toyota-aygo-review/page/0/1",
+   "https://www.pressreader.com/uk/car-mechanics-uk/20180301/281526521525355"
+  ]
+ },
+ {
+  "id": "mint-toyota-auris-1",
+  "label": "Toyota Auris I (2007-2012)",
+  "makes": [
+   "toyota"
+  ],
+  "years": {
+   "from": 2007,
+   "to": 2012
+  },
+  "keywords": [],
+  "models": [
+   "auris"
+  ],
+  "issues": [
+   {
+    "id": "mint-auris1-rattles",
+    "title": "Bruits de planche de bord",
+    "severity": "low",
+    "description": "Les plastiques de la planche de bord grincent et vibrent : c'est la plainte la plus fréquente des propriétaires.",
+    "costMin": 0,
+    "costMax": 200,
+    "whatToCheck": "Rouler sur une route abîmée radio coupée : écouter la planche de bord et les portes."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-toyota/fiabilite-213-pannes-toyota-auris.php",
+   "https://www.exchangeandmart.co.uk/reviews/toyota/auris/2010/209867"
+  ]
+ },
+ {
+  "id": "mint-nissan-micra-k12",
+  "label": "Nissan Micra III (K12, 2003-2010)",
+  "makes": [
+   "nissan"
+  ],
+  "years": {
+   "from": 2003,
+   "to": 2010
+  },
+  "keywords": [],
+  "models": [
+   "micra"
+  ],
+  "issues": [
+   {
+    "id": "mint-micra3-start",
+    "title": "Démarrage refusé (antidémarrage, clé)",
+    "severity": "medium",
+    "description": "L'antidémarrage, la clé ou l'antivol peuvent empêcher le démarrage ; un défaut électronique peut aussi vider la batterie.",
+    "costMin": 200,
+    "costMax": 700,
+    "whatToCheck": "Démarrer et couper plusieurs fois, avec chaque clé fournie : le démarrage doit être immédiat à chaque fois."
+   },
+   {
+    "id": "mint-micra3-boot",
+    "title": "Serrure du coffre et hayon qui fuit",
+    "severity": "low",
+    "description": "La serrure électrique du hayon tombe en panne, souvent après une entrée d'eau ; le hayon peut aussi laisser passer l'eau.",
+    "costMin": 100,
+    "costMax": 300,
+    "whatToCheck": "Ouvrir le coffre au bouton et à la télécommande, puis soulever le tapis : ouverture du premier coup, coffre sec."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-nissan/fiabilite-82-pannes-nissan-micra-iii.php",
+   "https://www.whatcar.com/nissan/micra/hatchback/used-review/n519/advice",
+   "https://www.australiancar.reviews/?p=47553"
+  ]
+ },
+ {
+  "id": "mint-kia-ceed-1",
+  "label": "Kia Cee'd I (2008-2010, rappel freinage)",
+  "makes": [
+   "kia"
+  ],
+  "years": {
+   "from": 2008,
+   "to": 2010
+  },
+  "keywords": [],
+  "models": [
+   "ceed",
+   "cee'd"
+  ],
+  "issues": [
+   {
+    "id": "mint-ceed1-brakes",
+    "title": "Rappel freinage (fabriquées 2008-2009)",
+    "severity": "medium",
+    "description": "Rappel de 2010 : sur des cee'd avec ESP fabriquées d'avril 2008 à mars 2009, le maître-cylindre pouvait réduire la force de freinage. Gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Donner le numéro de série (carte grise, case E) à un garage de la marque et demander que tous les rappels soient faits."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-kia/fiabilite-227-pannes-kia-ceed.php",
+   "https://fleetworld.co.uk/kia-recalls-over-7000-models/"
+  ]
+ },
+ {
+  "id": "mint-tesla-model-3",
+  "label": "Tesla Model 3 (2019-2023)",
+  "makes": [
+   "tesla"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2019,
+   "to": 2023
+  },
+  "keywords": [],
+  "models": [
+   "model 3"
+  ],
+  "issues": [
+   {
+    "id": "mint-m3-arms",
+    "title": "Bras de suspension avant fragiles",
+    "severity": "medium",
+    "fromKm": 40000,
+    "description": "Les rotules des bras de suspension avant s'usent ou rouillent tôt : grincements, jeu. Défaut très relevé au contrôle technique allemand.",
+    "costMin": 300,
+    "costMax": 900,
+    "whatToCheck": "Rouler au pas en braquant et passer des dos-d'âne : pas de grincement ni de claquement à l'avant."
+   },
+   {
+    "id": "mint-m3-camera",
+    "title": "Rappel câble de caméra de recul (2017-2020)",
+    "severity": "medium",
+    "description": "Rappel de fin 2021 (356 000 Model 3 de 2017 à 2020 aux États-Unis) : le câble de la caméra de recul s'abîme à force d'ouvrir le coffre.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Passer la marche arrière : l'image de la caméra doit s'afficher tout de suite. Demander la preuve du rappel."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-tesla/fiabilite-634-pannes-tesla-model-3.php",
+   "https://www.auto-motor-und-sport.de/mittelklasse/gebrauchtwagen/tesla-schneidet-beim-tuev-katastrophal-ab-hier-stecken-die-maengel/",
+   "https://www.cnbc.com/2021/12/30/tesla-recalls-475000-model-3-model-s-electric-cars-over-safety-issues.html",
+   "https://static.nhtsa.gov/odi/rcl/2021/RCLRPT-21V00D-5923.PDF"
+  ]
+ },
+ {
+  "id": "mint-tesla-model-y",
+  "label": "Tesla Model Y (2021 et après)",
+  "makes": [
+   "tesla"
+  ],
+  "fuel": [
+   "electrique"
+  ],
+  "years": {
+   "from": 2021
+  },
+  "keywords": [],
+  "models": [
+   "model y"
+  ],
+  "issues": [
+   {
+    "id": "mint-my-arms",
+    "title": "Bras de suspension avant fragiles",
+    "severity": "medium",
+    "fromKm": 40000,
+    "description": "Les rotules des bras de suspension avant s'usent ou rouillent tôt : grincements, jeu. Principale cause du record de défauts au contrôle allemand.",
+    "costMin": 300,
+    "costMax": 900,
+    "whatToCheck": "Rouler au pas en braquant et passer des dos-d'âne : pas de grincement ni de claquement à l'avant."
+   },
+   {
+    "id": "mint-my-panels",
+    "title": "Portes et panneaux mal ajustés",
+    "severity": "low",
+    "description": "Portes ou panneaux de carrosserie parfois mal ajustés dès la livraison : écarts irréguliers, bruits d'air, vitre qui remonte mal.",
+    "costMin": 0,
+    "costMax": 300,
+    "whatToCheck": "Fermer chaque porte : la vitre doit remonter jusqu'en haut. Regarder que les écarts entre portes soient réguliers."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-tesla/fiabilite-690-pannes-tesla-model-y.php",
+   "https://www.auto-motor-und-sport.de/mittelklasse/gebrauchtwagen/tesla-schneidet-beim-tuev-katastrophal-ab-hier-stecken-die-maengel/",
+   "https://www.notebookcheck.com/Tesla-Model-Y-mit-der-schlechtesten-Maengelbilanz-bei-Inspektionen-Grund-ist-die-OEM-Aufhaengung.1177535.0.html",
+   "https://www.motorbiscuit.com/tesla-model-y-problems"
   ]
  }
 ]

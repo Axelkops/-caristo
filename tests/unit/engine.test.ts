@@ -46,7 +46,7 @@ describe("pannes connues", () => {
   it("gère une électrique sans pannes diesel", () => {
     const issues = findKnownIssues(tesla, 60000, NOW);
     expect(issues.some((i) => i.id.includes("dpf") || i.id.includes("egr"))).toBe(false);
-    expect(issues.some((i) => i.id === "tesla-susp")).toBe(true);
+    expect(issues.some((i) => i.id === "mint-m3-arms")).toBe(true);
   });
   it("retombe sur les règles génériques pour un modèle inconnu", () => {
     const issues = findKnownIssues({ make: "Lada", model: "Niva", country: "FR", firstRegistration: "2012-01-01", fuel: "essence", gearbox: "manuelle", category: "voiture" }, 150000, NOW);

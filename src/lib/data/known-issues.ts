@@ -262,8 +262,6 @@ const LEGACY_FAMILIES: IssueFamily[] = [
     makes: ["peugeot", "citroen", "citroën", "ds", "opel", "vauxhall"],
     fuel: ["electrique"],
     issues: [
-      { id: "ecmp-12v", title: "Batterie 12 V qui se décharge", severity: "medium", fromYears: 2, description: "La petite batterie 12 V peut se vider et empêcher le démarrage, même avec la grosse batterie pleine. Une mise à jour corrige souvent le problème.", costMin: 0, costMax: 250, whatToCheck: "Demander si le véhicule a déjà refusé de démarrer et si la mise à jour a été faite en concession." },
-      { id: "ecmp-software", title: "Mises à jour logicielles", severity: "low", description: "Plusieurs rappels se font par mise à jour : écran, recharge, chauffage.", costMin: 0, costMax: 0, whatToCheck: "Vérifier en concession, avec le VIN, que toutes les mises à jour et rappels sont faits." },
       { id: "ecmp-charge", title: "Recharge : câble et prise", severity: "low", fromKm: 40000, description: "Le câble de recharge et le capot de prise s'usent. La recharge rapide peut être moins rapide que l'annonce par temps froid : c'est normal.", costMin: 100, costMax: 400, whatToCheck: "Brancher le véhicule pendant l'essai et vérifier que la recharge démarre. Demander le câble d'origine." },
       { id: "ecmp-battery", title: "État de la batterie de traction", severity: "info", description: "Garantie 8 ans ou 160 000 km à 70 % de capacité. L'autonomie baisse lentement avec les années.", costMin: 0, costMax: 0, whatToCheck: "Demander au vendeur combien de kilomètres le tableau de bord affiche quand la batterie est chargée à 100 % (neuve : environ 340 km). Demander aussi un certificat de santé de la batterie, que la concession peut établir." },
     ],
@@ -275,7 +273,6 @@ const LEGACY_FAMILIES: IssueFamily[] = [
     makes: ["tesla"],
     fuel: ["electrique"],
     issues: [
-      { id: "tesla-susp", title: "Bras de suspension", severity: "medium", fromKm: 60000, description: "Bruits et usure prématurée des bras de suspension avant.", costMin: 300, costMax: 900, whatToCheck: "Pas de claquement sur dos d'âne." },
       { id: "tesla-battery", title: "État de la batterie", severity: "info", description: "La batterie est garantie 8 ans. Sa capacité baisse lentement.", costMin: 0, costMax: 0, whatToCheck: "Demander au vendeur combien de kilomètres le tableau de bord affiche à 100 % de charge et comparer à l'autonomie d'origine du modèle." },
     ],
   },
@@ -292,7 +289,7 @@ const LEGACY_FAMILIES: IssueFamily[] = [
   {
     id: "dacia-generic",
     label: "Dacia",
-    keywords: ["sandero", "duster", "logan", "jogger", "spring"],
+    keywords: ["sandero", "duster", "logan", "jogger", "lodgy", "dokker"],
     makes: ["dacia"],
     issues: [
       { id: "dacia-rust", title: "Points de rouille", severity: "low", fromYears: 6, description: "Traitement anticorrosion léger : regarder le bas de caisse et les passages de roue.", costMin: 0, costMax: 800, whatToCheck: "Regarder sous le véhicule et autour des roues." },
