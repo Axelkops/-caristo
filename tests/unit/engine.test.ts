@@ -7,6 +7,7 @@ import { buildReport, checkMileage, computeScore } from "@/lib/engine/report";
 
 const NOW = new Date("2026-11-04T10:00:00Z");
 const p3008: Vehicle = { make: "Peugeot", model: "3008", version: "1.5 BlueHDi 130 Allure EAT8", country: "FR", firstRegistration: "2019-03-12", firstRegistrationInCountry: "2021-02-09", fuel: "diesel", gearbox: "automatique", powerHp: 131, category: "voiture", imported: true, plate: "AB-123-CD" };
+const pt208: Vehicle = { make: "Peugeot", model: "208", version: "1.2 PureTech 110 S&S Allure", country: "FR", firstRegistration: "2026-01-10", fuel: "essence", gearbox: "manuelle", powerHp: 110, displacementCc: 1199, category: "voiture" };
 const tesla: Vehicle = { make: "Tesla", model: "Model 3", version: "Long Range", country: "FR", firstRegistration: "2020-07-01", fuel: "electrique", gearbox: "automatique", powerHp: 351, category: "voiture" };
 const emptyHistory: OfficialHistory = { available: false, reason: "test", inspections: [], mileageReadings: [], claims: [] };
 const history: OfficialHistory = {
@@ -24,17 +25,23 @@ const history: OfficialHistory = {
 };
 
 describe("pannes connues", () => {
-  it("trouve la distribution du 1.5 BlueHDi et la met en zone à 118 000 km", () => {
+  it("trouve la chaîne du 1.5 BlueHDi, l'AdBlue et la boîte EAT8", () => {
     const issues = findKnownIssues(p3008, 118000, NOW);
-    const belt = issues.find((i) => i.id === "dv5-belt");
-    expect(belt).toBeDefined();
-    expect(belt?.inZone).toBe(true);
-    expect(issues[0].id).toBe("dv5-belt"); // priorité : haute gravité en zone
+    const chain = issues.find((i) => i.id === "dv5-chain");
+    expect(chain).toBeDefined();
+    expect(chain?.inZone).toBe(true);
+    expect(issues[0].severity).toBe("high"); // priorité : haute gravité en zone
+    expect(issues[0].inZone).toBe(true);
+    expect(issues.some((i) => i.id === "adblue-tank")).toBe(true);
     expect(issues.some((i) => i.id === "eat-oil")).toBe(true); // boîte EAT8
   });
-  it("ne met pas en zone une voiture neuve", () => {
-    const issues = findKnownIssues({ ...p3008, firstRegistration: "2026-01-10", imported: false }, 8000, NOW);
-    expect(issues.find((i) => i.id === "dv5-belt")?.inZone).toBe(false);
+  it("ne met pas en zone la courroie d'une voiture neuve", () => {
+    const issues = findKnownIssues(pt208, 8000, NOW);
+    expect(issues.find((i) => i.id === "eb2b-belt")?.inZone).toBe(false);
+  });
+  it("ne confond pas le PureTech atmosphérique avec le turbo", () => {
+    const issues = findKnownIssues({ ...pt208, version: "1.2 PureTech 82", powerHp: 82, firstRegistration: "2018-05-02" }, 90000, NOW);
+    expect(issues.some((i) => i.id.startsWith("eb2"))).toBe(false);
   });
   it("gère une électrique sans pannes diesel", () => {
     const issues = findKnownIssues(tesla, 60000, NOW);
@@ -67,9 +74,11 @@ describe("kilométrage", () => {
 });
 
 describe("échéancier", () => {
-  it("met la distribution « maintenant » sans facture et au-delà de 5 ans", () => {
-    const issues = findKnownIssues(p3008, 118000, NOW);
-    const s = buildMaintenanceSchedule({ vehicle: p3008, mileage: 118000, history, knownIssues: issues, now: NOW });
+  it("met la distribution « maintenant » sans facture quand la panne est connue", () => {
+    const old208 = { ...pt208, firstRegistration: "2017-04-10" };
+    const issues = findKnownIssues(old208, 105000, NOW);
+    expect(issues.some((i) => i.id === "eb2a-belt")).toBe(true);
+    const s = buildMaintenanceSchedule({ vehicle: old208, mileage: 105000, history: emptyHistory, knownIssues: issues, now: NOW });
     const belt = s.items.find((i) => i.label === "Courroie de distribution");
     expect(belt?.horizon).toBe("now");
     expect(belt?.status).toBe("todo");
@@ -110,7 +119,7 @@ describe("rapport complet", () => {
     const r = buildReport({ id: "x", reference: "CAR-2026-TEST", vehicle: p3008, mileage: 118000, history, recalls: [], listing: { available: false, claims: [] }, now: NOW });
     expect(["A", "B", "C", "D", "E"]).toContain(r.score);
     expect(r.questions.length).toBeGreaterThan(0);
-    expect(r.questions[0].text.toLowerCase()).toContain("courroie");
+    expect(r.questions[0].text.toLowerCase()).toContain("chaîne");
     expect(r.limits.some((l) => l.includes("entrée en France"))).toBe(true);
     expect(r.sources.find((s) => s.label.startsWith("Historique"))?.status).toBe("ok");
   });

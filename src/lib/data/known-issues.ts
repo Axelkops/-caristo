@@ -5,6 +5,7 @@
  * À enrichir en continu. Les montants sont des fourchettes indicatives en garage indépendant.
  */
 import type { Fuel, KnownIssue } from "../engine/types";
+import KB_FAMILIES from "./kb/families.json";
 
 export interface IssueFamily {
   id: string;
@@ -29,7 +30,7 @@ export interface IssueFamily {
   issues: Omit<KnownIssue, "applies" | "inZone">[];
 }
 
-export const ISSUE_FAMILIES: IssueFamily[] = [
+const LEGACY_FAMILIES: IssueFamily[] = [
   {
     id: "psa-dv5-15-bluehdi",
     label: "PSA 1.5 BlueHDi (DV5)",
@@ -166,8 +167,9 @@ export const ISSUE_FAMILIES: IssueFamily[] = [
   },
   {
     id: "ford-15-tdci",
-    label: "Ford 1.5 / 1.6 TDCi",
-    keywords: ["1.5 tdci", "1.6 tdci", "tdci 95", "tdci 100", "tdci 120", "2.0 tdci", "tdci 150"],
+    label: "Ford 1.5 TDCi",
+    keywords: ["1.5 tdci"],
+    cc: [1498, 1499],
     makes: ["ford"],
     fuel: ["diesel"],
     issues: [
@@ -211,6 +213,8 @@ export const ISSUE_FAMILIES: IssueFamily[] = [
     id: "toyota-hybrid",
     label: "Toyota / Lexus hybride",
     keywords: ["hybrid", "hybride", "hsd", "hev"],
+    // tous les hybrides Toyota et Lexus (1.5 à 2.5 L) : la combinaison marque + énergie suffit
+    cc: [1490, 2500],
     makes: ["toyota", "lexus"],
     fuel: ["hybride", "hybride_rechargeable"],
     issues: [
@@ -294,6 +298,18 @@ export const ISSUE_FAMILIES: IssueFamily[] = [
       { id: "dacia-rust", title: "Points de rouille", severity: "low", fromYears: 6, description: "Traitement anticorrosion léger : regarder le bas de caisse et les passages de roue.", costMin: 0, costMax: 800, whatToCheck: "Regarder sous le véhicule et autour des roues." },
     ],
   },
+];
+
+/** Fiches remplacées par la base vérifiée (même moteur, sources recoupées). */
+const SUPERSEDED = new Set(["psa-dv5-15-bluehdi", "psa-dv6-16-hdi", "psa-eb2-12-puretech", "renault-k9k-15-dci", "renault-h5f-12-tce", "renault-h5h-13-tce", "vag-ea189-20-tdi", "vag-ea288-tdi", "vag-ea111-14-tsi", "vag-ea211-tsi", "vag-dsg7-dq200", "ford-10-ecoboost", "bmw-n47", "bmw-b47-b48", "mercedes-om651", "fiat-13-multijet", "nissan-12-dig-t"]);
+
+/**
+ * Base complète : fiches vérifiées (au moins deux sources indépendantes, voir src/lib/data/kb/families.json)
+ * puis fiches historiques encore utiles. Les hybrides Toyota anciens sont couverts par la base : la fiche générique démarre en 2016.
+ */
+export const ISSUE_FAMILIES: IssueFamily[] = [
+  ...(KB_FAMILIES as unknown as IssueFamily[]),
+  ...LEGACY_FAMILIES.filter((f) => !SUPERSEDED.has(f.id)).map((f) => (f.id === "toyota-hybrid" ? { ...f, years: { from: 2016 } } : f)),
 ];
 
 /** Pannes génériques selon énergie, kilométrage et âge, quand aucune fiche précise ne s'applique ou en complément. */

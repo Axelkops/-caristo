@@ -23,8 +23,11 @@ export function findKnownIssues(vehicle: Vehicle, mileage: number | undefined, n
 
   const year = vehicle.firstRegistration ? Number(vehicle.firstRegistration.slice(0, 4)) : undefined;
   const titles = new Set<string>();
-  for (const fam of ISSUE_FAMILIES) {
-    if (!familyMatches(fam, vehicle, hay, make, year)) continue;
+  const matched = ISSUE_FAMILIES.map((fam) => ({ fam, how: familyMatches(fam, vehicle, hay, make, year) })).filter((m) => m.how);
+  // un moteur reconnu par son nom ou son code l'emporte sur un moteur de même cylindrée reconnu par la cylindrée seule
+  const named = matched.some((m) => m.how === "keyword" && m.fam.cc);
+  for (const { fam, how } of matched) {
+    if (named && how === "cc") continue;
     for (const issue of fam.issues) {
       const t = norm(issue.title);
       if (seen.has(issue.id) || titles.has(t)) continue;
@@ -75,7 +78,7 @@ export function modelMatches(vehicleModel: string, models: string[]): boolean {
 }
 
 /** Règles de correspondance d'une fiche (voir src/lib/data/known-issues.ts). */
-export function familyMatches(fam: IssueFamily, vehicle: Vehicle, hay: string, make: string, year: number | undefined): boolean {
+export function familyMatches(fam: IssueFamily, vehicle: Vehicle, hay: string, make: string, year: number | undefined): false | "keyword" | "cc" | "model" {
   if (fam.makes.length && !fam.makes.some((m) => make.includes(norm(m)))) return false;
   if (fam.fuel && !fam.fuel.includes(vehicle.fuel)) return false;
   if (fam.years && year !== undefined && ((fam.years.from !== undefined && year < fam.years.from) || (fam.years.to !== undefined && year > fam.years.to))) return false;
@@ -83,9 +86,11 @@ export function familyMatches(fam: IssueFamily, vehicle: Vehicle, hay: string, m
   if (fam.models?.length && !modelMatches(vehicle.model, fam.models)) return false;
   const kwOk = fam.keywords.some((k) => hay.includes(norm(k)));
   const cc = vehicle.displacementCc;
-  const ccOk = !!fam.cc && !!cc && cc >= fam.cc[0] - 10 && cc <= fam.cc[1] + 10;
-  const hpOk = !fam.powerHp || !vehicle.powerHp || (vehicle.powerHp >= fam.powerHp[0] - 3 && vehicle.powerHp <= fam.powerHp[1] + 3);
+  const ccOk = !!fam.cc && !!cc && cc >= fam.cc[0] - 4 && cc <= fam.cc[1] + 4;
+  const hpOk = !fam.powerHp || !vehicle.powerHp || (vehicle.powerHp >= fam.powerHp[0] - 1 && vehicle.powerHp <= fam.powerHp[1] + 1);
+  if (kwOk && hpOk) return "keyword";
+  if (ccOk && hpOk) return "cc";
   // une fiche « modèle » (sans mot-clé ni cylindrée) est identifiée par le modèle seul
-  const modelOnly = !!fam.models?.length && fam.keywords.length === 0 && !fam.cc;
-  return (kwOk && hpOk) || (ccOk && hpOk) || modelOnly;
+  if (fam.models?.length && fam.keywords.length === 0 && !fam.cc) return "model";
+  return false;
 }
