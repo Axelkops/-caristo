@@ -104,7 +104,7 @@ describe("couverture de la base de pannes", () => {
     console.log(`Couverture : ${covered}/${rows.length} versions (${pct} %)`);
     if (process.env.COVERAGE_DETAIL) for (const r of rows) console.log(r.label, "=>", r.ids.join(", "));
     for (const r of rows.filter((x) => x.n === 0)) console.log("  sans fiche :", r.label);
-    expect(pct).toBeGreaterThanOrEqual(80);
+    expect(pct).toBeGreaterThanOrEqual(95);
   });
   it("ne mélange pas les générations d'un même moteur", () => {
     const golf = rows.find((r) => r.label.includes("Golf 1.4 TSI"))!;

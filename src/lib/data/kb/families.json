@@ -5814,6 +5814,1063 @@
   ]
  },
  {
+  "id": "as2-hk-crdi-16-22",
+  "label": "Hyundai/Kia diesels 1.6 CRDi (depuis 2018), 1.7, 2.0 et 2.2 CRDi",
+  "makes": [
+   "hyundai",
+   "kia"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2001
+  },
+  "cc": [
+   1598,
+   2199
+  ],
+  "keywords": [
+   "1.7 crdi",
+   "2.0 crdi",
+   "2.2 crdi",
+   "crdi 48v",
+   "crdi mhev",
+   "smartstream",
+   "d4fd",
+   "d4fe",
+   "d4ea",
+   "d4eb",
+   "d4ha",
+   "d4hb"
+  ],
+  "issues": [
+   {
+    "id": "as2-hkcrdi-volant",
+    "title": "Double volant moteur et embrayage usés tôt",
+    "severity": "high",
+    "fromKm": 50000,
+    "description": "Embrayage qui patine, vibrations ou claquements au ralenti : double volant moteur et embrayage à changer tôt, surtout sur 1.7 CRDi 115 et 2.0/2.2 CRDi.",
+    "costMin": 1000,
+    "costMax": 2200,
+    "whatToCheck": "Au ralenti, écouter un claquement qui cesse en débrayant. En côte, en 4e, accélérer fort : le régime ne doit pas monter seul. Demander les factures."
+   },
+   {
+    "id": "as2-hkcrdi-vilebrequin",
+    "title": "Casse du vilebrequin ou de sa poulie (1.6 CRDi dès 2018)",
+    "severity": "high",
+    "description": "Sur le 1.6 CRDi 115/136, surtout en hybride léger 48V, la poulie de vilebrequin ou le vilebrequin peut casser : casse moteur, parfois avant 30 000 km.",
+    "costMin": 400,
+    "costMax": 7000,
+    "whatToCheck": "Demander en concession, avec le numéro de série, si une intervention a été faite sur la poulie de vilebrequin. Écouter un cognement à l'avant du moteur."
+   },
+   {
+    "id": "as2-hkcrdi-synchros",
+    "title": "Boîte manuelle : vitesses qui craquent ou accrochent",
+    "severity": "medium",
+    "description": "Sur les boîtes manuelles 6 rapports, surtout de 2010 à 2018, les synchros s'usent : craquements, 3e à 6e difficiles à passer. Réparation de la boîte.",
+    "costMin": 800,
+    "costMax": 2000,
+    "whatToCheck": "À l'essai, passer toutes les vitesses en montant et en descendant, moteur froid puis chaud : aucun craquement ni point dur.",
+    "gearbox": "manuelle"
+   },
+   {
+    "id": "as2-hkcrdi-pompe-vide",
+    "title": "Rappels sur la pompe à vide du freinage",
+    "severity": "medium",
+    "description": "Des rappels ont visé la pompe à vide de l'assistance de freinage sur des diesels CRDi : pédale dure et freinage allongé. Réparation gratuite en concession.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Donner le numéro de série (carte grise, case E) à un garage de la marque et demander si tous les rappels sont faits. À l'essai, la pédale doit rester souple."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html",
+   "https://www.largus.fr/actualite-automobile/faut-il-acheter-une-kia-186441_p_2.html",
+   "https://www.caradisiac.com/fiabilite-du-kia-sportage-4-la-maxi-fiche-occasion-de-caradisiac-194333.htm",
+   "https://www.fiches-auto.fr/fiabilite-hyundai/fiabilite-528-pannes-hyundai-tucson.php",
+   "https://www.fiches-auto.fr/essai-hyundai/moteur-essai-181-1-hyundai-santa-fe-2-_-2l2-crdi-_-150.php",
+   "https://www.fiches-auto.fr/articles-auto/essai-moteur/2l0-crdi-136-ch.php",
+   "https://www.whocanfixmycar.com/advice/kia-sportage-common-problems",
+   "https://assets.adac.de/Autodatenbank/GWInfo/gw0304-kia-sportage-2010-2016-bericht.pdf"
+  ]
+ },
+ {
+  "id": "as2-hk-boite-dct7",
+  "label": "Boîte automatique à double embrayage 7 rapports Hyundai/Kia (DCT7)",
+  "makes": [
+   "hyundai",
+   "kia"
+  ],
+  "years": {
+   "from": 2015
+  },
+  "keywords": [
+   "dct",
+   "7dct",
+   "double embrayage"
+  ],
+  "gearbox": "automatique",
+  "issues": [
+   {
+    "id": "as2-dct7-vibrations",
+    "title": "Vibrations à très basse vitesse (avant avril 2018)",
+    "severity": "medium",
+    "description": "Vibrations de la carrosserie jusqu'à 5 km/h, en manœuvre ou dans les bouchons, sur des boîtes fabriquées avant avril 2018. Diagnostic et mise à jour en concession.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "À l'essai, rouler au pas, faire une marche arrière et un créneau : la voiture doit avancer sans vibrer ni brouter. Demander si la mise à jour a été faite."
+   },
+   {
+    "id": "as2-dct7-embrayage",
+    "title": "Double embrayage ou actionneurs usés prématurément",
+    "severity": "high",
+    "description": "Patinage, broutements au démarrage, voire boîte bloquée : le double embrayage ou ses actionneurs lâchent parfois tôt, même avant 60 000 km.",
+    "costMin": 1500,
+    "costMax": 3000,
+    "whatToCheck": "En côte, accélérer franchement : le régime ne doit pas monter sans que la vitesse suive. Démarrer plusieurs fois en douceur. Demander l'historique de garantie."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/kia-problemes-de-vibrations-avec-la-boite-double-embrayage-dct-7-10641403.html",
+   "https://www.caradisiac.com/fiabilite-du-kia-sportage-4-la-maxi-fiche-occasion-de-caradisiac-194333.htm",
+   "https://www.fiches-auto.fr/fiabilite-hyundai/fiabilite-528-pannes-hyundai-tucson.php"
+  ]
+ },
+ {
+  "id": "as2-nissan-boite-xtronic",
+  "label": "Boîte automatique à variation continue Nissan Xtronic (et Renault/Dacia X-Tronic)",
+  "makes": [
+   "nissan",
+   "renault",
+   "dacia"
+  ],
+  "years": {
+   "from": 2006
+  },
+  "keywords": [
+   "xtronic",
+   "x-tronic",
+   "cvt"
+  ],
+  "gearbox": "automatique",
+  "issues": [
+   {
+    "id": "as2-xtronic-panne",
+    "title": "Boîte qui patine, siffle ou se met en mode dégradé",
+    "severity": "high",
+    "fromKm": 60000,
+    "description": "Sifflement à l'accélération, sensation de patinage, perte de puissance à chaud : la boîte s'use et doit souvent être remplacée, parfois avant 100 000 km.",
+    "costMin": 2500,
+    "costMax": 4500,
+    "whatToCheck": "Essai d'au moins 20 min avec des montées : pas de sifflement, pas de voyant, et le régime ne doit pas monter sans que la vitesse suive."
+   },
+   {
+    "id": "as2-xtronic-acoups",
+    "title": "À-coups et effet élastique à basse vitesse",
+    "severity": "medium",
+    "description": "À-coups au démarrage et en ville, impression d'élastique entre moteur et roues : souvent le début de l'usure de la boîte, surtout sur les modèles d'avant 2014.",
+    "costMin": 200,
+    "costMax": 1500,
+    "whatToCheck": "Rouler au pas et en ville : démarrages en douceur, sans secousse ni à-coup. Faire lire les codes défaut de la boîte."
+   },
+   {
+    "id": "as2-xtronic-huile",
+    "title": "Huile de boîte qui chauffe : vidanges indispensables",
+    "severity": "medium",
+    "description": "L'huile de cette boîte chauffe vite et perd ses qualités, surtout en ville, en remorquage ou par forte chaleur. Sans vidange régulière, la boîte s'use plus vite.",
+    "costMin": 150,
+    "costMax": 400,
+    "whatToCheck": "Demander les factures de vidange de l'huile de boîte (environ tous les 60 000 km). Sans preuve, prévoir la vidange et en tenir compte dans le prix."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/articles-auto/fiabilite/s-3884-fiabilite-catastrophique-de-la-boite-x-tronic-nissan-renault.php",
+   "https://www.fiches-auto.fr/fiabilite-nissan/fiabilite-312-pannes-nissan-juke.php",
+   "https://www.dev.honestjohn.co.uk/news/honest-johns-motoring-agony-column/2017-11/honest-johns-motoring-agony-column-25-11-2016-part-1",
+   "https://www.whocanfixmycar.com/advice/common-problems-with-the-nissan-juke",
+   "https://www.service4service.co.uk/car-repairs/gearboxes/nissan-gearboxes"
+  ]
+ },
+ {
+  "id": "as2-nissan-mr16ddt-16-digt",
+  "label": "Nissan 1.6 DIG-T essence (MR16DDT : Juke, Qashqai, X-Trail, Pulsar)",
+  "makes": [
+   "nissan"
+  ],
+  "fuel": [
+   "essence"
+  ],
+  "years": {
+   "from": 2010,
+   "to": 2019
+  },
+  "cc": [
+   1618,
+   1618
+  ],
+  "powerHp": [
+   160,
+   220
+  ],
+  "keywords": [
+   "1.6 dig-t",
+   "dig-t 163",
+   "dig-t 190",
+   "dig-t 200",
+   "1.6 turbo 190",
+   "1.6 turbo 200",
+   "mr16ddt",
+   "nismo rs"
+  ],
+  "issues": [
+   {
+    "id": "as2-mr16-chaine",
+    "title": "Chaîne de distribution qui s'allonge ou casse",
+    "severity": "high",
+    "fromKm": 80000,
+    "description": "Bruit de chaîne au démarrage, puis risque de saut ou de casse de la chaîne et de casse moteur. Cas signalés vers 95 000 km, réparation très chère.",
+    "costMin": 1200,
+    "costMax": 2000,
+    "whatToCheck": "Moteur froid, écouter au démarrage un cliquetis métallique de quelques secondes. Demander si la chaîne a été changée et les factures d'entretien."
+   },
+   {
+    "id": "as2-mr16-huile",
+    "title": "Consommation d'huile (segments usés tôt)",
+    "severity": "high",
+    "fromKm": 80000,
+    "description": "Les segments s'usent tôt, surtout en conduite sportive : le moteur consomme de l'huile. Sans surveillance du niveau, la casse moteur menace.",
+    "costMin": 2000,
+    "costMax": 4000,
+    "whatToCheck": "Vérifier le niveau à la jauge, chercher de la fumée bleue à l'accélération. Demander au vendeur combien d'huile il ajoute entre deux vidanges."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-nissan/fiabilite-312-pannes-nissan-juke.php",
+   "https://autoblog.spidersweb.pl/nissan-juke-opinie"
+  ]
+ },
+ {
+  "id": "as2-nissan-micra-k13",
+  "label": "Nissan Micra IV (K13, 2010-2017)",
+  "makes": [
+   "nissan"
+  ],
+  "fuel": [
+   "essence"
+  ],
+  "years": {
+   "from": 2010,
+   "to": 2017
+  },
+  "keywords": [],
+  "models": [
+   "micra"
+  ],
+  "issues": [
+   {
+    "id": "as2-micra4-embrayage",
+    "title": "Embrayage usé très tôt (1.2 80 ch)",
+    "severity": "medium",
+    "fromKm": 30000,
+    "description": "Embrayage qui patine ou lâche, parfois avant 40 000 km, surtout sur le 1.2 80 ch. Un embrayage qui débraye mal use aussi la boîte de vitesses.",
+    "costMin": 500,
+    "costMax": 900,
+    "whatToCheck": "En côte, en 3e, accélérer fort : le régime ne doit pas monter seul. La pédale ne doit pas embrayer tout en haut de sa course."
+   },
+   {
+    "id": "as2-micra4-rappel-cvt",
+    "title": "Rappel boîte automatique à variation continue (2010-2014)",
+    "severity": "medium",
+    "description": "Rappel pour la courroie de la boîte automatique qui pouvait patiner, sur des Micra fabriquées d'août 2010 à août 2014. Gratuit chez Nissan.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Sur une boîte automatique, donner le numéro de série (carte grise, case E) à un garage Nissan et demander si le rappel de la boîte a été fait.",
+    "gearbox": "automatique"
+   },
+   {
+    "id": "as2-micra4-rappel-frein",
+    "title": "Rappel maître-cylindre de frein (2012-2013)",
+    "severity": "medium",
+    "description": "Sur des Micra fabriquées de juin 2012 à mars 2013, un joint du maître-cylindre peut allonger la course de la pédale de frein. Rappel gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander à un garage Nissan, avec le numéro de série, si le rappel est fait. À l'essai, la pédale de frein doit rester ferme et haute."
+   },
+   {
+    "id": "as2-micra4-logiciel",
+    "title": "Mise à jour du calculateur moteur (1.2 DIG-S 98 ch)",
+    "severity": "medium",
+    "description": "Voyant moteur, fonctionnement irrégulier ou accélérations non voulues : le calculateur du 1.2 DIG-S a été reprogrammé lors d'une campagne. Gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander en concession si la campagne de mise à jour du calculateur a été faite. À l'essai, le moteur doit tourner rond, sans voyant."
+   },
+   {
+    "id": "as2-micra4-demarrage",
+    "title": "Démarreur et batterie fragiles",
+    "severity": "low",
+    "description": "Les pannes les plus fréquentes viennent du démarreur, de la batterie et des bougies : démarrage difficile, voire impossible.",
+    "costMin": 100,
+    "costMax": 450,
+    "whatToCheck": "Démarrer moteur froid puis chaud : le moteur doit partir tout de suite, sans bruit de crécelle. Demander l'âge de la batterie."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-nissan/fiabilite-297-pannes-nissan-micra-iv.php",
+   "https://www.caradisiac.com/Maxi-fiche-fiabilite-que-vaut-la-Nissan-Micra-4-en-occasion-96940.htm",
+   "https://carwiki.de/nissan-micra-probleme"
+  ]
+ },
+ {
+  "id": "as2-nissan-navara-d40-pathfinder-r51",
+  "label": "Nissan Navara D40 et Pathfinder R51 diesel (2005-2015)",
+  "makes": [
+   "nissan"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2005,
+   "to": 2015
+  },
+  "keywords": [],
+  "models": [
+   "navara",
+   "pathfinder"
+  ],
+  "issues": [
+   {
+    "id": "as2-navara-chaine",
+    "title": "Chaîne de distribution du 2.5 dCi qui casse",
+    "severity": "high",
+    "description": "La chaîne de distribution du 2.5 dCi s'allonge puis peut casser : les soupapes touchent les pistons et le moteur est détruit. Cas dès 28 000 km.",
+    "costMin": 1000,
+    "costMax": 2000,
+    "whatToCheck": "Moteur froid, écouter un cliquetis ou un bruit de chaîne au démarrage et au ralenti. Demander si la chaîne a été remplacée, factures à l'appui."
+   },
+   {
+    "id": "as2-navara-chassis",
+    "title": "Châssis rouillé, fissuré, voire cassé",
+    "severity": "high",
+    "description": "Le châssis rouille et peut se fissurer, voire casser, surtout sur le Navara. Nissan a reconnu le problème, sans rappel général.",
+    "costMin": 1000,
+    "costMax": 4000,
+    "whatToCheck": "Regarder sous la voiture, surtout vers l'arrière et aux fixations des ressorts : pas de rouille qui s'effrite, de trou, de fissure ni de renfort soudé."
+   }
+  ],
+  "sources": [
+   "https://fwi.co.uk/machinery/4x4s/tips-for-buying-a-second-hand-pickup-nissan-navara",
+   "https://www.carsguide.com.au/car-advice/q-and-a/cam-timing-chain-breaking-on-nissan-navara-7610",
+   "https://fr.motor1.com/news/135362/nissan-navara-chassis-coupes/"
+  ]
+ },
+ {
+  "id": "as2-honda-22-ictdi",
+  "label": "Honda 2.2 i-CTDi diesel (N22A : Accord, Civic, CR-V, FR-V)",
+  "makes": [
+   "honda"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2004,
+   "to": 2011
+  },
+  "cc": [
+   2204,
+   2204
+  ],
+  "keywords": [
+   "i-ctdi",
+   "ictdi",
+   "ctdi",
+   "n22a"
+  ],
+  "issues": [
+   {
+    "id": "as2-ictdi-collecteur",
+    "title": "Collecteur d'échappement fissuré (jusqu'en 2010)",
+    "severity": "medium",
+    "fromKm": 100000,
+    "description": "Le collecteur d'échappement se fissure souvent entre 100 000 et 150 000 km : bruit de fuite et odeur de gaz d'échappement sous le capot.",
+    "costMin": 500,
+    "costMax": 1200,
+    "whatToCheck": "Moteur froid, écouter au démarrage un sifflement ou un claquement de fuite côté échappement. Demander si le collecteur a été changé."
+   },
+   {
+    "id": "as2-ictdi-volant",
+    "title": "Double volant moteur et embrayage bruyants",
+    "severity": "high",
+    "description": "Bruit de ferraille au ralenti puis embrayage qui patine : le double volant moteur et l'embrayage s'usent, parfois avant 80 000 km.",
+    "costMin": 1200,
+    "costMax": 2000,
+    "whatToCheck": "Au ralenti, écouter un claquement qui disparaît en débrayant. En côte, en 4e, accélérer fort : le régime ne doit pas monter seul."
+   },
+   {
+    "id": "as2-ictdi-egr",
+    "title": "Vanne antipollution encrassée (jusqu'en 2007)",
+    "severity": "medium",
+    "description": "La vanne antipollution s'encrasse vite et son tuyau se fissure : perte de puissance et voyant moteur, surtout sur les modèles jusqu'en 2007.",
+    "costMin": 300,
+    "costMax": 700,
+    "whatToCheck": "À l'essai, accélérer franchement de 1 500 à 3 500 tr/min : poussée régulière, sans trou ni voyant. Faire lire les codes défaut."
+   },
+   {
+    "id": "as2-ictdi-turbo",
+    "title": "Turbo qui lâche (surtout jusqu'en 2008)",
+    "severity": "high",
+    "fromKm": 100000,
+    "description": "Perte de puissance, sifflement ou fumée : le turbo est un point faible connu de ce moteur, surtout sur les modèles jusqu'en 2008.",
+    "costMin": 1200,
+    "costMax": 2200,
+    "whatToCheck": "Accélérer franchement à l'essai : pas de sifflement aigu ni de fumée bleue ou noire. Vérifier qu'il n'y a pas d'huile dans la durite d'air du turbo."
+   },
+   {
+    "id": "as2-ictdi-chaine",
+    "title": "Chaîne de distribution qui s'allonge",
+    "severity": "high",
+    "fromKm": 120000,
+    "description": "La chaîne de distribution peut s'allonger, même à kilométrage modéré : bruit au démarrage, puis remplacement coûteux pour éviter la casse.",
+    "costMin": 1200,
+    "costMax": 2000,
+    "whatToCheck": "Moteur froid, écouter un cliquetis métallique au démarrage. Au-delà de 150 000 km, demander si la chaîne a été remplacée, factures à l'appui."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html",
+   "https://www.fiches-auto.fr/fiabilite-honda/fiabilite-231-pannes-honda-accord.php",
+   "https://www.fiches-auto.fr/articles-auto/temoignages-fiabilite/honda.php",
+   "https://club.autodoc.co.uk/magazin/i-ctdi-and-i-dtec-honda-diesel-engines-with-common-rail-direct-fuel-injection-system"
+  ]
+ },
+ {
+  "id": "as2-honda-idtec-16-22",
+  "label": "Honda 1.6 et 2.2 i-DTEC diesel (N16A, N22B : Civic, CR-V, HR-V, Accord)",
+  "makes": [
+   "honda"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2008,
+   "to": 2021
+  },
+  "cc": [
+   1597,
+   2199
+  ],
+  "keywords": [
+   "i-dtec",
+   "idtec",
+   "n16a",
+   "n22b"
+  ],
+  "issues": [
+   {
+    "id": "as2-idtec-egr",
+    "title": "Tuyau ou vanne antipollution fissuré ou bouché",
+    "severity": "medium",
+    "fromKm": 150000,
+    "description": "Le tuyau de la vanne antipollution se fissure ou son filtre se bouche : voyant moteur, perte de puissance, parfois odeur d'échappement à bord.",
+    "costMin": 300,
+    "costMax": 900,
+    "whatToCheck": "Faire lire les codes défaut. À l'essai, accélérer de 1 500 à 3 500 tr/min : poussée régulière, sans trou. Pas d'odeur d'échappement dans l'habitacle."
+   },
+   {
+    "id": "as2-idtec-fap",
+    "title": "Filtre à particules qui se bouche tôt (surtout 1.6)",
+    "severity": "high",
+    "description": "Le filtre à particules se colmate tôt, surtout sur le 1.6 et en usage urbain : voyant, perte de puissance. Remplacements signalés dès 60 000 km.",
+    "costMin": 300,
+    "costMax": 1800,
+    "whatToCheck": "Demander le type de trajets : beaucoup de ville est un risque. Aucun voyant filtre à particules ou moteur. Faire lire les codes défaut."
+   },
+   {
+    "id": "as2-idtec-froid",
+    "title": "Démarrages à froid difficiles (bougies de préchauffage)",
+    "severity": "low",
+    "description": "Démarrage hésitant ou avec fumée par temps froid : bougies de préchauffage ou injecteurs encrassés, surtout sur le 1.6.",
+    "costMin": 150,
+    "costMax": 500,
+    "whatToCheck": "Demander à démarrer moteur froid : il doit partir vite, sans longue hésitation ni gros nuage de fumée."
+   }
+  ],
+  "sources": [
+   "https://club.autodoc.co.uk/magazin/i-ctdi-and-i-dtec-honda-diesel-engines-with-common-rail-direct-fuel-injection-system",
+   "https://www.fiches-auto.fr/fiabilite-honda/fiabilite-480-pannes-honda-crv.php",
+   "https://www.fiches-auto.fr/articles-auto/temoignages-fiabilite/honda.php",
+   "https://www.blackcircles.com/news/common-honda-civic-faults"
+  ]
+ },
+ {
+  "id": "as2-honda-vtec-turbo-10-15",
+  "label": "Honda 1.0 et 1.5 VTEC Turbo essence (Civic X, CR-V V)",
+  "makes": [
+   "honda"
+  ],
+  "fuel": [
+   "essence"
+  ],
+  "years": {
+   "from": 2017,
+   "to": 2023
+  },
+  "cc": [
+   988,
+   988
+  ],
+  "powerHp": [
+   125,
+   130
+  ],
+  "keywords": [
+   "1.0 vtec",
+   "1.0 i-vtec",
+   "1.5 vtec",
+   "1.5 i-vtec",
+   "p10a",
+   "l15b"
+  ],
+  "models": [
+   "civic",
+   "cr-v",
+   "crv"
+  ],
+  "issues": [
+   {
+    "id": "as2-vtect-courroie",
+    "title": "1.0 VTEC Turbo : courroie de distribution qui s'use tôt",
+    "severity": "high",
+    "fromKm": 80000,
+    "description": "Sur le 1.0, la courroie de distribution baigne dans l'huile et s'use plus vite que prévu : débris dans l'huile, turbo abîmé, voire casse moteur.",
+    "costMin": 800,
+    "costMax": 2500,
+    "whatToCheck": "Exiger un carnet d'entretien suivi avec la bonne huile. Demander si la courroie a été contrôlée ou changée. Écouter un sifflement anormal du turbo."
+   },
+   {
+    "id": "as2-vtect-dilution",
+    "title": "1.5 VTEC Turbo : essence dans l'huile par temps froid",
+    "severity": "medium",
+    "description": "Par temps froid et sur petits trajets, de l'essence passe dans l'huile : niveau qui monte, ratés moteur. Honda a corrigé par mise à jour sur certains marchés.",
+    "costMin": 100,
+    "costMax": 300,
+    "whatToCheck": "Tirer la jauge : le niveau ne doit pas dépasser le maximum ni sentir l'essence. Demander en concession si une mise à jour du calculateur a été faite."
+   }
+  ],
+  "sources": [
+   "https://www.whocanfixmycar.com/advice/common-problems-with-the-honda-civic",
+   "https://www.blackcircles.com/news/common-honda-civic-faults",
+   "https://www.fiches-auto.fr/articles-auto/temoignages-fiabilite/honda.php",
+   "https://www.consumerreports.org/car-recalls-defects/honda-extends-warranty-on-troubled-turbo-engines",
+   "https://www.slashgear.com/1689910/honda-engines-with-oil-dilution-problems/"
+  ]
+ },
+ {
+  "id": "as2-honda-jazz1-boite-cvt",
+  "label": "Honda Jazz I : boîte automatique à variation continue (CVT, 2002-2008)",
+  "makes": [
+   "honda"
+  ],
+  "years": {
+   "from": 2002,
+   "to": 2008
+  },
+  "keywords": [
+   "cvt",
+   "cvt-7",
+   "cvt7"
+  ],
+  "models": [
+   "jazz"
+  ],
+  "gearbox": "automatique",
+  "issues": [
+   {
+    "id": "as2-jazzcvt-broutement",
+    "title": "Broutements au démarrage",
+    "severity": "medium",
+    "description": "La voiture tremble en démarrant : l'huile de boîte s'use et l'embrayage de démarrage frotte. Une vidange avec la bonne huile et un réglage corrigent souvent.",
+    "costMin": 150,
+    "costMax": 600,
+    "whatToCheck": "À l'essai, démarrer doucement plusieurs fois, aussi en côte : pas de tremblement ni de secousse. Demander les factures de vidange de la boîte."
+   },
+   {
+    "id": "as2-jazzcvt-usure",
+    "title": "Boîte usée à remplacer",
+    "severity": "high",
+    "description": "Ces premières boîtes s'usent plus vite : réactions lentes, à-coups, patinage. Dans certains cas, la boîte entière doit être remplacée.",
+    "costMin": 2000,
+    "costMax": 3500,
+    "whatToCheck": "Accélérer franchement à l'essai : la voiture doit répondre tout de suite, sans patinage ni bruit. Faire lire les codes défaut de la boîte."
+   }
+  ],
+  "sources": [
+   "https://www.whocanfixmycar.com/advice/honda-jazz-common-problems",
+   "https://www.carsales.com.au/editorial/details/buying-used-honda-jazz-gd-2002-08-33086",
+   "https://www.carsguide.com.au/honda/jazz/problems/transmission",
+   "https://draft.carsguide.com.au/car-advice/q-and-a/which-generation-honda-jazz-had-a-transmission-issue-related-to-the-cvt-81475"
+  ]
+ },
+ {
+  "id": "as2-honda-boite-ishift",
+  "label": "Boîte robotisée Honda i-Shift (Civic VIII, Jazz II, 2006-2011)",
+  "makes": [
+   "honda"
+  ],
+  "years": {
+   "from": 2006,
+   "to": 2011
+  },
+  "keywords": [
+   "i-shift",
+   "ishift"
+  ],
+  "models": [
+   "civic",
+   "jazz"
+  ],
+  "gearbox": "automatique",
+  "issues": [
+   {
+    "id": "as2-ishift-actionneur",
+    "title": "Actionneur d'embrayage ou de vitesses en panne",
+    "severity": "medium",
+    "description": "Voyant de boîte, « N » qui clignote, vitesses qui ne passent plus ou démarrage refusé : l'actionneur de la boîte tombe en panne.",
+    "costMin": 600,
+    "costMax": 1500,
+    "whatToCheck": "Rouler au moins 20 min en passant toutes les vitesses et la marche arrière : aucun voyant, aucun « N » qui clignote. Faire lire les codes défaut."
+   },
+   {
+    "id": "as2-ishift-usure",
+    "title": "Boîte et embrayage usés faute d'entretien",
+    "severity": "high",
+    "fromKm": 150000,
+    "description": "Sans vidange de l'huile de boîte ni changement d'embrayage à temps, la mécanique s'use et abîme l'actionneur. Boîte à remplacer dans certains cas.",
+    "costMin": 1200,
+    "costMax": 2500,
+    "whatToCheck": "Demander les factures d'entretien de la boîte (huile, embrayage). À l'essai, les passages doivent être réguliers, sans patinage ni craquement."
+   }
+  ],
+  "sources": [
+   "https://www.whocanfixmycar.com/advice/honda-jazz-common-problems",
+   "https://club.autodoc.co.uk/magazin/i-shift-gear-boxes-for-honda-cars",
+   "https://www.ecutesting.com/common-faults/honda/honda-civic-clutch-actuator-fault/",
+   "https://www.fiches-auto.fr/articles-auto/temoignages-fiabilite/honda.php"
+  ]
+ },
+ {
+  "id": "as2-mazda-20-mzrcd",
+  "label": "Mazda 2.0 diesel MZR-CD / CiTD (RF : Mazda 3, 5, 6, MPV)",
+  "makes": [
+   "mazda"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2002,
+   "to": 2010
+  },
+  "cc": [
+   1998,
+   1998
+  ],
+  "keywords": [
+   "2.0 cd",
+   "2.0 mzr-cd",
+   "2.0 mzr cd",
+   "mzr-cd 2.0",
+   "2.0 citd",
+   "2.0 di",
+   "rf7j",
+   "rf5c"
+  ],
+  "issues": [
+   {
+    "id": "as2-mzrcd20-joints",
+    "title": "Joints d'injecteurs qui fuient",
+    "severity": "medium",
+    "description": "Les rondelles d'étanchéité des injecteurs fuient : claquement au ralenti, odeur d'échappement, et dépôts noirs qui tombent dans l'huile.",
+    "costMin": 300,
+    "costMax": 700,
+    "whatToCheck": "Capot ouvert, moteur tournant, écouter un « clac-clac » et chercher des dépôts noirs autour des injecteurs. Demander si les joints ont été changés."
+   },
+   {
+    "id": "as2-mzrcd20-crepine",
+    "title": "Crépine d'huile bouchée : risque de casse moteur",
+    "severity": "high",
+    "description": "Les dépôts venus des joints d'injecteurs bouchent la crépine d'huile : le moteur et le turbo manquent d'huile et peuvent casser.",
+    "costMin": 800,
+    "costMax": 5000,
+    "whatToCheck": "Voyant de pression d'huile éteint moteur chaud au ralenti. Demander si la crépine a été nettoyée lors du changement des joints d'injecteurs."
+   },
+   {
+    "id": "as2-mzrcd20-turbo",
+    "title": "Turbo qui lâche",
+    "severity": "high",
+    "fromKm": 90000,
+    "description": "Perte de puissance ou fumée : turbo à remplacer, souvent entre 90 000 et 200 000 km, parfois à cause d'un manque d'huile.",
+    "costMin": 1200,
+    "costMax": 2500,
+    "whatToCheck": "Accélérer franchement à l'essai : pas de sifflement aigu, pas de fumée bleue. Vérifier qu'il n'y a pas d'huile dans la durite d'air du turbo."
+   },
+   {
+    "id": "as2-mzrcd20-fap",
+    "title": "Filtre à particules qui se bouche (versions 143 ch)",
+    "severity": "medium",
+    "description": "Sur les versions équipées d'un filtre à particules, il se colmate : voyant, à-coups pendant son nettoyage automatique, nettoyages répétés.",
+    "costMin": 300,
+    "costMax": 1500,
+    "whatToCheck": "Aucun voyant filtre à particules ou moteur. Demander le type de trajets : beaucoup de petits trajets en ville est un risque."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html",
+   "https://www.fiches-auto.fr/fiabilite-mazda/fiabilite-119-pannes-mazda-6.php"
+  ]
+ },
+ {
+  "id": "as2-mazda-22-mzrcd",
+  "label": "Mazda 2.2 diesel MZR-CD (R2 : Mazda 3, Mazda 6, CX-7)",
+  "makes": [
+   "mazda"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2008,
+   "to": 2013
+  },
+  "cc": [
+   2184,
+   2184
+  ],
+  "keywords": [
+   "2.2 mzr-cd",
+   "2.2 mzr cd",
+   "mzr-cd 2.2",
+   "2.2 cd",
+   "2.2 crtd",
+   "r2aa"
+  ],
+  "issues": [
+   {
+    "id": "as2-mzrcd22-crepine",
+    "title": "Joints d'injecteurs et crépine d'huile bouchée",
+    "severity": "high",
+    "description": "Le joint d'un injecteur peut fuir ; les dépôts bouchent la crépine d'huile dans le carter. Sans intervention, le moteur doit être remplacé.",
+    "costMin": 500,
+    "costMax": 5000,
+    "whatToCheck": "Capot ouvert, chercher des dépôts noirs autour des injecteurs et écouter un claquement. Voyant de pression d'huile éteint. Demander les factures."
+   },
+   {
+    "id": "as2-mzrcd22-huile",
+    "title": "Niveau d'huile qui monte, filtre à particules",
+    "severity": "medium",
+    "description": "Le nettoyage du filtre à particules envoie du gazole dans l'huile : le niveau monte et l'huile protège moins. Le filtre peut aussi tomber en panne.",
+    "costMin": 200,
+    "costMax": 1500,
+    "whatToCheck": "Tirer la jauge : le niveau ne doit pas dépasser le maximum (signe de gazole dans l'huile). Demander le type de trajets et les dates de vidange."
+   },
+   {
+    "id": "as2-mzrcd22-turbo",
+    "title": "Turbo défaillant (163 et 185 ch, jusqu'à mi-2012)",
+    "severity": "high",
+    "description": "Perte de puissance due au turbo, notamment sur les 163 et 185 ch fabriqués jusqu'en juin 2012.",
+    "costMin": 1200,
+    "costMax": 2500,
+    "whatToCheck": "Accélérer franchement à l'essai : poussée nette dès 2 000 tr/min, sans sifflement aigu ni fumée. Faire lire les codes défaut."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html",
+   "https://australiancar.reviews/mzr-cd-r2-2008-mazda-diesel-engine/",
+   "https://www.alvolante.it/da_sapere/auto-usate/cerchi-un-auto-diesel-usata-occhio-questi-motori-416045"
+  ]
+ },
+ {
+  "id": "as2-mazda-22-skyactiv-d",
+  "label": "Mazda 2.2 Skyactiv-D diesel (CX-5, Mazda 6, Mazda 3)",
+  "makes": [
+   "mazda"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2012
+  },
+  "cc": [
+   2191,
+   2191
+  ],
+  "keywords": [
+   "2.2 skyactiv-d",
+   "2.2 skyactiv d",
+   "skyactiv-d 2.2",
+   "skyactiv-d 150",
+   "skyactiv-d 175",
+   "skyactiv-d 184",
+   "sh-vpts"
+  ],
+  "issues": [
+   {
+    "id": "as2-skyd22-dilution",
+    "title": "Gazole dans l'huile : niveau d'huile qui monte",
+    "severity": "medium",
+    "description": "Sur petits trajets, le nettoyage du filtre à particules envoie du gazole dans l'huile : le niveau monte. Si on l'ignore, le moteur peut être abîmé.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Tirer la jauge moteur froid : le niveau ne doit pas dépasser le maximum. Demander les factures de vidange et le type de trajets."
+   },
+   {
+    "id": "as2-skyd22-admission",
+    "title": "Admission encrassée (rappels sur le volet d'admission)",
+    "severity": "medium",
+    "description": "La suie s'accumule dans l'admission et son volet : perte de puissance, voyants, voire calage. Rappels avec nettoyage et mise à jour du calculateur.",
+    "costMin": 150,
+    "costMax": 700,
+    "whatToCheck": "Demander en concession, avec le numéro de série, si les rappels (volet d'admission, injecteurs) sont faits. À l'essai, poussée régulière, sans voyant."
+   }
+  ],
+  "sources": [
+   "https://www.whocanfixmycar.com/advice/common-problems-with-the-mazda-cx-5",
+   "https://www.thetruthaboutcars.com/2012/12/mazda-asking-australian-diesel-owners-to-monitor-oil-levels/",
+   "https://mazdas247.com/forum/goto/post?id=6664610"
+  ]
+ },
+ {
+  "id": "as2-mitsubishi-did-18-22",
+  "label": "Mitsubishi 1.8 et 2.2 DI-D diesel (4N13, 4N14 : ASX, Outlander, Lancer)",
+  "makes": [
+   "mitsubishi"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2010,
+   "to": 2019
+  },
+  "cc": [
+   1798,
+   1798
+  ],
+  "powerHp": [
+   114,
+   150
+  ],
+  "keywords": [
+   "1.8 di-d",
+   "1.8 did",
+   "2.2 di-d 150",
+   "2.2 did 150",
+   "4n13",
+   "4n14"
+  ],
+  "issues": [
+   {
+    "id": "as2-did-fap",
+    "title": "Filtre à particules et gazole dans l'huile",
+    "severity": "medium",
+    "description": "Sur petits trajets, le filtre à particules se nettoie mal : il se bouche et du gazole passe dans l'huile. Niveau d'huile trop haut, risque de casse.",
+    "costMin": 200,
+    "costMax": 1500,
+    "whatToCheck": "Tirer la jauge : le niveau ne doit pas dépasser le maximum. Aucun voyant moteur ou filtre. Demander le type de trajets et les factures de vidange."
+   },
+   {
+    "id": "as2-did-egr",
+    "title": "Vanne antipollution et admission encrassées",
+    "severity": "medium",
+    "description": "La vanne antipollution et l'admission s'encrassent de suie : perte de puissance, voyant moteur. La suie peut aussi coller les segments.",
+    "costMin": 300,
+    "costMax": 900,
+    "whatToCheck": "Faire lire les codes défaut. À l'essai, accélérer de 1 500 à 3 500 tr/min : poussée régulière, sans trou ni fumée noire."
+   }
+  ],
+  "sources": [
+   "https://gebrauchtwagenberater.de/mitsubishi-asx-probleme-krankheiten/",
+   "https://www.caradvice.com.au/reviews/mitsubishi-asx-used-car-reviewed/",
+   "https://www.carsguide.com.au/mitsubishi/asx/problems/diesel"
+  ]
+ },
+ {
+  "id": "as2-subaru-20d-boxer",
+  "label": "Subaru 2.0D diesel boxer (EE20 : Forester, Outback, Legacy, XV, Impreza)",
+  "makes": [
+   "subaru"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2008,
+   "to": 2018
+  },
+  "cc": [
+   1998,
+   1998
+  ],
+  "keywords": [
+   "2.0d",
+   "2.0 d",
+   "boxer diesel",
+   "ee20"
+  ],
+  "issues": [
+   {
+    "id": "as2-ee20-vilebrequin",
+    "title": "Vilebrequin et coussinets qui cassent (surtout 2008-2010)",
+    "severity": "high",
+    "description": "Usure des coussinets puis casse du vilebrequin : cognement métallique et moteur à remplacer. Surtout sur les premiers moteurs, jusqu'en 2010.",
+    "costMin": 4000,
+    "costMax": 8000,
+    "whatToCheck": "Moteur chaud, au ralenti et en accélérant, écouter un cognement métallique. Demander si le moteur a été changé par Subaru, factures à l'appui."
+   },
+   {
+    "id": "as2-ee20-embrayage",
+    "title": "Embrayage et double volant moteur usés tôt",
+    "severity": "high",
+    "fromKm": 30000,
+    "description": "Embrayage et double volant moteur qui lâchent parfois dès 30 000 à 40 000 km sur les premiers modèles ; Subaru a ensuite modifié le logiciel.",
+    "costMin": 1200,
+    "costMax": 2000,
+    "whatToCheck": "En côte, en 4e, accélérer fort : le régime ne doit pas monter seul. Au ralenti, écouter un claquement qui disparaît en débrayant."
+   },
+   {
+    "id": "as2-ee20-fap",
+    "title": "Filtre à particules qui se bouche",
+    "severity": "medium",
+    "description": "Le filtre à particules supporte mal les trajets courts : voyant qui revient, perte de puissance, nettoyages ou remplacement.",
+    "costMin": 500,
+    "costMax": 1500,
+    "whatToCheck": "Aucun voyant filtre à particules ou moteur. Demander le type de trajets : un usage surtout urbain est un risque."
+   }
+  ],
+  "sources": [
+   "https://www.auto-swiat.pl/porady/wszystko-o-silniku/czy-warto-kupic-subaru-z-dieslem-wszystko-o-silniku-20-d/z30k6cd",
+   "https://theautopian.com/subaru-invented-the-worlds-first-production-diesel-boxer-engine-and-it-was-a-total-disaster",
+   "https://www.alvolante.it/da_sapere/auto-usate/cerchi-un-auto-diesel-usata-occhio-questi-motori-416045"
+  ]
+ },
+ {
+  "id": "as2-suzuki-19-ddis",
+  "label": "Suzuki 1.9 DDiS diesel (Grand Vitara, SX4)",
+  "makes": [
+   "suzuki"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2005,
+   "to": 2015
+  },
+  "cc": [
+   1870,
+   1870
+  ],
+  "keywords": [
+   "1.9 ddis",
+   "1.9 d ddis",
+   "f9q"
+  ],
+  "issues": [
+   {
+    "id": "as2-ddis19-fap",
+    "title": "Filtre à particules bouché, niveau d'huile qui monte",
+    "severity": "medium",
+    "description": "Filtre à particules qui se bouche, voyant allumé et niveau d'huile qui monte (gazole dans l'huile), surtout jusqu'en 2008 et en usage urbain.",
+    "costMin": 300,
+    "costMax": 1500,
+    "whatToCheck": "Tirer la jauge : le niveau ne doit pas dépasser le maximum. Aucun voyant moteur ou filtre à particules. Demander le type de trajets."
+   },
+   {
+    "id": "as2-ddis19-courroies",
+    "title": "Pompe à eau et poulies : courroies en danger",
+    "severity": "high",
+    "description": "La pompe à eau peut gripper et faire sauter la courroie de distribution ; une poulie peut casser la courroie d'accessoires (jusqu'en 2008).",
+    "costMin": 500,
+    "costMax": 1000,
+    "whatToCheck": "Demander la facture du dernier kit de distribution avec pompe à eau. Moteur tournant, écouter un grincement ou un sifflement de poulie."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html",
+   "https://www.fiches-auto.fr/articles-auto/temoignages-fiabilite/suzuki.php",
+   "https://www.whocanfixmycar.com/advice/suzuki-vitara-common-problems"
+  ]
+ },
+ {
+  "id": "as2-mg-hs-1",
+  "label": "MG HS (2019-2024)",
+  "makes": [
+   "mg"
+  ],
+  "fuel": [
+   "essence",
+   "hybride_rechargeable"
+  ],
+  "years": {
+   "from": 2019,
+   "to": 2024
+  },
+  "keywords": [],
+  "models": [
+   "hs"
+  ],
+  "issues": [
+   {
+    "id": "as2-mghs-boite",
+    "title": "Boîte à double embrayage peu fluide (essence)",
+    "severity": "medium",
+    "description": "Sur l'essence automatique, la boîte à double embrayage donne des à-coups et des hésitations à basse vitesse. Une mise à jour aide souvent.",
+    "costMin": 100,
+    "costMax": 1500,
+    "whatToCheck": "À l'essai, rouler au pas, en ville et en marche arrière : démarrages sans à-coup ni broutement. Demander si les mises à jour ont été faites.",
+    "gearbox": "automatique"
+   },
+   {
+    "id": "as2-mghs-ecran",
+    "title": "Écran et électronique qui plantent",
+    "severity": "low",
+    "description": "Écran tactile qui se fige ou redémarre, téléphone qui ne se connecte pas, clé non reconnue, caméra en panne : bugs électroniques fréquents.",
+    "costMin": 100,
+    "costMax": 800,
+    "whatToCheck": "Tester l'écran, la connexion du téléphone, la caméra de recul, les vitres et rétroviseurs électriques, et les deux clés."
+   },
+   {
+    "id": "as2-mghs-batterie",
+    "title": "Batterie 12 V qui se décharge",
+    "severity": "low",
+    "description": "La batterie 12 V se vide parfois après quelques jours d'arrêt. Il faut la changer, et parfois l'alternateur.",
+    "costMin": 150,
+    "costMax": 600,
+    "whatToCheck": "Demander si la voiture a déjà refusé de démarrer après quelques jours d'arrêt, et l'âge de la batterie."
+   },
+   {
+    "id": "as2-mghs-rappel-masse",
+    "title": "Rappel câble de masse électrique (2020-2022)",
+    "severity": "medium",
+    "description": "Rappel de 2023 : un isolant gênait le contact d'un câble de masse, avec un risque d'incendie signalé sur l'hybride rechargeable. Gratuit chez MG.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Donner le numéro de série (carte grise, case E) à un garage MG et demander si tous les rappels sont faits."
+   }
+  ],
+  "sources": [
+   "https://www.bumper.co/blog/mg-hs-reliability",
+   "https://www.service4service.co.uk/news/mg/the-most-common-problems-with-mg-vehicles/",
+   "https://www.autoexpress.co.uk/mg/hs/364270/used-mg-hs-mk1-2019-2024-buyers-guide-unrivalled-price-far-perfect",
+   "https://www.whatcar.com/mg-motor-uk/hs/hatchback/used-review/n23838/reliability"
+  ]
+ },
+ {
   "id": "en2-rn-f9q-19-dci-2000-2006",
   "label": "Renault/Nissan/Opel 1.9 dCi 80 à 120 ch (F9Q), 2000-2006",
   "makes": [
