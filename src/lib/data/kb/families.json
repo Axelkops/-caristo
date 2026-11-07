@@ -5812,6 +5812,1217 @@
   ]
  },
  {
+  "id": "en2-rn-f9q-19-dci-2000-2006",
+  "label": "Renault/Nissan/Opel 1.9 dCi 80 à 120 ch (F9Q), 2000-2006",
+  "makes": [
+   "renault",
+   "nissan",
+   "opel",
+   "vauxhall"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2000,
+   "to": 2006
+  },
+  "cc": [
+   1870,
+   1870
+  ],
+  "powerHp": [
+   80,
+   125
+  ],
+  "keywords": [
+   "1.9 dci 80",
+   "1.9 dci 85",
+   "1.9 dci 100",
+   "1.9 dci 102",
+   "1.9 dci 105",
+   "1.9 dci 110",
+   "1.9 dci 120",
+   "1.9 dti"
+  ],
+  "issues": [
+   {
+    "id": "en2-f9q-turbo",
+    "title": "Turbo qui lâche (surtout en 120 ch)",
+    "severity": "high",
+    "description": "Point faible n° 1 de ces versions, surtout le 120 ch : sifflement, fumée, perte de puissance. Une casse de turbo peut aussi abîmer le moteur.",
+    "costMin": 1000,
+    "costMax": 2000,
+    "whatToCheck": "À l'essai, accélérer franchement en 3e : poussée régulière, sans sifflement aigu ni fumée bleue. Demander si le turbo a déjà été changé (facture)."
+   },
+   {
+    "id": "en2-f9q-bearings",
+    "title": "Coussinets de bielle fragiles : risque de casse moteur",
+    "severity": "high",
+    "description": "Jusqu'en 2004-2005, les coussinets de bielle s'usent, surtout si l'on roule souvent à bas régime. Le moteur peut casser sans prévenir.",
+    "costMin": 2500,
+    "costMax": 5000,
+    "whatToCheck": "Moteur chaud, au ralenti puis vers 2 000 tr/min : aucun claquement ni grondement. Voyant d'huile éteint. Vidanges régulières sur factures."
+   },
+   {
+    "id": "en2-f9q-egr",
+    "title": "Vanne antipollution encrassée",
+    "severity": "medium",
+    "description": "Panne très fréquente, surtout en usage urbain : à-coups, trous à l'accélération, perte de puissance, voyant moteur.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Essai moteur froid puis chaud : ralenti stable, pas d'à-coups à bas régime, voyant moteur éteint."
+   },
+   {
+    "id": "en2-f9q-injectors",
+    "title": "Injecteurs fragiles",
+    "severity": "medium",
+    "description": "Injecteurs ou joints d'injecteurs défaillants : démarrage difficile, fumée, claquements, ralenti irrégulier.",
+    "costMin": 300,
+    "costMax": 1800,
+    "whatToCheck": "Démarrer moteur froid : départ franc, sans fumée épaisse. Capot ouvert : pas d'odeur de gazole ni de suie autour des injecteurs."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/articles-auto/chiffres-fiabilite-diesel/s-2444-fiabilite-du-19-dci.php",
+   "https://www.planeterenault.com/1-gamme/45-moteurs/1597-actualite-automobile/11892-achat-occasion-faut-il-eviter-moteur-1-9-dci-f9q-chez-renault-/",
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_3.html",
+   "https://www.fiches-auto.fr/articles-auto/fiabilite/s-1192-diesels-les-moins-fiables.php"
+  ]
+ },
+ {
+  "id": "en2-rn-f9q-19-dci-130-2005-2011",
+  "label": "Renault 1.9 dCi 130 (F9Q), 2005-2011",
+  "makes": [
+   "renault"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2005,
+   "to": 2011
+  },
+  "cc": [
+   1870,
+   1870
+  ],
+  "powerHp": [
+   126,
+   131
+  ],
+  "keywords": [
+   "1.9 dci 130"
+  ],
+  "issues": [
+   {
+    "id": "en2-f9q130-injseal",
+    "title": "Joints d'injecteurs qui fuient",
+    "severity": "medium",
+    "description": "Problème d'injection fréquent, souvent un simple joint d'injecteur. Négligée, la fuite encrasse la chambre de combustion et peut casser le moteur.",
+    "costMin": 200,
+    "costMax": 1500,
+    "whatToCheck": "Capot ouvert, moteur chaud : pas d'odeur d'échappement ni de dépôt noir autour des injecteurs. Démarrage franc, sans claquement anormal."
+   },
+   {
+    "id": "en2-f9q130-turbo",
+    "title": "Turbo : perte de puissance (surtout avant 2008)",
+    "severity": "medium",
+    "description": "Jusqu'en 2008, soucis de turbo fréquents : souvent une durite, un joint ou un capteur de pression, parfois le turbo lui-même.",
+    "costMin": 150,
+    "costMax": 1800,
+    "whatToCheck": "Accélérer franchement en 3e : poussée régulière, pas de sifflement, pas de passage en mode dégradé ni de voyant moteur."
+   },
+   {
+    "id": "en2-f9q130-egr",
+    "title": "Vanne antipollution encrassée",
+    "severity": "medium",
+    "description": "La vanne antipollution s'encrasse, surtout si la voiture roule beaucoup en ville : à-coups, perte de puissance, voyant moteur.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Essai moteur froid puis chaud : ralenti stable, pas d'à-coups à bas régime, voyant moteur éteint."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/articles-auto/chiffres-fiabilite-diesel/s-2444-fiabilite-du-19-dci.php",
+   "https://www.planeterenault.com/1-gamme/45-moteurs/1597-actualite-automobile/11892-achat-occasion-faut-il-eviter-moteur-1-9-dci-f9q-chez-renault-/"
+  ]
+ },
+ {
+  "id": "en2-rn-m9r-20-dci-2005-2017",
+  "label": "Renault/Nissan/Opel 2.0 dCi (M9R), 2005-2017",
+  "makes": [
+   "renault",
+   "nissan",
+   "opel",
+   "vauxhall"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2005,
+   "to": 2017
+  },
+  "cc": [
+   1995,
+   1995
+  ],
+  "keywords": [
+   "2.0 dci",
+   "m9r"
+  ],
+  "issues": [
+   {
+    "id": "en2-m9r-bearings",
+    "title": "Coussinets de bielle fragiles (surtout avant 2009)",
+    "severity": "high",
+    "description": "Sur les moteurs jusqu'en 2009 (jusqu'en 2013 chez Nissan), les coussinets de bielle s'usent : perte de puissance, bruit, puis casse moteur.",
+    "costMin": 3000,
+    "costMax": 6000,
+    "whatToCheck": "Moteur chaud : aucun claquement au ralenti ni en accélérant. Voyant d'huile éteint. Exiger des vidanges régulières avec l'huile prévue (factures)."
+   },
+   {
+    "id": "en2-m9r-dpf",
+    "title": "Filtre à particules qui se bouche",
+    "severity": "medium",
+    "description": "Le filtre à particules s'encrasse trop, surtout en ville : voyant, perte de puissance. Souvent traité sous garantie ou par une opération Renault.",
+    "costMin": 300,
+    "costMax": 2000,
+    "whatToCheck": "Aucun voyant de filtre à particules. Demander quels trajets fait la voiture et les factures liées au filtre (nettoyage, remplacement, mise à jour)."
+   }
+  ],
+  "sources": [
+   "https://www.planeterenault.com/1-gamme/45-moteurs/1597-actualite-automobile/11812-fiabilite-et-entretien-moteur-renault-2-0-dci/",
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_3.html",
+   "https://www.fiches-auto.fr/articles-auto/fiabilite/s-1192-diesels-les-moins-fiables.php"
+  ]
+ },
+ {
+  "id": "en2-rn-r9m-16-dci-2014-2018",
+  "label": "Renault 1.6 dCi génération 2 (R9M) : Espace 5, Talisman, Trafic 3 (2014-2018)",
+  "makes": [
+   "renault"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2014,
+   "to": 2018
+  },
+  "cc": [
+   1598,
+   1598
+  ],
+  "keywords": [
+   "1.6 dci",
+   "r9m"
+  ],
+  "models": [
+   "espace",
+   "talisman",
+   "trafic"
+  ],
+  "issues": [
+   {
+    "id": "en2-r9m-block",
+    "title": "Bloc moteur qui peut se fissurer",
+    "severity": "high",
+    "description": "Défaut de fabrication sur des moteurs produits de déc. 2014 à mars 2018 : bruit, fuite d'huile, perte de liquide, calage. Renault participe au remplacement.",
+    "costMin": 0,
+    "costMax": 7000,
+    "whatToCheck": "Demander en concession Renault, avec le numéro de série (VIN), si l'opération technique 0CZ2 concerne la voiture. Vase d'expansion : niveau stable, sans huile."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/renault-espace-talisman-et-trafic-risque-de-casse-du-moteur-16-dci-9928390.html",
+   "https://www.fiches-auto.fr/articles-auto/chiffres-fiabilite-diesel/s-2443-fiabilite-du-16-dci.php"
+  ]
+ },
+ {
+  "id": "en2-rn-boite-dp0",
+  "label": "Boîte automatique 4 rapports DP0 / DP2 (Renault essence)",
+  "makes": [
+   "renault"
+  ],
+  "fuel": [
+   "essence"
+  ],
+  "years": {
+   "from": 2000,
+   "to": 2016
+  },
+  "keywords": [
+   "dp0",
+   "dp2",
+   "bva",
+   "proactive",
+   "bva4",
+   "ba4"
+  ],
+  "models": [
+   "clio",
+   "clio estate",
+   "modus",
+   "grand modus",
+   "megane",
+   "megane estate",
+   "megane coupe",
+   "megane cc",
+   "megane coupe-cabriolet",
+   "scenic",
+   "grand scenic",
+   "kangoo",
+   "symbol",
+   "thalia"
+  ],
+  "gearbox": "automatique",
+  "issues": [
+   {
+    "id": "en2-dp0-solenoid",
+    "title": "Électrovannes de la boîte usées",
+    "severity": "medium",
+    "description": "Ce sont les pièces les plus souvent changées : passages brutaux, à-coups, patinage, voyant et boîte bloquée en mode secours.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Essai moteur chaud : les 4 rapports passent en douceur, sans choc ni patinage. Aucun voyant ni message de défaut de boîte."
+   },
+   {
+    "id": "en2-dp0-heat",
+    "title": "Surchauffe de la boîte",
+    "severity": "medium",
+    "description": "Le petit radiateur d'huile, qui sert aussi de filtre, se bouche : en été ou dans les bouchons, la boîte chauffe et passe en mode secours.",
+    "costMin": 200,
+    "costMax": 600,
+    "whatToCheck": "Faire un essai d'au moins 20 minutes, dont un peu de ville. Demander si l'huile de boîte a été vidangée (environ tous les 40 000 km)."
+   },
+   {
+    "id": "en2-dp0-valvebody",
+    "title": "Bloc hydraulique abîmé par la chaleur",
+    "severity": "high",
+    "description": "L'huile trop chaude ou usée déforme le bloc qui commande la boîte : à-coups permanents, patinage. Réparation lourde.",
+    "costMin": 900,
+    "costMax": 2500,
+    "whatToCheck": "À l'arrêt, passer de P à R puis à D : enclenchement rapide et sans choc. Renoncer si la boîte patine ou cogne."
+   }
+  ],
+  "sources": [
+   "https://go4trans.com/transmission/dp0",
+   "https://gearboxlist.com/peugeot/al4/"
+  ]
+ },
+ {
+  "id": "en2-psa-boite-bmp-etg",
+  "label": "Boîte robotisée Peugeot/Citroën/DS BMP5/BMP6, ETG5/ETG6, EGS6",
+  "makes": [
+   "peugeot",
+   "citroen",
+   "ds"
+  ],
+  "years": {
+   "from": 2006,
+   "to": 2018
+  },
+  "keywords": [
+   "bmp6",
+   "bmp 6",
+   "etg6",
+   "etg 6",
+   "egs6",
+   "egs 6",
+   "bmp5",
+   "bmp 5",
+   "etg5",
+   "etg 5"
+  ],
+  "models": [
+   "c3",
+   "c3 picasso",
+   "c4",
+   "c4 picasso",
+   "grand c4 picasso",
+   "c4 spacetourer",
+   "grand c4 spacetourer",
+   "c4 cactus",
+   "c5",
+   "ds3",
+   "ds 3",
+   "ds4",
+   "ds 4",
+   "ds5",
+   "ds 5",
+   "berlingo",
+   "208",
+   "2008",
+   "308",
+   "3008",
+   "5008",
+   "508",
+   "partner"
+  ],
+  "issues": [
+   {
+    "id": "en2-bmp-jerk",
+    "title": "À-coups et passages de vitesses lents",
+    "severity": "low",
+    "description": "Passages hésitants et à-coups, surtout en mode automatique. Souvent amélioré par une mise à jour du calculateur de boîte et un réapprentissage.",
+    "costMin": 0,
+    "costMax": 300,
+    "whatToCheck": "Essai en ville : démarrer, rouler au pas, passer de 1re en 2e puis 3e. Demander si la mise à jour du calculateur de boîte a été faite."
+   },
+   {
+    "id": "en2-bmp-clutch",
+    "title": "Embrayage usé : la voiture avance mal",
+    "severity": "medium",
+    "description": "L'embrayage s'use comme sur une boîte manuelle : patinage, broutement, voiture qui avance difficilement. Il faut le changer puis refaire l'apprentissage.",
+    "costMin": 700,
+    "costMax": 1300,
+    "whatToCheck": "En côte, démarrer et accélérer : pas de patinage ni de broutement. Demander la date du dernier remplacement d'embrayage (facture)."
+   },
+   {
+    "id": "en2-bmp-bearings",
+    "title": "Roulements de boîte bruyants",
+    "severity": "medium",
+    "description": "Bruit de roulement qui suit la vitesse, défaut connu de ces boîtes : il faut remplacer les roulements de la boîte.",
+    "costMin": 800,
+    "costMax": 1500,
+    "whatToCheck": "À l'essai, radio éteinte, écouter vers 50 puis 90 km/h : pas de sifflement ni de grondement qui augmente avec la vitesse."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/voiture-d-occasion-quel-citroen-c4-picasso-acheter-2530370_p_2.html",
+   "https://www.fiches-auto.fr/articles-auto/boites-automatiques/s-1025-bmp-de-peugeot-citroen.php",
+   "https://www.fiches-auto.fr/articles-auto/fiabilite/s-3159-boites-automatiques-les-moins-fiables-la-liste-noire.php"
+  ]
+ },
+ {
+  "id": "en2-opel-10-12-14-chaine",
+  "label": "Opel 1.0 / 1.2 / 1.4 essence à chaîne (Twinport, ecoFLEX), 2003-2014",
+  "makes": [
+   "opel",
+   "vauxhall"
+  ],
+  "fuel": [
+   "essence",
+   "gpl"
+  ],
+  "years": {
+   "from": 2003,
+   "to": 2014
+  },
+  "cc": [
+   998,
+   1398
+  ],
+  "powerHp": [
+   60,
+   101
+  ],
+  "keywords": [
+   "twinport",
+   "z10xep",
+   "z12xep",
+   "z14xep",
+   "a10xep",
+   "a12xer",
+   "a12xel",
+   "a14xer",
+   "a14xel"
+  ],
+  "models": [
+   "corsa",
+   "astra",
+   "meriva",
+   "tigra",
+   "combo",
+   "adam"
+  ],
+  "issues": [
+   {
+    "id": "en2-twp-chain",
+    "title": "Chaîne de distribution qui s'allonge",
+    "severity": "high",
+    "description": "Bruit de ferraille au démarrage, voyant moteur : la chaîne s'allonge, surtout si les vidanges sont négligées. Elle peut alors sauter et casser le moteur.",
+    "costMin": 600,
+    "costMax": 1300,
+    "whatToCheck": "Démarrer moteur froid, capot ouvert : aucun cliquetis métallique dans les premières secondes. Demander les factures de vidange et de chaîne."
+   },
+   {
+    "id": "en2-twp-flaps",
+    "title": "Volets d'admission Twinport qui se bloquent",
+    "severity": "medium",
+    "description": "Les petits volets du collecteur d'admission se grippent ou cassent : voyant moteur, ralenti instable, perte de puissance.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Moteur chaud : ralenti régulier, reprise franche, voyant moteur éteint. Faire lire les codes défaut si possible."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-opel/fiabilite-126-pannes-opel-corsa-4.php",
+   "https://www.zr.ru/content/articles/943905-5-osnovnykh-dvigatelej-opel-i-s",
+   "https://gebrauchtwagenberater.de/opel-astra-j-probleme/"
+  ]
+ },
+ {
+  "id": "en2-opel-14-turbo",
+  "label": "Opel 1.4 Turbo essence (A14NET, B14NET), 2010-2019",
+  "makes": [
+   "opel",
+   "vauxhall"
+  ],
+  "fuel": [
+   "essence",
+   "gpl"
+  ],
+  "years": {
+   "from": 2010,
+   "to": 2019
+  },
+  "cc": [
+   1364,
+   1364
+  ],
+  "powerHp": [
+   116,
+   152
+  ],
+  "keywords": [
+   "1.4 turbo",
+   "1.4t",
+   "a14net",
+   "a14nel",
+   "b14net",
+   "b14nel"
+  ],
+  "issues": [
+   {
+    "id": "en2-a14t-coolant",
+    "title": "Pertes de liquide de refroidissement",
+    "severity": "medium",
+    "description": "Pompe à eau, boîtier de thermostat en plastique ou tuyaux du turbo fuient : le niveau baisse sans flaque. Négligé, la culasse peut s'abîmer.",
+    "costMin": 200,
+    "costMax": 900,
+    "whatToCheck": "Moteur froid : niveau du vase d'expansion au maximum. Chercher des dépôts blancs ou roses sous la pompe à eau et le thermostat."
+   },
+   {
+    "id": "en2-a14t-turbo",
+    "title": "Turbo : fuite d'huile ou commande qui se grippe",
+    "severity": "medium",
+    "description": "Le turbo peut lâcher : cliquetis métallique à l'accélération, manque de puissance, fumée bleue en charge.",
+    "costMin": 400,
+    "costMax": 1800,
+    "whatToCheck": "À l'essai, accélérer franchement en 3e : poussée régulière, sans cliquetis ni fumée bleue, voyant moteur éteint."
+   }
+  ],
+  "sources": [
+   "https://kfz-dietrich.com/blog/opel-1-4-turbo-a14net-b14-kuehlmittelverlust-turbo-diagnose/",
+   "https://gebrauchtwagenberater.de/opel-astra-j-probleme/"
+  ]
+ },
+ {
+  "id": "en2-opel-17-cdti",
+  "label": "Opel 1.7 CDTi (moteur Isuzu), 2003-2015",
+  "makes": [
+   "opel",
+   "vauxhall"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2003,
+   "to": 2015
+  },
+  "cc": [
+   1686,
+   1686
+  ],
+  "keywords": [
+   "1.7 cdti",
+   "z17dth",
+   "z17dtl",
+   "z17dtr",
+   "a17dtr",
+   "a17dts",
+   "a17dtj",
+   "a17dte",
+   "a17dtc",
+   "a17dtn"
+  ],
+  "issues": [
+   {
+    "id": "en2-a17-egr",
+    "title": "Vanne antipollution encrassée",
+    "severity": "medium",
+    "description": "Panne très fréquente sur ce moteur, surtout en 100 à 125 ch : à-coups, perte de puissance, voyant moteur.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Essai moteur froid puis chaud : ralenti stable, pas d'à-coups à bas régime, voyant moteur éteint."
+   },
+   {
+    "id": "en2-a17-dpf",
+    "title": "Filtre à particules qui se bouche",
+    "severity": "medium",
+    "description": "Sur les versions à filtre à particules, les trajets courts le bouchent : voyant, perte de puissance, nettoyages à répétition.",
+    "costMin": 300,
+    "costMax": 2000,
+    "whatToCheck": "Aucun voyant de filtre à particules. Demander quels trajets fait la voiture. Le niveau d'huile ne doit pas dépasser le maximum."
+   },
+   {
+    "id": "en2-a17-turbo",
+    "title": "Turbo : perte de puissance (surtout avant 2010)",
+    "severity": "medium",
+    "description": "Le turbo ou sa commande faiblit : manque de puissance, mode dégradé. Panne surtout signalée jusqu'en mai 2010.",
+    "costMin": 300,
+    "costMax": 1800,
+    "whatToCheck": "À l'essai, accélérer franchement en 3e : poussée régulière, sans sifflement ni fumée, voyant moteur éteint."
+   },
+   {
+    "id": "en2-a17-injseal",
+    "title": "Fuites aux joints d'injecteurs",
+    "severity": "medium",
+    "description": "Les joints autour des injecteurs se dégradent et fuient : odeur, fumée, démarrage difficile. Les injecteurs eux-mêmes lâchent aussi souvent.",
+    "costMin": 200,
+    "costMax": 1500,
+    "whatToCheck": "Capot ouvert, moteur chaud : pas de suie ni d'odeur d'échappement autour des injecteurs. Démarrage à froid franc, sans fumée épaisse."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/articles-auto/fiabilite-classements/s-3129-opel-les-moins-fiables.php",
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html",
+   "https://club.autodoc.co.uk/magazin/cdti-opelvauxhall-diesel-engines-with-common-rail-direct-fuel-injection-system",
+   "https://www.fiches-auto.fr/articles-auto/fiabilite/s-1192-diesels-les-moins-fiables.php"
+  ]
+ },
+ {
+  "id": "en2-opel-boite-easytronic",
+  "label": "Boîte robotisée Opel Easytronic",
+  "makes": [
+   "opel",
+   "vauxhall"
+  ],
+  "years": {
+   "from": 2000,
+   "to": 2018
+  },
+  "keywords": [
+   "easytronic"
+  ],
+  "issues": [
+   {
+    "id": "en2-easy-actuator",
+    "title": "Actionneur d'embrayage qui lâche",
+    "severity": "medium",
+    "description": "Le moteur électrique qui commande l'embrayage s'use : « F » au tableau de bord, vitesses qui ne passent plus, voiture bloquée au point mort.",
+    "costMin": 400,
+    "costMax": 1200,
+    "whatToCheck": "À l'essai, passer toutes les vitesses et la marche arrière : enclenchement rapide, sans bip ni lettre « F » ou « N » qui clignote au tableau de bord."
+   },
+   {
+    "id": "en2-easy-clutch",
+    "title": "Embrayage qui s'use vite",
+    "severity": "medium",
+    "description": "Cette boîte use l'embrayage plus vite qu'une boîte manuelle, surtout en ville ou si la voiture reste garée avec une vitesse engagée.",
+    "costMin": 600,
+    "costMax": 1100,
+    "whatToCheck": "En côte, démarrer doucement : pas de patinage ni de secousse. Demander la date du dernier embrayage et de l'apprentissage de la boîte."
+   }
+  ],
+  "sources": [
+   "https://www.ecutesting.com/common-faults/vauxhall/vauxhall-easytronic-gearbox-clutch-actuator-transmission-problems/",
+   "https://gearboxlist.com/opel/easytronic/",
+   "https://www.zr.ru/content/articles/943905-5-osnovnykh-dvigatelej-opel-i-s"
+  ]
+ },
+ {
+  "id": "en2-opel-boite-m32",
+  "label": "Boîte manuelle 6 vitesses Opel M32 (2004-2013)",
+  "makes": [
+   "opel",
+   "vauxhall"
+  ],
+  "fuel": [
+   "diesel",
+   "essence"
+  ],
+  "years": {
+   "from": 2004,
+   "to": 2013
+  },
+  "keywords": [
+   "m32",
+   "1.7 cdti",
+   "1.9 cdti",
+   "2.0 cdti",
+   "1.4 turbo",
+   "1.6 turbo",
+   "1.6 sidi",
+   "opc",
+   "vxr"
+  ],
+  "models": [
+   "astra",
+   "zafira",
+   "zafira tourer",
+   "insignia",
+   "meriva",
+   "signum",
+   "vectra",
+   "mokka",
+   "cascada"
+  ],
+  "gearbox": "manuelle",
+  "issues": [
+   {
+    "id": "en2-m32-bearings",
+    "title": "Roulements de la boîte 6 vitesses qui s'usent tôt",
+    "severity": "high",
+    "fromKm": 50000,
+    "description": "Roulements trop petits : sifflement en 5e et 6e, levier qui bouge à l'accélération. Négligée, la boîte casse. Nette amélioration fin 2012-2013.",
+    "costMin": 800,
+    "costMax": 2500,
+    "whatToCheck": "Boîte 6 vitesses : en 5e et 6e, accélérer puis lever le pied. Pas de sifflement, et le levier ne doit ni bouger ni sauter."
+   }
+  ],
+  "sources": [
+   "https://www.sinspeed.co.uk/common-m20-m32-gearbox-bearing-failures-repairs-rebuilds/comment-page-1",
+   "https://stillrunningstrong.com/?p=7798",
+   "https://gebrauchtwagenberater.de/opel-insignia-a-probleme/",
+   "https://gebrauchtwagenberater.de/opel-astra-j-probleme/"
+  ]
+ },
+ {
+  "id": "en2-fiat-opel-19-jtd-cdti",
+  "label": "Fiat/Alfa/Lancia/Opel/Saab/Suzuki 1.9 JTD Multijet et 1.9 CDTi, 2002-2012",
+  "makes": [
+   "fiat",
+   "alfa romeo",
+   "lancia",
+   "opel",
+   "vauxhall",
+   "saab",
+   "suzuki"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2002,
+   "to": 2012
+  },
+  "cc": [
+   1910,
+   1910
+  ],
+  "keywords": [
+   "1.9 jtd",
+   "1.9 jtdm",
+   "1.9 multijet",
+   "1.9 mjt",
+   "1.9 cdti",
+   "1.9 tid",
+   "1.9 ttid",
+   "1.9 ddis",
+   "z19dt",
+   "z19dth",
+   "z19dtl"
+  ],
+  "issues": [
+   {
+    "id": "en2-19m-egr",
+    "title": "Vanne antipollution très souvent encrassée",
+    "severity": "medium",
+    "description": "Panne n° 1 de ce moteur : à-coups, perte de puissance, mode dégradé, voyant moteur.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Essai moteur froid puis chaud : ralenti stable, pas d'à-coups à bas régime, voyant moteur éteint."
+   },
+   {
+    "id": "en2-19m-turbo",
+    "title": "Turbo : perte de puissance",
+    "severity": "medium",
+    "description": "Le turbo ou sa commande faiblit : manque de puissance, sifflement, passage en mode dégradé.",
+    "costMin": 300,
+    "costMax": 1800,
+    "whatToCheck": "À l'essai, accélérer franchement en 3e : poussée régulière, sans sifflement aigu ni fumée bleue."
+   },
+   {
+    "id": "en2-19m-inj",
+    "title": "Injecteurs et joints d'injecteurs",
+    "severity": "medium",
+    "description": "Injecteurs ou joints d'injecteurs défaillants : démarrage difficile, fumée, ratés, perte de puissance.",
+    "costMin": 200,
+    "costMax": 1500,
+    "whatToCheck": "Démarrer moteur froid : départ franc, sans fumée épaisse. Capot ouvert : pas d'odeur de gazole ni de suie autour des injecteurs."
+   },
+   {
+    "id": "en2-19m-dpf",
+    "title": "Filtre à particules qui se bouche",
+    "severity": "medium",
+    "description": "Sur les versions à filtre à particules (Opel, Fiat 150 ch...), les trajets courts le bouchent : voyant, perte de puissance.",
+    "costMin": 300,
+    "costMax": 2000,
+    "whatToCheck": "Aucun voyant de filtre à particules. Demander quels trajets fait la voiture. Le niveau d'huile ne doit pas dépasser le maximum."
+   },
+   {
+    "id": "en2-19m-alt",
+    "title": "Alternateur et sa poulie (Opel surtout)",
+    "severity": "medium",
+    "description": "Sur les Opel 1.9 CDTi, l'alternateur ou sa poulie lâchent souvent (notamment 2007-2009) : voyant de charge, batterie qui se vide.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Moteur tournant : voyant de batterie éteint. Faire mesurer la tension de charge (environ 14 V). Pas de bruit de roulement côté courroie."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html",
+   "https://www.fiches-auto.fr/articles-auto/fiabilite/s-1192-diesels-les-moins-fiables.php",
+   "https://www.fiches-auto.fr/articles-auto/fiabilite-classements/s-3129-opel-les-moins-fiables.php"
+  ]
+ },
+ {
+  "id": "en2-fiat-16-multijet",
+  "label": "Fiat/Alfa/Lancia/Jeep/Suzuki/Opel 1.6 Multijet (1.6 JTDm, 1.6 DDiS, Combo 1.6 CDTi), 2008-2022",
+  "makes": [
+   "fiat",
+   "alfa romeo",
+   "lancia",
+   "jeep",
+   "suzuki",
+   "opel",
+   "vauxhall"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2008,
+   "to": 2022
+  },
+  "cc": [
+   1598,
+   1598
+  ],
+  "keywords": [
+   "1.6 multijet",
+   "1.6 mjt",
+   "1.6 jtd",
+   "1.6 jtdm",
+   "1.6 ddis"
+  ],
+  "models": [
+   "bravo",
+   "doblo",
+   "doblo cargo",
+   "500l",
+   "500x",
+   "tipo",
+   "linea",
+   "sedici",
+   "punto",
+   "grande punto",
+   "punto evo",
+   "qubo",
+   "mito",
+   "giulietta",
+   "delta",
+   "renegade",
+   "compass",
+   "sx4 s-cross",
+   "s-cross",
+   "vitara",
+   "combo"
+  ],
+  "issues": [
+   {
+    "id": "en2-mj16-egrcooler",
+    "title": "Fuite de liquide à l'échangeur antipollution",
+    "severity": "medium",
+    "description": "Fuite de liquide de refroidissement, souvent à l'échangeur de la vanne antipollution, surtout en 105 ch : le niveau baisse, l'alerte arrive tard.",
+    "costMin": 500,
+    "costMax": 1200,
+    "whatToCheck": "Moteur froid : vase d'expansion au bon niveau. Demander si l'on rajoute du liquide. Pas de fumée blanche ni d'odeur sucrée à l'échappement."
+   },
+   {
+    "id": "en2-mj16-egr",
+    "title": "Vanne antipollution encrassée",
+    "severity": "medium",
+    "description": "La vanne antipollution s'encrasse : à-coups, perte de puissance, voyant moteur.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Essai moteur froid puis chaud : ralenti stable, pas d'à-coups à bas régime, voyant moteur éteint."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/articles-auto/fiabilite-moteurs-diesel/s-3997-fiabilite-16-jtd-multijet-fiat-alfa-romeo.php",
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html"
+  ]
+ },
+ {
+  "id": "en2-ford-14-tdci",
+  "label": "Ford/Mazda 1.4 TDCi et 1.4 MZ-CD (moteur PSA DV4), 2002-2013",
+  "makes": [
+   "ford",
+   "mazda"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2002,
+   "to": 2013
+  },
+  "cc": [
+   1398,
+   1399
+  ],
+  "keywords": [
+   "1.4 tdci",
+   "1.4 mz-cd",
+   "1.4 mzcd"
+  ],
+  "issues": [
+   {
+    "id": "en2-f14-injseal",
+    "title": "Fuites aux joints d'injecteurs",
+    "severity": "medium",
+    "description": "Les joints des injecteurs laissent passer gaz et gazole : odeur, dépôts noirs, démarrage difficile. Corrigé en usine vers 2004, puis 2008.",
+    "costMin": 150,
+    "costMax": 450,
+    "whatToCheck": "Capot ouvert, moteur chaud : pas d'odeur de gazole ni de croûte noire autour des injecteurs."
+   },
+   {
+    "id": "en2-f14-start",
+    "title": "Démarrage difficile (retours de gazole, injecteurs)",
+    "severity": "medium",
+    "description": "Tuyaux de retour ou injecteurs qui fuient : le circuit se désamorce, le moteur peine à démarrer ou hésite à l'accélération.",
+    "costMin": 100,
+    "costMax": 1000,
+    "whatToCheck": "Démarrer moteur froid puis moteur chaud : le moteur doit partir en moins de 2 secondes. Pas de gazole humide sur les tuyaux des injecteurs."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-ford/fiabilite-276-pannes-ford-fiesta.php",
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_2.html",
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html"
+  ]
+ },
+ {
+  "id": "en2-ford-16-ecoboost",
+  "label": "Ford 1.6 EcoBoost / SCTi 150 à 200 ch, 2010-2017",
+  "makes": [
+   "ford"
+  ],
+  "fuel": [
+   "essence"
+  ],
+  "years": {
+   "from": 2010,
+   "to": 2017
+  },
+  "cc": [
+   1596,
+   1596
+  ],
+  "powerHp": [
+   150,
+   200
+  ],
+  "keywords": [
+   "1.6 ecoboost",
+   "1.6 scti",
+   "1.6 sct"
+  ],
+  "issues": [
+   {
+    "id": "en2-eb16-recall",
+    "title": "Rappel : surchauffe et fissure de culasse",
+    "severity": "high",
+    "description": "Un manque de liquide fait surchauffer la culasse, qui peut se fissurer : fuite d'huile et risque d'incendie. Rappel gratuit (pose d'un capteur de niveau).",
+    "costMin": 0,
+    "costMax": 3000,
+    "whatToCheck": "Demander chez Ford, avec le numéro de série (VIN), si le rappel a été fait. Moteur froid : liquide de refroidissement au bon niveau, sans fuite."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/rappel-ford-16-ecoboostscti-risque-de-surchauffe-de-culasse-10799390.html",
+   "https://www.expressandstar.com/news/motors/2018/10/01/ford-to-pay-for-repairs-of-ecoboost-engine-fault",
+   "https://gebrauchtwagenberater.de/ford-ecoboost-probleme/",
+   "https://www.fiches-auto.fr/fiabilite-ford/fiabilite-326-pannes-ford-focus-3.php"
+  ]
+ },
+ {
+  "id": "en2-ford-15-ecoboost-4cyl",
+  "label": "Ford 1.5 EcoBoost 4 cylindres 150 à 182 ch, 2014-2019",
+  "makes": [
+   "ford"
+  ],
+  "fuel": [
+   "essence"
+  ],
+  "years": {
+   "from": 2014,
+   "to": 2019
+  },
+  "cc": [
+   1498,
+   1499
+  ],
+  "powerHp": [
+   120,
+   182
+  ],
+  "keywords": [],
+  "issues": [
+   {
+    "id": "en2-eb15-coolant",
+    "title": "Liquide de refroidissement dans les cylindres",
+    "severity": "high",
+    "description": "Sur les moteurs d'avant mi-2019, du liquide passe dans les cylindres : perte de liquide sans fuite visible, ratés, puis casse moteur.",
+    "costMin": 3000,
+    "costMax": 7000,
+    "whatToCheck": "Moteur froid : niveau de liquide au maximum ; demander s'il baisse. Démarrage à froid sans ratés ni fumée blanche. Appoints fréquents = méfiance."
+   }
+  ],
+  "sources": [
+   "https://gebrauchtwagenberater.de/ford-ecoboost-probleme/",
+   "https://8020automotive.com/the-4-most-common-ford-1-5-ecoboost-engine-problems/"
+  ]
+ },
+ {
+  "id": "en2-ford-20-ecoblue",
+  "label": "Ford 2.0 EcoBlue diesel (Transit, Kuga, Focus, Mondeo, S-Max), depuis 2016",
+  "makes": [
+   "ford"
+  ],
+  "fuel": [
+   "diesel",
+   "hybride"
+  ],
+  "years": {
+   "from": 2016
+  },
+  "cc": [
+   1995,
+   1996
+  ],
+  "keywords": [
+   "2.0 ecoblue"
+  ],
+  "issues": [
+   {
+    "id": "en2-ecob20-belt",
+    "title": "Courroie de distribution dans l'huile à surveiller",
+    "severity": "high",
+    "description": "La courroie baigne dans l'huile et peut se dégrader : perte de pression d'huile, casse moteur. Ford a avancé son changement à 6 ans ou 160 000 km.",
+    "costMin": 900,
+    "costMax": 2000,
+    "whatToCheck": "Voiture de 6 ans ou 160 000 km : exiger la facture de la courroie. Vidanges avec l'huile prévue par Ford, sur factures. Voyant d'huile éteint."
+   }
+  ],
+  "sources": [
+   "https://www.parkers.co.uk/car-news/ford-wet-belt-issues/",
+   "https://www.journaldunet.com/story/1547269-cd1-nouveau-moteur-problemes-puretech/"
+  ]
+ },
+ {
+  "id": "en2-mb-om646",
+  "label": "Mercedes 2.2 CDI OM646 (200/220 CDI, Vito, Viano, Sprinter), 2002-2010",
+  "makes": [
+   "mercedes",
+   "mercedes-benz"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2002,
+   "to": 2010
+  },
+  "cc": [
+   2148,
+   2148
+  ],
+  "keywords": [
+   "om646",
+   "om 646"
+  ],
+  "issues": [
+   {
+    "id": "en2-om646-inj",
+    "title": "Injecteurs fragiles et joints qui fuient",
+    "severity": "medium",
+    "description": "Injecteurs réputés fragiles : démarrage difficile, ratés, fumée. Leurs joints en cuivre fuient aussi, avec une croûte noire autour.",
+    "costMin": 300,
+    "costMax": 2500,
+    "whatToCheck": "Capot ouvert, moteur chaud : pas de dépôt noir goudronneux ni d'odeur d'échappement autour des injecteurs. Démarrage à froid franc."
+   },
+   {
+    "id": "en2-om646-egr",
+    "title": "Vanne antipollution encrassée",
+    "severity": "medium",
+    "description": "Panne la plus citée sur les 220 CDI de 150 ch, surtout en usage urbain : à-coups, perte de puissance, voyant moteur.",
+    "costMin": 300,
+    "costMax": 800,
+    "whatToCheck": "Essai moteur froid puis chaud : ralenti stable, pas d'à-coups à bas régime, voyant moteur éteint."
+   },
+   {
+    "id": "en2-om646-coolant",
+    "title": "Perte de liquide par un échangeur",
+    "severity": "medium",
+    "description": "Un échangeur (refroidisseur antipollution ou échangeur eau/huile) peut fuir : liquide qui baisse sans fuite visible, fumée blanche, parfois eau dans l'huile.",
+    "costMin": 500,
+    "costMax": 1300,
+    "whatToCheck": "Vase d'expansion au bon niveau, liquide propre sans trace grasse. Bouchon d'huile sans dépôt crémeux. Pas de fumée blanche moteur chaud."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/articles-auto/fiabilite-moteurs-diesel/s-3307-fiabilite-220-cdi.php",
+   "https://www.caradisiac.com/Fiabilite-45843.htm",
+   "https://www.largus.fr/actualite-automobile/diesel-la-liste-des-pannes-recurrentes-5287380_p_5.html",
+   "https://kfz-dietrich.com/blog/mercedes-diagnose-w211-e220-cdi-typische-fehler/",
+   "https://carwiki.de/mercedes-om646-motor"
+  ]
+ },
+ {
+  "id": "en2-mb-boite-7g-tronic",
+  "label": "Mercedes boîte automatique 7G-Tronic (722.9), 2003-2016",
+  "makes": [
+   "mercedes",
+   "mercedes-benz"
+  ],
+  "years": {
+   "from": 2003,
+   "to": 2016
+  },
+  "keywords": [
+   "7g-tronic",
+   "7g tronic",
+   "7gtronic",
+   "722.9"
+  ],
+  "gearbox": "automatique",
+  "issues": [
+   {
+    "id": "en2-7g-plate",
+    "title": "Calculateur de boîte intégré qui lâche",
+    "severity": "high",
+    "fromKm": 80000,
+    "description": "La plaque électronique de la boîte (capteurs de vitesse) se dégrade : passages ratés, boîte bloquée sur un rapport, mode secours.",
+    "costMin": 1000,
+    "costMax": 2500,
+    "whatToCheck": "Essai d'au moins 20 minutes : passages doux et rapides, aucun rapport bloqué ni message boîte. Faire lire les codes défaut de la boîte."
+   }
+  ],
+  "sources": [
+   "https://theautopian.com/heres-what-a-conductor-plate-is-and-why-it-kills-so-many-mercedes-benzes",
+   "https://ecutesting.com/common-faults/mercedes/7g-tronic-transmission-problems"
+  ]
+ },
+ {
+  "id": "en2-volvo-d5-24-5cyl",
+  "label": "Volvo 2.4 diesel 5 cylindres D5 / 2.4D / D3 / D4 (D5244), 2001-2016",
+  "makes": [
+   "volvo"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2001,
+   "to": 2016
+  },
+  "cc": [
+   2400,
+   2401
+  ],
+  "keywords": [
+   "d5244",
+   "2.4d",
+   "2.4 d"
+  ],
+  "issues": [
+   {
+    "id": "en2-d5-dpf",
+    "title": "Filtre à particules et vanne antipollution encrassés",
+    "severity": "medium",
+    "description": "Le filtre à particules et la vanne antipollution s'encrassent assez vite : voyant, perte de puissance. Une mise à jour a amélioré les premiers modèles.",
+    "costMin": 300,
+    "costMax": 2000,
+    "whatToCheck": "Aucun voyant moteur ni de filtre. Demander si les mises à jour du calculateur ont été faites et quels trajets fait la voiture (trajets courts = risque)."
+   }
+  ],
+  "sources": [
+   "https://club.autodoc.co.uk/magazin/d3-d4-and-d5-engines-what-it-stands-for-and-its-performance-parameters",
+   "https://gebrauchtwagenberater.de/volvo-xc60-i-2008-2017-probleme/"
+  ]
+ },
+ {
+  "id": "en2-lr-freelander2-22-diesel",
+  "label": "Land Rover Freelander 2 2.2 TD4 / SD4 / eD4 (2006-2014)",
+  "makes": [
+   "land rover"
+  ],
+  "fuel": [
+   "diesel"
+  ],
+  "years": {
+   "from": 2006,
+   "to": 2014
+  },
+  "cc": [
+   2179,
+   2179
+  ],
+  "keywords": [
+   "2.2 td4",
+   "2.2 sd4",
+   "2.2 ed4",
+   "sd4",
+   "ed4",
+   "td4_e",
+   "td4 e"
+  ],
+  "models": [
+   "freelander",
+   "freelander 2"
+  ],
+  "issues": [
+   {
+    "id": "en2-fl2-egrcooler",
+    "title": "Refroidisseur antipollution qui se fissure",
+    "severity": "medium",
+    "description": "Le refroidisseur de la vanne antipollution se fissure avec les vibrations : perte de liquide, message « Low coolant level ». Une pièce améliorée existe.",
+    "costMin": 600,
+    "costMax": 1300,
+    "whatToCheck": "Vase d'expansion au bon niveau, aucun message d'alerte. Demander si le refroidisseur a été remplacé par la pièce modifiée (facture)."
+   },
+   {
+    "id": "en2-fl2-haldex",
+    "title": "Coupleur de transmission 4x4 qui fuit",
+    "severity": "medium",
+    "description": "Les joints du coupleur de transmission intégrale (Haldex) fuient : flaque d'huile à l'arrière, puis roues arrière qui ne sont plus entraînées.",
+    "costMin": 400,
+    "costMax": 1200,
+    "whatToCheck": "Regarder sous l'arrière de la voiture : pas de trace d'huile. Demander les factures d'entretien du coupleur (huile et filtre)."
+   },
+   {
+    "id": "en2-fl2-fuelrecall",
+    "title": "Rappel : fuite de gazole (modèles 2012-2013)",
+    "severity": "medium",
+    "description": "Les tuyaux de retour des injecteurs peuvent fuir, avec un risque d'incendie (diesels fabriqués de janvier 2012 à octobre 2013). Rappel gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Demander chez Land Rover, avec le numéro de série (VIN), si le rappel a été fait. Capot ouvert, moteur chaud : aucune odeur de gazole."
+   }
+  ],
+  "sources": [
+   "https://haynes.com/en-gb/tips-tutorials/land-rover-freelander-mk2-common-problems-2006-2015",
+   "https://carwiki.de/land-rover-freelander-probleme"
+  ]
+ },
+ {
   "id": "evh-stellantis-ecmp-2019-2021",
   "label": "Peugeot e-208 / e-2008, Opel Corsa-e / Mokka-e, DS 3 E-Tense, Citroën ë-C4 (2019-2021)",
   "makes": [
@@ -8175,16 +9386,6 @@
    "astra"
   ],
   "issues": [
-   {
-    "id": "mint-astraj-m32",
-    "title": "Boîte manuelle 6 vitesses (M32) fragile",
-    "severity": "high",
-    "fromKm": 80000,
-    "description": "La boîte manuelle 6 vitesses M32 est un gros point faible : roulements qui grondent, puis vitesses qui sautent et casse.",
-    "costMin": 1000,
-    "costMax": 2000,
-    "whatToCheck": "Écouter en 5e et 6e en accélérant puis en lâchant : un grondement annonce des roulements usés. Le levier ne doit pas bouger seul."
-   },
    {
     "id": "mint-astraj-water",
     "title": "Infiltrations d'eau (coffre, plancher avant)",

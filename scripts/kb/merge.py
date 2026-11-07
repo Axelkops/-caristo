@@ -21,6 +21,8 @@ for f in order:
             x["models"] = ["clio", "captur", "arkana", "megane", "jogger", "duster", "bigster", "symbioz", "asx", "colt"]
         if x["id"] == "rn-clio5-captur2-electronique":
             x["models"], x["keywords"] = ["clio", "captur"], []
+        # la boîte M32 de l'Astra J est couverte par la fiche boîte dédiée (en2-opel-boite-m32)
+        x["issues"] = [i for i in x["issues"] if i["id"] != "mint-astraj-m32"]
         for i in x["issues"]:
             if i["id"] == "adblue-cover":
                 i["title"] = "AdBlue : prise en charge du constructeur"
