@@ -29,6 +29,7 @@ export function findKnownIssues(vehicle: Vehicle, mileage: number | undefined, n
   for (const { fam, how } of matched) {
     if (named && how === "cc") continue;
     for (const issue of fam.issues) {
+      if (issue.gearbox && vehicle.gearbox !== "inconnue" && vehicle.gearbox !== issue.gearbox) continue;
       const t = norm(issue.title);
       if (seen.has(issue.id) || titles.has(t)) continue;
       seen.add(issue.id);

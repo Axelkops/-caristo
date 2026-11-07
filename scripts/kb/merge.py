@@ -2,6 +2,7 @@
 import json, sys
 import os
 order = [f for f in ["stellantis", "renault-nissan", "vag", "premium-ford-opel", "asia", "asia2", "engines2", "ev-hybrid", "models-fr", "models-fr2", "models-intl", "models-intl-verified"] if os.path.exists(f"kbclean/{f}.json")]
+MANUAL_ONLY = {"mfr2-captur1-boite", "mfr-206-boite-manuelle", "mfr2-twingo2-boite-5e", "mfr2-308i-boite", "mfr2-308ii-boite", "mfr2-espace4-boite-6", "mfr2-sandero2-boite-5e", "mint-polo4-gearbox", "mint-touran1-gearbox", "mint-focus3-clutch", "mint-corsad-gearbox", "as-1kr1-embrayage", "as-1kr2-embrayage", "mfr2-kangoo2-embrayage", "mfr2-duster1-embrayage", "mfr2-c3ii-embrayage", "mint-cmax2-clutch"}
 out, pending = [], []
 for f in order:
     for x in json.load(open(f"kbclean/{f}.json")):
@@ -21,9 +22,16 @@ for f in order:
             x["models"] = ["clio", "captur", "arkana", "megane", "jogger", "duster", "bigster", "symbioz", "asx", "colt"]
         if x["id"] == "rn-clio5-captur2-electronique":
             x["models"], x["keywords"] = ["clio", "captur"], []
+        if x["id"] == "en2-psa-boite-bmp-etg":
+            x["keywords"] += ["bvmp6", "boite pilotee"]
+        if x["id"] == "mfr2-citroen-c4-picasso-1-bmp6":
+            # à-coups et usure d'embrayage déjà décrits par la fiche boîte robotisée PSA
+            x["issues"] = [i for i in x["issues"] if "à-coups" not in i["title"]]
         # la boîte M32 de l'Astra J est couverte par la fiche boîte dédiée (en2-opel-boite-m32)
         x["issues"] = [i for i in x["issues"] if i["id"] != "mint-astraj-m32"]
         for i in x["issues"]:
+            if i["id"] in MANUAL_ONLY or "boîte manuelle" in i["title"].lower():
+                i["gearbox"] = "manuelle"  # ne s'affiche pas sur une boîte automatique
             if i["id"] == "adblue-cover":
                 i["title"] = "AdBlue : prise en charge du constructeur"
             # une panne qui culmine à un kilométrage devient fréquente vers 60 % de ce kilométrage

@@ -91,6 +91,8 @@ export interface KnownIssue {
   costMin?: number;
   costMax?: number;
   whatToCheck: string;
+  /** panne propre à une boîte (manuelle ou automatique) : ignorée pour l'autre */
+  gearbox?: "manuelle" | "automatique";
   /** Calculé pour CE véhicule */
   applies?: boolean;
   inZone?: boolean;

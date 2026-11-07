@@ -48,7 +48,7 @@ for f in data:
             if m: problems.append(f"{iid}: jargon « {m.group(0)} » dans {k}")
         cmin, cmax = i.get("costMin", 0), i.get("costMax", 0)
         if cmin > cmax: problems.append(f"{iid}: coût inversé")
-        clean_issues.append({k: i[k] for k in ("id", "title", "severity", "fromKm", "peakKm", "fromYears", "description", "costMin", "costMax", "whatToCheck") if k in i})
+        clean_issues.append({k: i[k] for k in ("id", "title", "severity", "fromKm", "peakKm", "fromYears", "description", "costMin", "costMax", "whatToCheck", "gearbox") if k in i})
     fam["issues"] = clean_issues
     out.append(fam)
 json.dump(out, open(dst, "w"), ensure_ascii=False, indent=1)

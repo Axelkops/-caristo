@@ -5031,7 +5031,8 @@
     "description": "L'embrayage d'origine s'use ou casse tôt, parfois avant 50 000 km : il patine, fait du bruit ou la pédale devient dure.",
     "costMin": 450,
     "costMax": 800,
-    "whatToCheck": "À l'essai, accélérer fort en 4e vers 2 000 tr/min : le régime ne doit pas monter sans que la voiture accélère. Demander si l'embrayage a été changé."
+    "whatToCheck": "À l'essai, accélérer fort en 4e vers 2 000 tr/min : le régime ne doit pas monter sans que la voiture accélère. Demander si l'embrayage a été changé.",
+    "gearbox": "manuelle"
    },
    {
     "id": "as-1kr1-infiltrations",
@@ -5108,7 +5109,8 @@
     "description": "L'embrayage peut patiner ou lâcher tôt, parfois vers 20 000 à 50 000 km. Les vitesses peuvent aussi être dures à passer avant 2017.",
     "costMin": 500,
     "costMax": 850,
-    "whatToCheck": "À l'essai, accélérer en 4e à bas régime : pas de patinage ni d'odeur de brûlé. Passer toutes les vitesses et la marche arrière : pas d'accroc."
+    "whatToCheck": "À l'essai, accélérer en 4e à bas régime : pas de patinage ni d'odeur de brûlé. Passer toutes les vitesses et la marche arrière : pas d'accroc.",
+    "gearbox": "manuelle"
    },
    {
     "id": "as-1kr2-infiltrations",
@@ -6134,7 +6136,9 @@
    "bmp5",
    "bmp 5",
    "etg5",
-   "etg 5"
+   "etg 5",
+   "bvmp6",
+   "boite pilotee"
   ],
   "models": [
    "c3",
@@ -7998,7 +8002,8 @@
     "description": "Sur les boîtes manuelles produites jusqu'en 2003, les roulements s'usent : boîte qui siffle, vitesses dures à passer en rétrogradant.",
     "costMin": 500,
     "costMax": 1200,
-    "whatToCheck": "Pendant l'essai, rétrograder de 3e en 2e et passer la marche arrière : aucun craquement. Pas de sifflement qui monte avec la vitesse."
+    "whatToCheck": "Pendant l'essai, rétrograder de 3e en 2e et passer la marche arrière : aucun craquement. Pas de sifflement qui monte avec la vitesse.",
+    "gearbox": "manuelle"
    }
   ],
   "sources": [
@@ -8366,6 +8371,1328 @@
   ]
  },
  {
+  "id": "mfr2-renault-clio-4",
+  "label": "Renault Clio IV (2012-2019)",
+  "makes": [
+   "renault"
+  ],
+  "years": {
+   "from": 2012,
+   "to": 2019
+  },
+  "keywords": [],
+  "models": [
+   "clio",
+   "clio estate"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-clio4-train-avant",
+    "title": "Train avant qui grince (silentblocs de barre)",
+    "severity": "low",
+    "fromKm": 30000,
+    "description": "Les silentblocs de la barre stabilisatrice s'usent tôt : grincements et claquements à l'avant, surtout par temps froid et sur les ralentisseurs.",
+    "costMin": 100,
+    "costMax": 300,
+    "whatToCheck": "Passer des ralentisseurs au pas et braquer à l'arrêt dans les deux sens : aucun grincement ni claquement à l'avant."
+   },
+   {
+    "id": "mfr2-clio4-sifflement-porte",
+    "title": "Sifflement d'air à une porte avant",
+    "severity": "low",
+    "description": "Un joint de portière mal ajusté, surtout côté conducteur, fait siffler l'air à partir de 70-80 km/h.",
+    "costMin": 50,
+    "costMax": 250,
+    "whatToCheck": "Sur voie rapide, écouter près des portes avant entre 80 et 110 km/h : pas de sifflement."
+   },
+   {
+    "id": "mfr2-clio4-ecran",
+    "title": "Écran tactile et GPS qui buguent",
+    "severity": "low",
+    "description": "Le R-Link ou le Media Nav peut se figer, redémarrer seul ou perdre le Bluetooth, surtout sur les premières années. Une mise à jour suffit souvent.",
+    "costMin": 0,
+    "costMax": 1000,
+    "whatToCheck": "Allumer l'écran, lancer le GPS et connecter un téléphone : pas de gel ni de redémarrage. Demander si les mises à jour ont été faites."
+   },
+   {
+    "id": "mfr2-clio4-rappel-freins",
+    "title": "Rappel flexibles de frein (2014) à vérifier",
+    "severity": "info",
+    "description": "Renault a rappelé des Clio IV en 2014 pour remplacer des flexibles de frein défectueux. Le remplacement est gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Faire vérifier le numéro de série (VIN) chez Renault pour savoir si le rappel a été fait."
+   },
+   {
+    "id": "mfr2-clio4-jauge",
+    "title": "Jauge à carburant imprécise",
+    "severity": "low",
+    "description": "La jauge peut afficher un niveau faux ou descendre très lentement. Une reprogrammation corrige souvent le défaut.",
+    "costMin": 0,
+    "costMax": 150,
+    "whatToCheck": "Comparer la jauge avec le dernier plein connu et demander si une mise à jour du tableau de bord a été faite."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-renault/fiabilite-357-pannes-renault-clio-4.php",
+   "https://www.planeterenault.com/1-gamme/1694-anciennes/1597-actualite-automobile/11946-clio-4-occasion-modele-fiable-et-sans-souci/",
+   "https://www.largus.fr/actualite-automobile/les-nouveautes-20112012-sont-elles-fiables-4119383_p_2.html"
+  ]
+ },
+ {
+  "id": "mfr2-renault-clio-2",
+  "label": "Renault Clio II (1998-2005)",
+  "makes": [
+   "renault"
+  ],
+  "years": {
+   "from": 1998,
+   "to": 2005
+  },
+  "keywords": [],
+  "models": [
+   "clio"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-clio2-voyant-airbag",
+    "title": "Voyant d'airbag allumé (connecteurs sous sièges)",
+    "severity": "low",
+    "description": "Le voyant d'airbag s'allume souvent à cause d'un mauvais contact des fils sous les sièges avant. Réparation simple, mais à faire pour la sécurité.",
+    "costMin": 50,
+    "costMax": 200,
+    "whatToCheck": "Contact mis, le voyant d'airbag doit s'éteindre après quelques secondes. Avancer et reculer les sièges avant : il ne doit pas se rallumer."
+   },
+   {
+    "id": "mfr2-clio2-electricite",
+    "title": "Centralisation et électricité capricieuses",
+    "severity": "low",
+    "description": "Télécommande, verrouillage, plafonnier, essuie-glaces ou feux arrière peuvent mal fonctionner (boîtier électronique, masses oxydées).",
+    "costMin": 50,
+    "costMax": 400,
+    "whatToCheck": "Tester la télécommande sur toutes les portes, les essuie-glaces, les feux arrière et stop : tout doit répondre normalement."
+   },
+   {
+    "id": "mfr2-clio2-clim-cablage",
+    "title": "Clim : câblage qui frotte (1.5 dCi jusqu'à 2002)",
+    "severity": "info",
+    "description": "Sur les 1.5 dCi produites jusqu'à mi-2002, un faisceau de la climatisation peut frotter sur un tuyau et se couper. Un rappel gratuit a eu lieu fin 2002.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Vérifier que la clim souffle froid et demander si le rappel de 2002 a été fait (carnet ou concession Renault)."
+   },
+   {
+    "id": "mfr2-clio2-rappel-bras",
+    "title": "Rappel bras de suspension (produites été-automne 2002)",
+    "severity": "info",
+    "description": "Des Clio II produites entre juillet et octobre 2002 ont été rappelées : un bras de suspension avant non conforme pouvait casser en cas de choc.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Pour une Clio de 2002, faire vérifier le numéro de série (VIN) chez Renault pour savoir si le bras a été changé."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-renault/fiabilite-61-pannes-renault-clio-2.php",
+   "https://www.caradisiac.com/Renault-Clio-40181.htm",
+   "https://uk.haynes.com/blogs/tips-tutorials/how-to-buy-a-renault-clio-ii-phase-2-2001-2005-models"
+  ]
+ },
+ {
+  "id": "mfr2-renault-twingo-2",
+  "label": "Renault Twingo II (2007-2014)",
+  "makes": [
+   "renault"
+  ],
+  "years": {
+   "from": 2007,
+   "to": 2014
+  },
+  "keywords": [],
+  "models": [
+   "twingo"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-twingo2-voyant-airbag",
+    "title": "Voyant d'airbag allumé (connecteurs sous sièges)",
+    "severity": "low",
+    "description": "Le voyant d'airbag peut s'allumer sans raison à cause des connecteurs ou fils situés sous les sièges.",
+    "costMin": 50,
+    "costMax": 200,
+    "whatToCheck": "Contact mis, le voyant d'airbag doit s'éteindre après quelques secondes et ne pas se rallumer en bougeant les sièges."
+   },
+   {
+    "id": "mfr2-twingo2-peinture",
+    "title": "Peinture et vernis fragiles",
+    "severity": "low",
+    "description": "Le vernis se dégrade et s'écaille facilement ; le bras d'essuie-glace peut aussi écailler le bord du capot.",
+    "costMin": 200,
+    "costMax": 800,
+    "whatToCheck": "Inspecter capot, toit et hayon en pleine lumière : pas de vernis terne ou écaillé, pas de rouille naissante."
+   },
+   {
+    "id": "mfr2-twingo2-boite-5e",
+    "title": "Boîte manuelle : bruit ou vibrations en 5e",
+    "severity": "low",
+    "description": "Un bruit ou des vibrations peuvent apparaître en 5e vers 80-100 km/h, parfois sans remède simple.",
+    "costMin": 100,
+    "costMax": 1200,
+    "whatToCheck": "Sur voie rapide, rouler en 5e entre 80 et 110 km/h : pas de sifflement ni de vibration du levier.",
+    "gearbox": "manuelle"
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/Maxi-fiche-fiabilite-la-Renault-Twingo-2-74111.htm",
+   "https://www.fiches-auto.fr/fiabilite-renault/fiabilite-173-pannes-renault-twingo-2.php"
+  ]
+ },
+ {
+  "id": "mfr2-peugeot-208-1",
+  "label": "Peugeot 208 I (2012-2019)",
+  "makes": [
+   "peugeot"
+  ],
+  "years": {
+   "from": 2012,
+   "to": 2019
+  },
+  "keywords": [],
+  "models": [
+   "208"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-208i-ecran",
+    "title": "Écran tactile qui se fige ou s'éteint",
+    "severity": "medium",
+    "description": "L'écran peut se figer ou tomber en panne : radio, GPS et réglages inaccessibles. Une mise à jour aide parfois, sinon l'écran est à changer.",
+    "costMin": 0,
+    "costMax": 1200,
+    "whatToCheck": "Utiliser l'écran 10 minutes (radio, GPS, Bluetooth, réglages) : il doit répondre sans gel. Demander les factures de mise à jour."
+   },
+   {
+    "id": "mfr2-208i-rappel-triangles",
+    "title": "Rappel vis des triangles de suspension avant",
+    "severity": "info",
+    "description": "Des vis de fixation des triangles avant pouvaient casser, avec risque de perte de contrôle. Le rappel est gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Faire vérifier le numéro de série (VIN) chez Peugeot pour savoir si le rappel a été fait."
+   }
+  ],
+  "sources": [
+   "https://www.autoexpress.co.uk/peugeot/208/99371/used-peugeot-208-mk1-2012-2019-problems-recalls",
+   "https://whatcar.com/peugeot/208/hatchback/used-review/n884/advice",
+   "https://www.largus.fr/actualite-automobile/les-nouveautes-20112012-sont-elles-fiables-4119383_p_2.html"
+  ]
+ },
+ {
+  "id": "mfr2-peugeot-208-2-rappels-2019-2020",
+  "label": "Peugeot 208 II produites en 2019-2020 : rappels",
+  "makes": [
+   "peugeot"
+  ],
+  "years": {
+   "from": 2019,
+   "to": 2020
+  },
+  "keywords": [],
+  "models": [
+   "208"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-208ii-rappel-geometrie",
+    "title": "Rappel : réglage du train avant (fin 2019-début 2020)",
+    "severity": "info",
+    "description": "Sur des 208 produites de septembre 2019 à mars 2020, la géométrie du train avant pouvait être mal réglée. Le rappel est gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Faire vérifier le VIN chez Peugeot. À l'essai, la voiture doit rouler droit sans tirer d'un côté, volant centré."
+   },
+   {
+    "id": "mfr2-208ii-rappel-electrique",
+    "title": "Rappel : défaut électrique, coupure en roulant",
+    "severity": "medium",
+    "description": "Des 208 de 2019-2020 sont rappelées pour un défaut électrique : l'électricité peut se couper en roulant et le redémarrage être impossible un moment.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Faire vérifier le numéro de série (VIN) chez Peugeot ou sur RappelConso pour confirmer que la réparation a été faite."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-peugeot/fiabilite-645-pannes-peugeot-208-2.php",
+   "https://whatcar.com/peugeot/208/hatchback/used-review/n22549/reliability",
+   "https://www.connexionfrance.com/article/Practical/Transport/Peugeot-Tesla-cars-recalled-in-France-as-faults-raise-risk-of-crashes"
+  ]
+ },
+ {
+  "id": "mfr2-peugeot-2008-1",
+  "label": "Peugeot 2008 I (2013-2019)",
+  "makes": [
+   "peugeot"
+  ],
+  "years": {
+   "from": 2013,
+   "to": 2019
+  },
+  "keywords": [],
+  "models": [
+   "2008"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-2008i-ecran-bluetooth",
+    "title": "Écran tactile et Bluetooth capricieux",
+    "severity": "low",
+    "description": "Le Bluetooth se connecte mal ou perd la musique, et l'écran peut tomber en panne, rendant radio et GPS inaccessibles.",
+    "costMin": 0,
+    "costMax": 1200,
+    "whatToCheck": "Connecter un téléphone, lancer la musique et le GPS : connexion stable et écran réactif pendant tout l'essai."
+   },
+   {
+    "id": "mfr2-2008i-rappel-suspension",
+    "title": "Rappel vis de fixation de suspension arrière",
+    "severity": "info",
+    "description": "Des vis de fixation des amortisseurs arrière pouvaient être mal serrées. Le rappel est gratuit.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Faire vérifier le numéro de série (VIN) chez Peugeot pour savoir si le rappel a été fait."
+   }
+  ],
+  "sources": [
+   "https://www.autoexpress.co.uk/peugeot/2008/97954/used-peugeot-2008-mk1-2013-2019-problems-recalls",
+   "https://www.autoexpress.co.uk/peugeot/2008/97954/used-peugeot-2008-mk1-2013-2019-reliability-owner-reviews",
+   "https://www.fiches-auto.fr/fiabilite-peugeot/fiabilite-447-pannes-peugeot-2008.php"
+  ]
+ },
+ {
+  "id": "mfr2-peugeot-308-1",
+  "label": "Peugeot 308 I (2007-2013)",
+  "makes": [
+   "peugeot"
+  ],
+  "years": {
+   "from": 2007,
+   "to": 2013
+  },
+  "keywords": [],
+  "models": [
+   "308",
+   "308 sw",
+   "308 cc"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-308i-electrique",
+    "title": "Commandes électriques et verrouillage capricieux",
+    "severity": "medium",
+    "description": "Vitres, verrouillage, commodos ou écran peuvent mal fonctionner : boîtier électronique, faisceau de porte ou batterie faible en cause.",
+    "costMin": 100,
+    "costMax": 600,
+    "whatToCheck": "Tester chaque vitre, le verrouillage à la télécommande, les clignotants, l'écran et le coffre : tout doit répondre du premier coup."
+   },
+   {
+    "id": "mfr2-308i-boite",
+    "title": "Boîte manuelle qui accroche ou reste au point mort",
+    "severity": "medium",
+    "description": "Passages de vitesses difficiles, synchros usés ou levier qui reste coincé au point mort sont signalés.",
+    "costMin": 300,
+    "costMax": 1500,
+    "whatToCheck": "Passer tous les rapports et la marche arrière, moteur froid puis chaud : pas de craquement ni de blocage.",
+    "gearbox": "manuelle"
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-peugeot/fiabilite-185-pannes-peugeot-308.php",
+   "https://whatcar.com/peugeot/308/hatchback/used-review/n544/reliability"
+  ]
+ },
+ {
+  "id": "mfr2-peugeot-308-2",
+  "label": "Peugeot 308 II (2013-2021)",
+  "makes": [
+   "peugeot"
+  ],
+  "years": {
+   "from": 2013,
+   "to": 2021
+  },
+  "keywords": [],
+  "models": [
+   "308",
+   "308 sw"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-308ii-ecran",
+    "title": "Écran tactile et électronique capricieux",
+    "severity": "low",
+    "description": "L'écran peut geler, rester noir ou ralentir, surtout avant mi-2015. Les commandes électriques sont le point faible du modèle.",
+    "costMin": 0,
+    "costMax": 1000,
+    "whatToCheck": "Utiliser l'écran (clim, radio, GPS) plusieurs minutes et tester toutes les commandes : pas de gel ni d'écran noir."
+   },
+   {
+    "id": "mfr2-308ii-boite",
+    "title": "Boîte manuelle dure, surtout à froid",
+    "severity": "medium",
+    "description": "Les vitesses passent mal, surtout à froid et sur les diesels ; la voiture peut aussi rester coincée au point mort.",
+    "costMin": 300,
+    "costMax": 1500,
+    "whatToCheck": "Démarrer moteur froid et passer toutes les vitesses dès les premiers mètres : pas de dureté ni de blocage.",
+    "gearbox": "manuelle"
+   },
+   {
+    "id": "mfr2-308ii-rappel-serrures",
+    "title": "Rappel serrures de porte (produites mi-2015)",
+    "severity": "info",
+    "description": "Des 308 produites de l'été à mi-novembre 2015 ont été rappelées : les portes pouvaient mal se verrouiller ou s'ouvrir. Réparation gratuite.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Fermer et verrouiller chaque porte : toutes doivent se bloquer. Faire vérifier le VIN chez Peugeot."
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/fiabilite-de-la-peugeot-308-ii-la-maxi-fiche-occasion-de-caradisiac-109564.htm",
+   "https://whatcar.com/peugeot/308/hatchback/used-review/n850/advice",
+   "https://www.autoexpress.co.uk/peugeot/308/65748/hatchback/reliability"
+  ]
+ },
+ {
+  "id": "mfr2-renault-captur-1",
+  "label": "Renault Captur I (2013-2019)",
+  "makes": [
+   "renault"
+  ],
+  "years": {
+   "from": 2013,
+   "to": 2019
+  },
+  "keywords": [],
+  "models": [
+   "captur"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-captur1-ecran",
+    "title": "Écran R-Link ou GPS qui bugue",
+    "severity": "low",
+    "description": "L'écran peut se figer, le GPS ralentir ou les mises à jour échouer, surtout sur les premières années. Reprogrammation souvent suffisante.",
+    "costMin": 0,
+    "costMax": 1000,
+    "whatToCheck": "Allumer l'écran, lancer le GPS et connecter un téléphone : pas de gel. Demander si les mises à jour ont été faites."
+   },
+   {
+    "id": "mfr2-captur1-train-avant",
+    "title": "Train avant qui grince (barre stabilisatrice)",
+    "severity": "low",
+    "description": "Grincements et bruits du train avant ou en braquant, liés à la barre stabilisatrice ou à ses biellettes, surtout jusqu'à fin 2014.",
+    "costMin": 100,
+    "costMax": 300,
+    "whatToCheck": "Braquer à l'arrêt dans les deux sens et passer des ralentisseurs au pas : aucun grincement ni claquement."
+   },
+   {
+    "id": "mfr2-captur1-boite",
+    "title": "Boîte manuelle dure et embrayage qui remonte mal",
+    "severity": "medium",
+    "description": "Vitesses difficiles à passer (surtout jusqu'en 2017) et pédale d'embrayage qui remonte lentement (émetteur à changer jusqu'en 2018).",
+    "costMin": 150,
+    "costMax": 1500,
+    "whatToCheck": "Passer toutes les vitesses et la marche arrière plusieurs fois ; la pédale d'embrayage doit remonter franchement.",
+    "gearbox": "manuelle"
+   },
+   {
+    "id": "mfr2-captur1-cablage-portes",
+    "title": "Vitres et rétros capricieux (câblage, jusqu'en 2015)",
+    "severity": "low",
+    "description": "Le câblage des portes avant peut dérégler vitres, rétroviseurs et GPS sur les voitures produites jusqu'à avril 2015.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Actionner chaque vitre et le réglage des rétroviseurs plusieurs fois, porte ouverte puis fermée."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/guide-achat-occasion/renault/captur/avis-fiabilite-renault-captur-i-j87-30039383.html",
+   "https://www.fiches-auto.fr/fiabilite-renault/fiabilite-446-pannes-renault-captur.php"
+  ]
+ },
+ {
+  "id": "mfr2-peugeot-207",
+  "label": "Peugeot 207 (2006-2014)",
+  "makes": [
+   "peugeot"
+  ],
+  "years": {
+   "from": 2006,
+   "to": 2014
+  },
+  "keywords": [],
+  "models": [
+   "207",
+   "207 sw",
+   "207 cc",
+   "207+",
+   "207 plus"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-207-abs-esp",
+    "title": "Bloc ABS/ESP défaillant (surtout jusqu'à fin 2007)",
+    "severity": "medium",
+    "description": "Voyants ABS et ESP allumés : capteur de roue, faisceau ou bloc ABS en cause. Le bloc complet coûte cher.",
+    "costMin": 150,
+    "costMax": 1200,
+    "whatToCheck": "Les voyants ABS et ESP doivent s'éteindre au démarrage et rester éteints pendant tout l'essai."
+   },
+   {
+    "id": "mfr2-207-direction",
+    "title": "Direction qui cogne ou perd l'assistance",
+    "severity": "medium",
+    "description": "Claquements dans la direction (surtout jusqu'à mi-2008) ou assistance électrique qui lâche : voyant et volant très dur.",
+    "costMin": 300,
+    "costMax": 1200,
+    "whatToCheck": "Braquer à fond dans les deux sens à l'arrêt puis en manœuvre : volant léger, sans claquement, aucun voyant."
+   },
+   {
+    "id": "mfr2-207-leve-vitres",
+    "title": "Lève-vitres lents ou par à-coups",
+    "severity": "low",
+    "description": "Les vitres montent lentement, par à-coups ou se bloquent ; la fonction impulsion peut se dérégler.",
+    "costMin": 100,
+    "costMax": 350,
+    "whatToCheck": "Monter et descendre chaque vitre plusieurs fois, y compris d'une seule impulsion : mouvement régulier et complet."
+   },
+   {
+    "id": "mfr2-207-regulateur",
+    "title": "Régulateur de vitesse qui se coupe seul",
+    "severity": "low",
+    "description": "Le régulateur se désactive en roulant ou refuse de s'enclencher, souvent à cause d'un contacteur de pédale.",
+    "costMin": 50,
+    "costMax": 200,
+    "whatToCheck": "Si la voiture en a un, enclencher le régulateur sur voie rapide : il doit tenir la vitesse sans se couper."
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/Peugeot-40287.htm",
+   "https://www.fiches-auto.fr/fiabilite-peugeot/fiabilite-128-pannes-peugeot-207.php",
+   "https://www.largus.fr/actualite-automobile/voiture-d-occasion-quelle-citadine-polyvalente-acheter-3179376_p_3.html"
+  ]
+ },
+ {
+  "id": "mfr2-peugeot-307",
+  "label": "Peugeot 307 (2001-2008)",
+  "makes": [
+   "peugeot"
+  ],
+  "years": {
+   "from": 2001,
+   "to": 2008
+  },
+  "keywords": [],
+  "models": [
+   "307",
+   "307 sw",
+   "307 break",
+   "307 cc"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-307-bsi",
+    "title": "Boîtier électronique central : vitres, voyants, clim",
+    "severity": "medium",
+    "description": "Le boîtier électronique central dérègle vitres, clignotants, essuie-glaces, clim et voyants. Une vitre arrière peut descendre seule (2003-2004).",
+    "costMin": 100,
+    "costMax": 700,
+    "whatToCheck": "Tester vitres, essuie-glaces, clignotants et clim. Verrouiller la voiture et vérifier qu'aucune vitre ne redescend."
+   },
+   {
+    "id": "mfr2-307-com2000",
+    "title": "Commandes sous le volant (COM 2000) défaillantes",
+    "severity": "medium",
+    "description": "Le bloc de commandes sous le volant tombe en panne : clignotants capricieux et voyant d'airbag allumé, surtout jusqu'en avril 2005.",
+    "costMin": 150,
+    "costMax": 450,
+    "whatToCheck": "Actionner clignotants, phares et essuie-glaces. Le voyant d'airbag doit s'éteindre après le démarrage."
+   },
+   {
+    "id": "mfr2-307-train-avant",
+    "title": "Train avant qui claque",
+    "severity": "low",
+    "description": "Claquements de la direction et des suspensions avant, souvent au niveau des paliers de barre stabilisatrice.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Rouler sur des pavés et des ralentisseurs, braquer en manœuvre : aucun claquement à l'avant."
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/Peugeot-307-est-elle-enfin-fiable-40231.htm",
+   "https://www.largus.fr/actualite-automobile/bilan-occasion-peugeot-307-181128_p_5.html",
+   "https://www.largus.fr/actualite-automobile/voitures-francaises-la-liste-noire-des-modeles-a-problemes-167621_p_2.html",
+   "https://www.whatcar.com/peugeot/307/hatchback/used-review/n543/reliability"
+  ]
+ },
+ {
+  "id": "mfr2-citroen-c3-2",
+  "label": "Citroën C3 II (2009-2016)",
+  "makes": [
+   "citroen"
+  ],
+  "years": {
+   "from": 2009,
+   "to": 2016
+  },
+  "keywords": [],
+  "models": [
+   "c3"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-c3ii-voyants",
+    "title": "Voyants allumés sans raison (électronique)",
+    "severity": "low",
+    "description": "Des voyants s'allument sans panne réelle ; boîtier électronique, calculateur ou batterie faible sont souvent en cause.",
+    "costMin": 0,
+    "costMax": 500,
+    "whatToCheck": "Après le démarrage et pendant l'essai, aucun voyant ne doit rester allumé. Faire lire les codes défaut si possible."
+   },
+   {
+    "id": "mfr2-c3ii-embrayage",
+    "title": "Embrayage usé tôt (versions diesel)",
+    "severity": "medium",
+    "description": "Sur les diesels, l'embrayage peut patiner ou brouter bien avant 100 000 km.",
+    "costMin": 500,
+    "costMax": 900,
+    "whatToCheck": "En 4e vers 50 km/h, accélérer fort : le régime ne doit pas monter sans que la voiture accélère. Pas de broutement au démarrage.",
+    "gearbox": "manuelle"
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-citroen/fiabilite-263-pannes-citroen-c3-ii.php",
+   "https://www.actu-automobile.com/2022/09/11/occasion-citroen-c3-ii-2009-2017-guide-dachat"
+  ]
+ },
+ {
+  "id": "mfr2-citroen-c3-3",
+  "label": "Citroën C3 III (2016-2024)",
+  "makes": [
+   "citroen"
+  ],
+  "years": {
+   "from": 2016,
+   "to": 2024
+  },
+  "keywords": [],
+  "models": [
+   "c3"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-c3iii-feux-arriere",
+    "title": "Feux arrière qui prennent l'eau (surtout avant 2018)",
+    "severity": "low",
+    "description": "De la buée ou de l'eau s'accumule dans les feux arrière ; le remplacement du feu est souvent la seule solution.",
+    "costMin": 100,
+    "costMax": 350,
+    "whatToCheck": "Regarder l'intérieur des feux arrière, si possible après une pluie ou un lavage : pas de buée ni d'eau."
+   },
+   {
+    "id": "mfr2-c3iii-trains-bruyants",
+    "title": "Trains avant et arrière bruyants (avant fin 2017)",
+    "severity": "low",
+    "description": "Bruits et claquements des suspensions sur les ralentisseurs, corrigés en usine courant 2017.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Passer des ralentisseurs à 20-30 km/h : pas de claquement à l'arrière ni à l'avant."
+   },
+   {
+    "id": "mfr2-c3iii-ecran",
+    "title": "Écran tactile et GPS lents ou qui buguent",
+    "severity": "low",
+    "description": "L'écran peut ralentir, perdre le Bluetooth ou le GPS et couper la radio ; il regroupe aussi les réglages de clim.",
+    "costMin": 0,
+    "costMax": 900,
+    "whatToCheck": "Utiliser l'écran (clim, radio, GPS, téléphone) plusieurs minutes : réponses rapides, pas de coupure."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/fiabilite-que-valent-les-nouvelles-voitures-francaises-9556393.html",
+   "https://www.caradisiac.com/maxi-fiche-fiabilite-citroen-c3-une-discrete-a-ne-pas-ecarter-201000.htm",
+   "https://www.fiches-auto.fr/fiabilite-citroen/fiabilite-566-pannes-citroen-c3-iii.php"
+  ]
+ },
+ {
+  "id": "mfr2-citroen-c4-picasso-1",
+  "label": "Citroën C4 Picasso et Grand C4 Picasso I (2006-2013)",
+  "makes": [
+   "citroen"
+  ],
+  "years": {
+   "from": 2006,
+   "to": 2013
+  },
+  "keywords": [],
+  "models": [
+   "c4 picasso",
+   "grand c4 picasso"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-c4p1-suspension-pneumatique",
+    "title": "Suspension pneumatique arrière qui s'affaisse",
+    "severity": "medium",
+    "description": "Sur les Grand C4 Picasso qui en ont une, les coussins d'air arrière deviennent poreux : l'arrière s'affaisse ; le compresseur peut aussi lâcher.",
+    "costMin": 300,
+    "costMax": 1500,
+    "whatToCheck": "Voir la voiture après une nuit garée : l'arrière ne doit pas être affaissé. Aucun message « suspension défaillante »."
+   },
+   {
+    "id": "mfr2-c4p1-frein-parking",
+    "title": "Frein de parking électrique défaillant",
+    "severity": "medium",
+    "description": "Le frein peut ne plus se desserrer, mal tenir en pente ou afficher « frein de parking défaillant » (câble, moteur ou calculateur).",
+    "costMin": 0,
+    "costMax": 900,
+    "whatToCheck": "Serrer et desserrer plusieurs fois, démarrer en côte : desserrage automatique, aucun message d'alerte."
+   },
+   {
+    "id": "mfr2-c4p1-electronique",
+    "title": "Électronique et écran central capricieux",
+    "severity": "medium",
+    "description": "Le boîtier électronique dérègle clim, vitres, GPS ou radio ; l'écran central peut s'éteindre et devoir être changé.",
+    "costMin": 100,
+    "costMax": 1000,
+    "whatToCheck": "Vérifier l'affichage central, la radio, le GPS, chaque vitre et la clim pendant tout l'essai."
+   },
+   {
+    "id": "mfr2-c4p1-clim",
+    "title": "Climatisation qui faiblit ou se coupe",
+    "severity": "medium",
+    "description": "Régulation qui déraille, soufflerie qui se coupe (pulseur, module de commande) ou condenseur qui fuit.",
+    "costMin": 150,
+    "costMax": 800,
+    "whatToCheck": "Mettre la clim au plus froid et la ventilation à toutes les vitesses : air froid et débit stable."
+   },
+   {
+    "id": "mfr2-c4p1-pare-brise",
+    "title": "Pare-brise panoramique mal collé (premières séries)",
+    "severity": "medium",
+    "description": "Sur les premières voitures, le grand pare-brise ou son joint supérieur peut se décoller dans les coins : bruits, voire infiltrations.",
+    "costMin": 0,
+    "costMax": 1200,
+    "whatToCheck": "Regarder les coins et le haut du pare-brise : joint bien collé, sans jour. Vérifier que les tapis avant sont secs."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/voiture-d-occasion-quel-citroen-c4-picasso-acheter-2530370_p_2.html",
+   "https://www.caradisiac.com/renault-scenic-3-vs-citroen-c4-picasso-le-match-fiabilite-110098.htm",
+   "https://www.whatcar.com/citroen/grand-c4-picasso/mpv/used-review/n300/advice",
+   "https://parkers.co.uk/citroen/c4-picasso/estate-2007/used-review",
+   "https://www.fiches-auto.fr/fiabilite-citroen/fiabilite-189-pannes-citroen-c4-picasso.php"
+  ]
+ },
+ {
+  "id": "mfr2-citroen-c4-picasso-1-bmp6",
+  "label": "Citroën C4 Picasso I : boîte pilotée BMP6 (2006-2013)",
+  "makes": [
+   "citroen"
+  ],
+  "years": {
+   "from": 2006,
+   "to": 2013
+  },
+  "keywords": [
+   "bmp6",
+   "bmp 6",
+   "bvmp6",
+   "egs6",
+   "egs",
+   "boite pilotee"
+  ],
+  "models": [
+   "c4 picasso",
+   "grand c4 picasso"
+  ],
+  "gearbox": "automatique",
+  "issues": [
+   {
+    "id": "mfr2-c4p1-bmp6-blocage",
+    "title": "Boîte pilotée qui refuse d'engager les vitesses",
+    "severity": "medium",
+    "description": "La voiture peut refuser d'engager un rapport ou rester bloquée (actionneur, faisceau ou calculateur de boîte), surtout jusqu'en 2009-2010.",
+    "costMin": 200,
+    "costMax": 1500,
+    "whatToCheck": "Passer plusieurs fois de N à D puis R, moteur froid et chaud : chaque rapport s'engage vite, sans message d'alerte."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/voiture-d-occasion-quel-citroen-c4-picasso-acheter-2530370_p_2.html",
+   "https://www.caradisiac.com/renault-scenic-3-vs-citroen-c4-picasso-le-match-fiabilite-110098.htm",
+   "https://www.whatcar.com/citroen/grand-c4-picasso/mpv/used-review/n300/advice",
+   "https://parkers.co.uk/citroen/c4-picasso/estate-2007/used-review"
+  ]
+ },
+ {
+  "id": "mfr2-citroen-c4-picasso-2",
+  "label": "Citroën C4 Picasso et Grand C4 Picasso II / SpaceTourer (2013-2022)",
+  "makes": [
+   "citroen"
+  ],
+  "years": {
+   "from": 2013,
+   "to": 2022
+  },
+  "keywords": [],
+  "models": [
+   "c4 picasso",
+   "grand c4 picasso",
+   "c4 spacetourer",
+   "grand c4 spacetourer"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-c4p2-electronique",
+    "title": "Écran tactile, clé et voyants capricieux",
+    "severity": "low",
+    "description": "L'écran tactile peut se figer ou mal répondre, la clé ne pas être reconnue et des voyants s'allumer sans raison.",
+    "costMin": 0,
+    "costMax": 1000,
+    "whatToCheck": "Utiliser l'écran (clim, radio, GPS) plusieurs minutes et démarrer 2 ou 3 fois : pas de gel, clé reconnue, aucun voyant."
+   },
+   {
+    "id": "mfr2-c4p2-clim",
+    "title": "Climatisation en panne ou qui souffle chaud",
+    "severity": "medium",
+    "description": "Des pannes de climatisation (commande, compresseur) sont signalées dès les premières années, parfois liées à l'électronique.",
+    "costMin": 150,
+    "costMax": 1000,
+    "whatToCheck": "Mettre la clim au plus froid : air nettement froid en moins de 2 minutes, sans bruit anormal."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-citroen/fiabilite-448-pannes-citroen-c4-picasso-spacetourer.php",
+   "https://www.whatcar.com/citroen/grand-c4-picasso/mpv/used-review/n818/advice"
+  ]
+ },
+ {
+  "id": "mfr2-citroen-c4-cactus",
+  "label": "Citroën C4 Cactus (2014-2020)",
+  "makes": [
+   "citroen"
+  ],
+  "years": {
+   "from": 2014,
+   "to": 2020
+  },
+  "keywords": [],
+  "models": [
+   "c4 cactus"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-cactus-clim",
+    "title": "Climatisation qui lâche (surtout avant 2017)",
+    "severity": "medium",
+    "description": "Clim qui souffle chaud, compresseur ou résistance de ventilation en panne ; changer la résistance oblige à démonter la planche de bord.",
+    "costMin": 150,
+    "costMax": 1000,
+    "whatToCheck": "Mettre la clim au plus froid et la ventilation à toutes les vitesses : air froid, toutes les vitesses fonctionnent."
+   },
+   {
+    "id": "mfr2-cactus-train-avant",
+    "title": "Train avant qui grince ou claque",
+    "severity": "low",
+    "description": "Grincements et claquements à l'avant sur les bosses (biellettes, rotules, coupelles), surtout avant 2017.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Passer des ralentisseurs au pas et braquer en manœuvre : aucun grincement ni claquement à l'avant."
+   },
+   {
+    "id": "mfr2-cactus-boite",
+    "title": "Boîte de vitesses capricieuse (avant 2017)",
+    "severity": "medium",
+    "description": "Boîte manuelle bruyante ou dure, boîte robotisée lente avec à-coups ; embrayages parfois usés tôt.",
+    "costMin": 300,
+    "costMax": 1500,
+    "whatToCheck": "Passer tous les rapports et la marche arrière ; en boîte robotisée, vérifier l'absence d'à-coups et de longues hésitations."
+   },
+   {
+    "id": "mfr2-cactus-rouille-portes",
+    "title": "Rouille au bas des portes (avant août 2016)",
+    "severity": "low",
+    "description": "Des points de corrosion apparaissent au bas des portières sur les voitures produites avant août 2016.",
+    "costMin": 200,
+    "costMax": 800,
+    "whatToCheck": "Ouvrir les portes et regarder le bas des portières : pas de cloques ni de taches de rouille."
+   },
+   {
+    "id": "mfr2-cactus-ecran",
+    "title": "Écran tactile lent ou qui s'éteint",
+    "severity": "low",
+    "description": "La tablette tactile peut être lente, redémarrer seule ou rester noire ; une mise à jour donne des résultats variables.",
+    "costMin": 0,
+    "costMax": 900,
+    "whatToCheck": "Utiliser l'écran (clim, radio, GPS) plusieurs minutes : réponses rapides, pas d'écran noir ni de redémarrage."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/fiabilite-que-valent-les-nouvelles-voitures-francaises-9556393.html",
+   "https://parkers.co.uk/citroen/c4-cactus/hatchback-2014/used-review",
+   "https://www.fiches-auto.fr/fiabilite-citroen/fiabilite-486-pannes-citroen-c4-cactus.php"
+  ]
+ },
+ {
+  "id": "mfr2-renault-scenic-3",
+  "label": "Renault Scénic III et Grand Scénic III (2009-2016)",
+  "makes": [
+   "renault"
+  ],
+  "years": {
+   "from": 2009,
+   "to": 2016
+  },
+  "keywords": [],
+  "models": [
+   "scenic",
+   "grand scenic",
+   "scenic xmod"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-scenic3-freins-arriere",
+    "title": "Freins arrière usés très tôt (frein de parking)",
+    "severity": "medium",
+    "description": "Le frein de parking automatique use vite les plaquettes et parfois les disques arrière ; corrigé en usine entre fin 2012 et avril 2014.",
+    "costMin": 150,
+    "costMax": 400,
+    "whatToCheck": "Regarder les disques arrière (rebord marqué = usure) et demander la date du dernier changement des freins arrière."
+   },
+   {
+    "id": "mfr2-scenic3-cuir-volant",
+    "title": "Cuir du volant et du pommeau qui craquelle",
+    "severity": "low",
+    "description": "Sur les voitures produites jusqu'en mars 2012, le cuir du volant et du pommeau se dégrade vite. Renault a pris en charge des remplacements.",
+    "costMin": 150,
+    "costMax": 400,
+    "whatToCheck": "Regarder le cuir du volant et du levier de vitesse : pas de craquelures ni de cuir qui pèle."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/actualite-automobile/quel-renault-scenic-iii-choisir-4658379.html",
+   "https://www.caradisiac.com/renault-scenic-3-vs-citroen-c4-picasso-le-match-fiabilite-110098.htm"
+  ]
+ },
+ {
+  "id": "mfr2-renault-espace-4",
+  "label": "Renault Espace IV et Grand Espace IV (2002-2014)",
+  "makes": [
+   "renault"
+  ],
+  "years": {
+   "from": 2002,
+   "to": 2014
+  },
+  "keywords": [],
+  "models": [
+   "espace",
+   "grand espace"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-espace4-electronique",
+    "title": "Électronique capricieuse (surtout jusqu'en 2003)",
+    "severity": "medium",
+    "description": "Le boîtier électronique de l'habitacle dérègle clim, régulateur, jauge, essuie-glaces, verrouillage et voyants.",
+    "costMin": 100,
+    "costMax": 800,
+    "whatToCheck": "Tester clim, régulateur, essuie-glaces et verrouillage, vérifier la jauge : aucun voyant allumé au tableau de bord."
+   },
+   {
+    "id": "mfr2-espace4-boite-6",
+    "title": "Boîte manuelle 6 vitesses fragile (jusqu'en 2004)",
+    "severity": "high",
+    "description": "Des roulements trop faibles rendent les vitesses dures puis cassent la boîte, souvent avant 100 000 km. Il faut alors la remplacer.",
+    "costMin": 1500,
+    "costMax": 3000,
+    "whatToCheck": "À l'essai, écouter un grondement qui varie avec la vitesse et passer tous les rapports. Demander si la boîte a été changée.",
+    "gearbox": "manuelle"
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/Renault-Espace-IV-4-40298.htm",
+   "https://www.largus.fr/actualite-automobile/voitures-francaises-la-liste-noire-des-modeles-a-problemes-167621_p_4.html"
+  ]
+ },
+ {
+  "id": "mfr2-renault-kangoo-2",
+  "label": "Renault Kangoo II (2008-2021)",
+  "makes": [
+   "renault"
+  ],
+  "years": {
+   "from": 2008,
+   "to": 2021
+  },
+  "keywords": [],
+  "models": [
+   "kangoo",
+   "grand kangoo",
+   "kangoo express",
+   "kangoo be bop"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-kangoo2-embrayage",
+    "title": "Émetteur d'embrayage et embrayage fragiles",
+    "severity": "medium",
+    "description": "L'émetteur d'embrayage, mal fixé à la pédale, peut casser et empêcher de passer les vitesses ; l'embrayage s'use parfois tôt.",
+    "costMin": 150,
+    "costMax": 1300,
+    "whatToCheck": "Appuyer plusieurs fois sur l'embrayage : pédale ferme qui remonte bien, vitesses qui passent sans forcer.",
+    "gearbox": "manuelle"
+   },
+   {
+    "id": "mfr2-kangoo2-eau-tapis",
+    "title": "Eau sur le tapis passager (évacuation de clim)",
+    "severity": "low",
+    "description": "Le tuyau d'évacuation de la climatisation se bouche : l'eau coule dans l'habitacle et trempe la moquette côté passager.",
+    "costMin": 0,
+    "costMax": 150,
+    "whatToCheck": "Soulever le tapis côté passager et toucher la moquette : elle doit être sèche."
+   },
+   {
+    "id": "mfr2-kangoo2-rappels-direction",
+    "title": "Rappels direction (produites jusqu'à début 2009)",
+    "severity": "info",
+    "description": "Colonne de direction mal alignée (produites jusqu'à mars 2008) et assistance à reprogrammer (jusqu'à janvier 2009) : rappels gratuits.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Faire vérifier le numéro de série (VIN) chez Renault pour savoir si le rappel a été fait."
+   },
+   {
+    "id": "mfr2-kangoo2-rappel-sieges",
+    "title": "Rappel fixation des sièges avant (avant mars 2010)",
+    "severity": "info",
+    "description": "Les vis de fixation des sièges avant des Kangoo produits avant mars 2010 ont été remplacées lors d'un rappel gratuit en 2012.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Faire vérifier le numéro de série (VIN) chez Renault pour savoir si le rappel a été fait."
+   },
+   {
+    "id": "mfr2-kangoo2-serrures",
+    "title": "Serrures de portes et de hayon qui cassent",
+    "severity": "low",
+    "description": "Des serrures de portes, de portes coulissantes ou de hayon cassent ou ne répondent plus.",
+    "costMin": 100,
+    "costMax": 350,
+    "whatToCheck": "Ouvrir et verrouiller chaque porte, portes coulissantes comprises, et le hayon, à la clé et à la télécommande."
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/Maxi-fiche-fiabilite-que-vaut-le-Renault-Kangoo-2-en-occasion-93188.htm",
+   "https://www.fiches-auto.fr/fiabilite-renault/fiabilite-243-pannes-renault-kangoo-2.php"
+  ]
+ },
+ {
+  "id": "mfr2-renault-kadjar",
+  "label": "Renault Kadjar (2015-2022)",
+  "makes": [
+   "renault"
+  ],
+  "years": {
+   "from": 2015,
+   "to": 2022
+  },
+  "keywords": [],
+  "models": [
+   "kadjar"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-kadjar-ecran",
+    "title": "Écran R-Link 2 qui se fige ou redémarre",
+    "severity": "low",
+    "description": "L'écran peut se figer, redémarrer, rester noir au démarrage ou perdre le Bluetooth. Une mise à jour en concession règle souvent le problème.",
+    "costMin": 0,
+    "costMax": 1000,
+    "whatToCheck": "Allumer l'écran, lancer le GPS et connecter un téléphone : pas de gel. Demander si le logiciel est à jour."
+   },
+   {
+    "id": "mfr2-kadjar-batterie",
+    "title": "Batterie et gestion de charge capricieuses",
+    "severity": "low",
+    "description": "La batterie se décharge, surtout en petits trajets, à cause de la gestion de charge ; une mise à jour est parfois nécessaire.",
+    "costMin": 0,
+    "costMax": 250,
+    "whatToCheck": "Demander l'âge de la batterie et les mises à jour faites. Au démarrage, aucun message lié à la batterie."
+   }
+  ],
+  "sources": [
+   "https://www.fiches-auto.fr/fiabilite-renault/fiabilite-516-pannes-renault-kadjar.php",
+   "https://www.whatcar.com/audi/q5/estate/used-review/n802/reliability"
+  ]
+ },
+ {
+  "id": "mfr2-peugeot-3008-2",
+  "label": "Peugeot 3008 II (2016-2023)",
+  "makes": [
+   "peugeot"
+  ],
+  "years": {
+   "from": 2016,
+   "to": 2023
+  },
+  "keywords": [],
+  "models": [
+   "3008"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-3008ii-capot",
+    "title": "Capot qui vibre à vitesse d'autoroute",
+    "severity": "low",
+    "description": "Le capot vibre ou flotte vers 120-130 km/h ou par vent de côté ; le réglage en atelier ne suffit pas toujours.",
+    "costMin": 0,
+    "costMax": 300,
+    "whatToCheck": "Sur voie rapide à 120-130 km/h, regarder le capot : il ne doit pas vibrer. Demander si un réglage a été fait."
+   },
+   {
+    "id": "mfr2-3008ii-ecran",
+    "title": "Écran multimédia qui se fige ou reste noir",
+    "severity": "medium",
+    "description": "Écran noir, GPS ou Bluetooth perdu, lenteurs ou tactile qui ne répond plus ; reprogrammation, parfois remplacement.",
+    "costMin": 0,
+    "costMax": 1200,
+    "whatToCheck": "Utiliser l'écran plusieurs minutes (radio, GPS, téléphone, clim) : pas d'écran noir ni de gel."
+   },
+   {
+    "id": "mfr2-3008ii-coffre",
+    "title": "Hayon ou coffre qui reste bloqué",
+    "severity": "low",
+    "description": "Le coffre ou le hayon électrique peut rester verrouillé ou tomber en panne ; la serrure ou le module est à changer.",
+    "costMin": 100,
+    "costMax": 600,
+    "whatToCheck": "Ouvrir et fermer le coffre plusieurs fois (bouton, clé, mains libres si équipé) : il doit répondre à chaque fois."
+   },
+   {
+    "id": "mfr2-3008ii-trains",
+    "title": "Bruits de train avant et arrière",
+    "severity": "low",
+    "description": "Bruits ou claquements à l'avant (biellette, bras, rotules) et à l'arrière (coupelles de suspension).",
+    "costMin": 100,
+    "costMax": 500,
+    "whatToCheck": "Passer des ralentisseurs et braquer en manœuvre : aucun claquement ni grincement."
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/match-fiabilite-peugeot-3008-ii-vs-volkswagen-tiguan-ii-200696.htm",
+   "https://www.fiches-auto.fr/fiabilite-peugeot/fiabilite-553-pannes-peugeot-3008-2.php"
+  ]
+ },
+ {
+  "id": "mfr2-dacia-duster-1",
+  "label": "Dacia Duster I (2010-2017)",
+  "makes": [
+   "dacia"
+  ],
+  "years": {
+   "from": 2010,
+   "to": 2017
+  },
+  "keywords": [],
+  "models": [
+   "duster"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-duster1-vibrations",
+    "title": "Vibrations au volant vers 110-140 km/h",
+    "severity": "low",
+    "description": "Beaucoup de Duster vibrent à vitesse d'autoroute ; un équilibrage suffit parfois, sinon pneus ou jantes sont à changer.",
+    "costMin": 50,
+    "costMax": 400,
+    "whatToCheck": "Sur voie rapide, rouler entre 110 et 130 km/h : le volant ne doit pas vibrer."
+   },
+   {
+    "id": "mfr2-duster1-jauge",
+    "title": "Jauge à carburant fausse (surtout 4x4, avant 2011)",
+    "severity": "low",
+    "description": "La jauge peut indiquer un niveau très faux, surtout sur les 4x4 produits avant début 2011 ; la réparation peut imposer de changer le compteur.",
+    "costMin": 0,
+    "costMax": 600,
+    "whatToCheck": "Comparer la jauge avec le dernier plein connu ; elle doit bouger normalement en roulant, y compris en pente."
+   },
+   {
+    "id": "mfr2-duster1-pare-brise",
+    "title": "Pare-brise qui se fissure sans choc",
+    "severity": "medium",
+    "description": "Des pare-brise se fissurent sans impact, souvent près du rétroviseur intérieur.",
+    "costMin": 300,
+    "costMax": 700,
+    "whatToCheck": "Inspecter tout le pare-brise, surtout autour du rétroviseur intérieur : aucune fissure."
+   },
+   {
+    "id": "mfr2-duster1-embrayage",
+    "title": "Embrayage usé très tôt (diesel)",
+    "severity": "medium",
+    "description": "Sur les diesels, surtout le dCi 85, l'embrayage peut patiner ou brouter à froid dès 15 000 à 50 000 km.",
+    "costMin": 500,
+    "costMax": 900,
+    "whatToCheck": "En 4e vers 50 km/h, accélérer fort : pas de patinage. Démarrer à froid : pas de broutement.",
+    "gearbox": "manuelle"
+   },
+   {
+    "id": "mfr2-duster1-abs",
+    "title": "Voyants ABS et ESP allumés",
+    "severity": "medium",
+    "description": "Les voyants ABS et ESP s'allument, à tort ou à cause d'un bloc ABS défaillant qu'il faut changer.",
+    "costMin": 100,
+    "costMax": 1200,
+    "whatToCheck": "Les voyants ABS et ESP doivent s'éteindre au démarrage et rester éteints pendant tout l'essai."
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/Maxi-fiche-fiabilite-que-vaut-le-Dacia-Duster-en-occasion-75565.htm",
+   "https://www.fiches-auto.fr/fiabilite-dacia/fiabilite-274-pannes-dacia-duster.php"
+  ]
+ },
+ {
+  "id": "mfr2-dacia-sandero-2",
+  "label": "Dacia Sandero II (2012-2020)",
+  "makes": [
+   "dacia"
+  ],
+  "years": {
+   "from": 2012,
+   "to": 2020
+  },
+  "keywords": [],
+  "models": [
+   "sandero",
+   "sandero stepway"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-sandero2-train-avant",
+    "title": "Train avant bruyant",
+    "severity": "low",
+    "description": "Bruits du train avant selon les séries : bras, rotules, butées, tampons de barre stabilisatrice ou roulements.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Passer des ralentisseurs au pas et braquer en manœuvre : aucun claquement ni grondement à l'avant."
+   },
+   {
+    "id": "mfr2-sandero2-direction",
+    "title": "Direction bruyante et rappel biellettes (fin 2015)",
+    "severity": "medium",
+    "description": "Bruits en braquant (durite, rotules). Les Sandero produites de mi-septembre à début décembre 2015 ont été rappelées pour leurs biellettes.",
+    "costMin": 0,
+    "costMax": 400,
+    "whatToCheck": "Braquer à fond dans les deux sens : pas de bruit. Pour une voiture de fin 2015, faire vérifier le VIN chez Dacia."
+   },
+   {
+    "id": "mfr2-sandero2-boite-5e",
+    "title": "Boîte manuelle : 5e qui grince ou saute",
+    "severity": "medium",
+    "description": "Grincement en 5e (2016-2018) et vitesses difficiles à passer ; la réparation peut aller jusqu'au pignon de 5e ou à la boîte.",
+    "costMin": 200,
+    "costMax": 1200,
+    "whatToCheck": "Sur voie rapide, rouler en 5e et accélérer : pas de grincement, la vitesse ne saute pas. Passer tous les rapports.",
+    "gearbox": "manuelle"
+   },
+   {
+    "id": "mfr2-sandero2-media-nav",
+    "title": "Écran Media Nav qui bugue",
+    "severity": "low",
+    "description": "Le Media Nav peut planter, ralentir ou couper le son ; une reprogrammation corrige souvent le défaut.",
+    "costMin": 0,
+    "costMax": 600,
+    "whatToCheck": "Allumer l'écran, lancer le GPS et connecter un téléphone : pas de plantage ni de coupure de son."
+   },
+   {
+    "id": "mfr2-sandero2-rappel-airbag",
+    "title": "Rappel airbag conducteur (produites avr.-août 2018)",
+    "severity": "info",
+    "description": "Des Sandero produites d'avril à août 2018 ont été rappelées : l'airbag conducteur pouvait mal se déployer. Réparation gratuite.",
+    "costMin": 0,
+    "costMax": 0,
+    "whatToCheck": "Pour une voiture de 2018, faire vérifier le numéro de série (VIN) chez Dacia pour savoir si le rappel a été fait."
+   }
+  ],
+  "sources": [
+   "https://www.largus.fr/guide-achat-occasion/dacia/sandero/avis-fiabilite-dacia-sandero-ii-b52-30039368.html",
+   "https://www.fiches-auto.fr/fiabilite-dacia/fiabilite-366-pannes-dacia-sandero-2.php"
+  ]
+ },
+ {
+  "id": "mfr2-citroen-xsara-picasso",
+  "label": "Citroën Xsara Picasso (1999-2012)",
+  "makes": [
+   "citroen"
+  ],
+  "years": {
+   "from": 1999,
+   "to": 2012
+  },
+  "keywords": [],
+  "models": [
+   "xsara picasso"
+  ],
+  "issues": [
+   {
+    "id": "mfr2-xsarap-leve-vitres",
+    "title": "Lève-vitres qui se bloquent (surtout avant 2003)",
+    "severity": "low",
+    "description": "Les vitres électriques, surtout côté conducteur, se bloquent ou descendent mal : guidage, câble ou moteur en cause.",
+    "costMin": 100,
+    "costMax": 300,
+    "whatToCheck": "Monter et descendre chaque vitre électrique plusieurs fois : mouvement régulier, sans blocage."
+   },
+   {
+    "id": "mfr2-xsarap-electronique",
+    "title": "Électronique : voyants, commodos, affichage",
+    "severity": "medium",
+    "description": "Le boîtier électronique central, les commandes sous le volant et l'écran central donnent des pannes et des voyants, surtout avant 2004.",
+    "costMin": 100,
+    "costMax": 600,
+    "whatToCheck": "Tester clignotants, phares, essuie-glaces et l'écran central ; aucun voyant ne doit rester allumé."
+   },
+   {
+    "id": "mfr2-xsarap-pulseur",
+    "title": "Ventilation qui ne marche plus (pulseur)",
+    "severity": "low",
+    "description": "La soufflerie peut perdre des vitesses ou s'arrêter, surtout sur les voitures produites jusqu'à l'été 2004.",
+    "costMin": 100,
+    "costMax": 400,
+    "whatToCheck": "Mettre la ventilation sur chaque vitesse : le débit d'air doit changer à chaque cran."
+   },
+   {
+    "id": "mfr2-xsarap-contacteur",
+    "title": "Contacteur de démarrage fragile, clé qui coince",
+    "severity": "medium",
+    "description": "Le contacteur à clé (neiman) peut se bloquer ou mal contacter : clé coincée, démarrage difficile, surtout à chaud.",
+    "costMin": 150,
+    "costMax": 450,
+    "whatToCheck": "Mettre et retirer la clé plusieurs fois, démarrer à froid puis à chaud : la clé tourne et sort sans forcer."
+   },
+   {
+    "id": "mfr2-xsarap-train-arriere",
+    "title": "Pneus usés vite et train arrière fatigué",
+    "severity": "medium",
+    "fromKm": 120000,
+    "description": "Les pneus s'usent très vite et le train arrière peut se fatiguer avec les kilomètres, ce qui accélère encore l'usure.",
+    "costMin": 300,
+    "costMax": 1200,
+    "whatToCheck": "Regarder les pneus arrière : une usure sur le bord intérieur et des roues penchées vues de derrière signalent un train arrière à refaire."
+   }
+  ],
+  "sources": [
+   "https://www.caradisiac.com/Citroen-Picasso-40152.htm",
+   "https://www.caradisiac.com/Fiabilite-45721.htm",
+   "https://www.fiches-auto.fr/fiabilite-citroen/fiabilite-55-pannes-citroen-xsara-picasso.php"
+  ]
+ },
+ {
   "id": "mint-vw-golf-4",
   "label": "Volkswagen Golf IV (1998-2003)",
   "makes": [
@@ -8707,7 +10034,8 @@
     "description": "La boîte manuelle fait partie des points faibles de cette Polo : bruit de roulement, vitesses qui craquent ou qui sautent.",
     "costMin": 600,
     "costMax": 1500,
-    "whatToCheck": "Passer toutes les vitesses, à froid puis à chaud : pas de craquement, pas de bruit qui monte avec la vitesse."
+    "whatToCheck": "Passer toutes les vitesses, à froid puis à chaud : pas de craquement, pas de bruit qui monte avec la vitesse.",
+    "gearbox": "manuelle"
    }
   ],
   "sources": [
@@ -8857,7 +10185,8 @@
     "description": "La boîte manuelle, surtout la 5 vitesses, manque de solidité sur ce monospace lourd : bruit, vitesses qui accrochent, casse.",
     "costMin": 800,
     "costMax": 1800,
-    "whatToCheck": "Passer toutes les vitesses à froid puis à chaud : pas de craquement ni de grondement qui monte avec la vitesse."
+    "whatToCheck": "Passer toutes les vitesses à froid puis à chaud : pas de craquement ni de grondement qui monte avec la vitesse.",
+    "gearbox": "manuelle"
    },
    {
     "id": "mint-touran1-windows",
@@ -9165,7 +10494,8 @@
     "description": "L'embrayage est le point faible le plus cité : il patine ou broute parfois avant 60 000 km. Des rappels ont visé le plateau d'embrayage.",
     "costMin": 700,
     "costMax": 1400,
-    "whatToCheck": "Accélérer fort en 4e à bas régime : le moteur ne doit pas s'emballer. Démarrer en côte sans broutement. Demander si les rappels sont faits."
+    "whatToCheck": "Accélérer fort en 4e à bas régime : le moteur ne doit pas s'emballer. Démarrer en côte sans broutement. Demander si les rappels sont faits.",
+    "gearbox": "manuelle"
    },
    {
     "id": "mint-focus3-keyless",
@@ -9210,7 +10540,8 @@
     "description": "Embrayage et volant moteur souffrent sur ce monospace lourd : broutement, sifflement en 1re ou patinage. Un rappel a visé le plateau (EcoBoost).",
     "costMin": 700,
     "costMax": 1400,
-    "whatToCheck": "Accélérer fort en 4e à bas régime : le moteur ne doit pas s'emballer. Démarrer en 1re sans broutement ni sifflement."
+    "whatToCheck": "Accélérer fort en 4e à bas régime : le moteur ne doit pas s'emballer. Démarrer en 1re sans broutement ni sifflement.",
+    "gearbox": "manuelle"
    },
    {
     "id": "mint-cmax2-water",
@@ -9281,7 +10612,8 @@
     "description": "La boîte manuelle manque d'endurance : roulements qui grondent (surtout en 6 vitesses), raclement, vitesses qui accrochent.",
     "costMin": 800,
     "costMax": 1600,
-    "whatToCheck": "Écouter en 4e et 5e en accélérant puis en lâchant : pas de grondement ni de sifflement qui suit la vitesse."
+    "whatToCheck": "Écouter en 4e et 5e en accélérant puis en lâchant : pas de grondement ni de sifflement qui suit la vitesse.",
+    "gearbox": "manuelle"
    },
    {
     "id": "mint-corsad-eps",
