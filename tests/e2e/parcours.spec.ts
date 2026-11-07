@@ -107,6 +107,13 @@ test("parcours complet : rapport, PDF, partage", async ({ page, request }) => {
   await expect(page.getByText(/Indice de confiance/)).toBeVisible();
   await expect(page.locator("#echeancier")).toContainText("12 mois");
   await expect(page.locator("#echeancier")).toContainText("36 mois");
+  // budget et infos pratiques
+  const budget = page.locator("#budget");
+  await expect(budget.getByRole("heading", { name: "Budget et infos pratiques" })).toBeVisible();
+  await expect(budget).toContainText("Coût réel sur 3 ans");
+  await expect(budget).toContainText("Vignette Crit'Air");
+  await budget.locator("select").selectOption("Île-de-France");
+  await expect(budget).toContainText(/\d+,\d{2}\s€/);
   // PDF
   const url = page.url();
   const id = url.split("/rapport/")[1];

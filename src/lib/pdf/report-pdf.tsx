@@ -2,6 +2,7 @@ import React from "react";
 import path from "node:path";
 import { Document, Page, Text, View, StyleSheet, Font, Svg, Path, Circle, Line, Rect, Polyline, Text as SvgText, renderToBuffer } from "@react-pdf/renderer";
 import type { ReportData, Inspection } from "../engine/types";
+import { buildOwnership } from "../engine/ownership";
 import { buildChecklist, PARTY_LABEL, type Checklist } from "../engine/checklist";
 import { approxCost } from "../engine/maintenance";
 import { FUEL_LABEL, GEARBOX_LABEL } from "../engine/labels";
@@ -445,6 +446,71 @@ export function Pdf({ r }: { r: ReportData }) {
             <Text style={[s.small, { marginTop: 4 }]}>{clean(r.valuation.basis)}</Text>
           </View>
         )}
+
+        {(() => {
+          const o = r.ownership ?? buildOwnership({ vehicle: v, mileage: r.mileage, history: h, valuation: r.valuation, askingPrice: r.valuation?.askingPrice, maintenance: r.maintenance, now: issued });
+          const t = o.threeYears, reg = o.registration;
+          const metro = reg ? reg.regions.filter((x) => !x.overseas) : [];
+          const cheap = metro.filter((x) => x.total === reg?.min).map((x) => x.name), dear = metro.filter((x) => x.total === reg?.max).map((x) => x.name);
+          const parts: [string, number, string][] = t ? [["Perte de valeur", t.depreciation, "#2563EB"], ["Carburant ou électricité", t.energy, "#60A5FA"], ["Entretien prévu", t.maintenance, "#93C5FD"], ["Carte grise", t.registration, "#C4B5FD"], ["Contrôles techniques", t.inspections, "#A5B4FC"]] : [];
+          const tiles: { label: string; value: string; sub: string; tone: Tone }[] = [];
+          if (reg) tiles.push({ label: "Carte grise", value: `${eur(Math.round(reg.min))} à ${eur(Math.round(reg.max))}`, sub: `${cheap.join(", ")} : le moins cher. ${dear.join(", ")} : le plus cher. ${reg.note}`, tone: "info" });
+          if (o.critAir) tiles.push({ label: "Vignette Crit'Air", value: o.critAir.level === "Non classé" ? "Non classé" : `Crit'Air ${o.critAir.level}`, sub: `${o.critAir.zfe} Situation de ${o.critAir.updated}.`, tone: o.critAir.tone });
+          if (o.energy) tiles.push({ label: o.energy.unit === "kWh" ? "Consommation et recharge" : "Consommation réelle estimée", value: `env. ${nf(o.energy.per100)} ${o.energy.unit}/100 km · env. ${eur(o.energy.annualCost)} par an`, sub: `${nf(o.energy.annualKm)} km par an, ${o.energy.energyLabel} à ${nf(o.energy.price)} €. ${o.energy.basis}`, tone: "info" });
+          if (o.mileageVsAverage) tiles.push({ label: "Kilométrage face à la moyenne", value: `${o.mileageVsAverage.deltaPct > 0 ? "+" : ""}${o.mileageVsAverage.deltaPct} % (moyenne ${km(o.mileageVsAverage.expected)})`, sub: o.mileageVsAverage.comment, tone: o.mileageVsAverage.verdict === "eleve" ? "warn" : "ok" });
+          if (o.nextInspection) tiles.push({ label: "Prochain contrôle technique", value: o.nextInspection.overdue ? "En retard" : `Avant le ${fd(o.nextInspection.date)}`, sub: o.nextInspection.detail, tone: o.nextInspection.overdue ? "bad" : "info" });
+          return (
+            <View style={s.section}>
+              <View wrap={false}>
+                <SectionHead title="Budget et infos pratiques" sub="Ce que ce véhicule va vous coûter après l'achat, et ce qu'il faut savoir avant de signer." badge={t ? <Tag tone="info">{`env. ${eur(t.perMonth)} par mois`}</Tag> : undefined} />
+                {t && (
+                  <View style={{ backgroundColor: INK, borderRadius: 10, padding: 12, marginBottom: 8 }}>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
+                      <View><Text style={{ color: "#AEB6C4", fontSize: 8 }}>Coût réel sur 3 ans, en plus du prix d&apos;achat récupéré à la revente</Text><Text style={{ color: "#FFFFFF", fontFamily: "Manrope", fontWeight: 800, fontSize: 22, marginTop: 2 }}>{`env. ${eur(t.total)}`}</Text></View>
+                      <Text style={{ color: "#93C5FD", fontSize: 10, fontWeight: 600 }}>{`soit env. ${eur(t.perMonth)} par mois`}</Text>
+                    </View>
+                    <View style={{ flexDirection: "row", height: 7, borderRadius: 4, overflow: "hidden", marginTop: 9, backgroundColor: "#1B2A44" }}>{parts.filter((x) => x[1] > 0).map((x) => <View key={x[0]} style={{ width: `${(x[1] / Math.max(1, t.total)) * 100}%`, backgroundColor: x[2] }} />)}</View>
+                    <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 7 }}>{parts.map((x) => <View key={x[0]} style={{ flexDirection: "row", alignItems: "center", width: "33%", marginBottom: 3 }}><View style={{ width: 6, height: 6, borderRadius: 1.5, backgroundColor: x[2], marginRight: 4 }} /><Text style={{ color: "#C8D0DC", fontSize: 7.5 }}>{x[0]} : </Text><Text style={{ color: "#FFFFFF", fontSize: 7.5, fontWeight: 600 }}>{x[0].startsWith("Carburant") && !t.energyIncluded ? "non estimé" : `env. ${eur(x[1])}`}</Text></View>)}</View>
+                    <Text style={{ color: "#8E9AAF", fontSize: 7, marginTop: 3 }}>{clean(`Achat ${t.purchaseBasis === "annonce" ? "au prix de l'annonce" : "à la cote moyenne"} (${eur(t.purchase)}), revente estimée ${eur(t.resale)} dans 3 ans. Hors assurance, stationnement et péages.`)}</Text>
+                  </View>
+                )}
+              </View>
+              {[tiles.slice(0, 2), tiles.slice(2, 4), tiles.slice(4)].filter((row) => row.length).map((row, ri) => (
+                <View key={ri} style={{ flexDirection: "row", gap: 8, marginBottom: 8 }} wrap={false}>
+                  {row.map((x) => (
+                    <View key={x.label} style={[s.card, { flex: 1, borderLeftWidth: 3, borderLeftColor: TONE[x.tone] }]}>
+                      <Text style={s.tileLabel}>{x.label}</Text>
+                      <Text style={[s.tileValue, { color: x.tone === "bad" || x.tone === "warn" ? TONE[x.tone] : NAVY, fontSize: 10 }]}>{clean(x.value)}</Text>
+                      <Text style={{ fontSize: 7.5, color: MUTED, marginTop: 3 }}>{clean(x.sub)}</Text>
+                    </View>
+                  ))}
+                  {row.length === 1 && <View style={{ flex: 1 }} />}
+                </View>
+              ))}
+              {o.warranties.length > 0 && (
+                <View style={[s.card, { marginBottom: 8 }]} wrap={false}>
+                  <Text style={[s.tileLabel, { marginBottom: 5 }]}>Garanties</Text>
+                  {o.warranties.map((w) => <View key={w.label} style={{ flexDirection: "row", marginBottom: 4 }}><View style={{ marginTop: 3, marginRight: 6 }}><Led tone={w.status === "active" ? "ok" : w.status === "check" ? "warn" : "neutral"} /></View><View style={{ flex: 1 }}><Text style={{ fontSize: 8.8, fontWeight: 600 }}>{`${w.label} : ${w.status === "active" ? "en cours" : w.status === "check" ? "à vérifier" : "terminée"}`}</Text><Text style={{ fontSize: 7.8, color: MUTED }}>{clean(w.detail)}</Text></View></View>)}
+                </View>
+              )}
+              {o.futureValues && r.valuation && (
+                <View style={[s.card]} wrap={false}>
+                  <Text style={[s.tileLabel, { marginBottom: 6 }]}>Valeur à la revente</Text>
+                  <View style={{ flexDirection: "row", alignItems: "flex-end", height: 70, gap: 14 }}>
+                    {[{ l: "Aujourd'hui", v: r.valuation.mid }, ...o.futureValues.map((f) => ({ l: `Dans ${f.years} an${f.years > 1 ? "s" : ""}`, v: f.value }))].map((x, i, a) => (
+                      <View key={x.l} style={{ flex: 1, alignItems: "center", justifyContent: "flex-end", height: 70 }}>
+                        <Text style={{ fontSize: 8, fontWeight: 600, marginBottom: 2 }}>{`env. ${eur(x.v)}`}</Text>
+                        <View style={{ width: "70%", height: Math.max(6, (x.v / Math.max(...a.map((y) => y.v))) * 44), backgroundColor: i === 0 ? ACCENT : ["#60A5FA", "#93C5FD", "#BFDBFE"][i - 1], borderTopLeftRadius: 3, borderTopRightRadius: 3 }} />
+                        <Text style={{ fontSize: 7.5, color: MUTED, marginTop: 2 }}>{x.l}</Text>
+                      </View>
+                    ))}
+                  </View>
+                  <Text style={[s.small, { marginTop: 4 }]}>Estimation en roulant la moyenne française chaque année. L&apos;état, l&apos;entretien et le marché font varier le prix.</Text>
+                </View>
+              )}
+            </View>
+          );
+        })()}
 
         {r.listing.available && r.listing.claims.length > 0 && (
           <View style={s.section} wrap={false}>

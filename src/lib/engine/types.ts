@@ -107,6 +107,17 @@ export interface Valuation {
   deltaToHigh?: number;
 }
 
+export interface Ownership {
+  registration?: { fiscalPower: number; halved: boolean; regions: { name: string; total: number; overseas: boolean }[]; min: number; max: number; average: number; note: string };
+  critAir?: { level: string; tone: "ok" | "warn" | "bad"; zfe: string; updated: string };
+  energy?: { unit: "L" | "kWh"; per100: number; annualKm: number; price: number; priceDate: string; annualCost: number; energyLabel: string; basis: string };
+  warranties: { label: string; status: "active" | "ended" | "check"; detail: string }[];
+  mileageVsAverage?: { expected: number; actual: number; deltaPct: number; verdict: "faible" | "normal" | "eleve"; perYear: number; comment: string };
+  nextInspection?: { date: string; overdue: boolean; estimated: boolean; detail: string };
+  futureValues?: { years: number; value: number }[];
+  threeYears?: { purchase: number; purchaseBasis: "annonce" | "cote"; resale: number; depreciation: number; energy: number; energyIncluded: boolean; maintenance: number; registration: number; inspections: number; total: number; perMonth: number };
+}
+
 export interface MaintenanceItem {
   label: string;
   rule: string; // préconisation
@@ -168,6 +179,8 @@ export interface ReportData {
   questions: SellerQuestion[];
   /** points à vérifier avant l'achat, construits pour ce véhicule */
   checklist: Checklist;
+  /** budget et infos pratiques : carte grise, Crit'Air, énergie, garanties, revente… (absent des rapports anciens) */
+  ownership?: Ownership;
   sources: { label: string; status: "ok" | "partial" | "none"; detail?: string }[];
   limits: string[];
 }

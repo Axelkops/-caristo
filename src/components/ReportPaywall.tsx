@@ -22,6 +22,7 @@ const ITEMS: { d: string; t: string; s: string; cg?: boolean; w: number }[] = [
   { d: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', t: "Entretien à prévoir", s: "Quand le faire, et combien ça coûte", w: 52 },
   { d: '<path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>', t: "Points à vérifier", s: "Côté vendeur et côté acheteur", w: 46 },
   { d: '<path d="M4 19V5M4 19h16"/><path d="M7 15l4-5 3 3 5-7"/>', t: "Cote estimée", s: "Comparée au prix de l'annonce", w: 58 },
+  { d: '<rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/>', t: "Budget sur 3 ans", s: "Carte grise, carburant, revente, garanties", w: 54 },
   { d: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>', t: "Rappels constructeur", s: "Campagnes de rappel du modèle", w: 36 },
 ];
 

@@ -5,6 +5,8 @@ import { ShareBox } from "./ShareBox";
 import { AddCarteGrise } from "./AddCarteGrise";
 import { ChecklistPanel } from "./ChecklistPanel";
 import { buildChecklist } from "@/lib/engine/checklist";
+import { buildOwnership } from "@/lib/engine/ownership";
+import { OwnershipPanel } from "./OwnershipPanel";
 
 /*
  * Rapport Caristo — « tableau de bord » : fond nuit, panneaux translucides, voyants LED.
@@ -96,6 +98,8 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
   const openRecalls = r.recalls.filter((x) => x.status === "open");
   // rapports produits avant l'ajout de la liste : on la construit à la volée
   const checklist = r.checklist ?? buildChecklist({ vehicle: v, mileage: r.mileage, history: h, knownIssues: r.knownIssues, recalls: r.recalls, now: issued });
+  // rapports produits avant l'ajout du budget : calculé à la volée avec le barème de secours
+  const own = r.ownership ?? buildOwnership({ vehicle: v, mileage: r.mileage, history: h, valuation: r.valuation, askingPrice: r.valuation?.askingPrice, maintenance: r.maintenance, now: issued });
 
   const lights: { label: string; value: string; tone: Tone; sub?: string }[] = [
     { label: "Kilométrage", value: r.mileageCheck.consistent === false ? "Incohérent" : r.mileageCheck.consistent ? "Cohérent" : "Non vérifiable", tone: r.mileageCheck.consistent === false ? "bad" : r.mileageCheck.consistent ? "ok" : "neutral", sub: readings.length ? plural(readings.length, "relevé officiel", "relevés officiels") : r.mileage ? `${fmtKm(r.mileage)} saisis` : undefined },
@@ -106,7 +110,7 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
     { label: "Cote estimée", value: r.valuation?.verdict === "au_dessus" ? `${euros(r.valuation.deltaToHigh)} au-dessus` : r.valuation?.verdict === "sous_la_cote" ? "Sous la cote" : r.valuation?.verdict === "dans_la_cote" ? "Dans la cote" : range(r.valuation?.low, r.valuation?.high), tone: r.valuation?.verdict === "au_dessus" ? "warn" : r.valuation?.verdict ? "ok" : "info", sub: r.valuation?.askingPrice ? `Prix de l'annonce : ${euros(r.valuation.askingPrice)}` : "Cote estimée" },
   ];
 
-  const nav = [["apercu", "Vue d'ensemble"], ["verifier", "À vérifier"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote estimée"], ...(r.listing.available ? [["annonce", "Annonce"]] : [])];
+  const nav = [["apercu", "Vue d'ensemble"], ["verifier", "À vérifier"], ["pannes", "Pannes connues"], ["echeancier", "Entretien"], ["historique", "Historique"], ["rappels", "Rappels"], ["cote", "Cote estimée"], ["budget", "Budget"], ...(r.listing.available ? [["annonce", "Annonce"]] : [])];
   const specs = [FUEL_LABEL[v.fuel], GEARBOX_LABEL[v.gearbox], v.powerHp ? `${v.powerHp} ch` : "", v.firstRegistration ? `Mise en circulation ${fmtDateFr(v.firstRegistration)}` : "", r.mileage !== undefined ? fmtKm(r.mileage) : "", v.critAir ? `Crit'Air ${v.critAir}` : ""].filter(Boolean);
 
   return (
@@ -350,6 +354,11 @@ export function ReportView({ report, reportId, shareToken, readonly = false, pac
               </div>
             </Panel>
           )}
+
+          {/* ===== Budget et infos pratiques ===== */}
+          <Panel id="budget" title="Budget et infos pratiques" sub="Ce que ce véhicule va vous coûter après l'achat, et ce qu'il faut savoir avant de signer." tone="info" badge={own.threeYears ? <Tag tone="info">≈ {euros(own.threeYears.perMonth)} par mois</Tag> : undefined}>
+            <OwnershipPanel o={own} currentValue={r.valuation?.mid} />
+          </Panel>
 
           {/* ===== Annonce ===== */}
           {r.listing.available && (() => { const warns = r.listing.claims.filter((c) => c.status === "warning").length; const tone: Tone = warns ? "warn" : "ok"; return (

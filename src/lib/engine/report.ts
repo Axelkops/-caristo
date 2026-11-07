@@ -1,4 +1,5 @@
 import { buildChecklist } from "./checklist";
+import { buildOwnership, type EnergyPrices } from "./ownership";
 import type { KnownIssue, ListingAnalysis, OfficialHistory, Recall, ReportData, SellerQuestion, Vehicle } from "./types";
 import { findKnownIssues, vehicleAgeYears } from "./known-issues";
 import { buildMaintenanceSchedule, fmtDate, fmtKm } from "./maintenance";
@@ -16,6 +17,8 @@ export interface ReportInputs {
   askingPrice?: number;
   entries?: { label: string; date: string; mileage?: number }[];
   valuationOverride?: ReportData["valuation"];
+  /** prix de l'énergie du jour (données ouvertes) ; à défaut, barème de secours */
+  energyPrices?: EnergyPrices;
   now?: Date;
 }
 
@@ -118,6 +121,7 @@ export function buildReport(input: ReportInputs): ReportData {
   const sc = computeScore({ history, mileageCheck, knownIssues, recalls: input.recalls, valuation, listing: input.listing, vehicle });
   const questions = buildQuestions({ history, knownIssues, maintenance, valuation, listing: input.listing, vehicle, mileageCheck });
   const checklist = buildChecklist({ vehicle, mileage, history, knownIssues, recalls: input.recalls, now });
+  const ownership = buildOwnership({ vehicle, mileage, history, valuation, askingPrice, maintenance, prices: input.energyPrices, now });
 
   const sources: ReportData["sources"] = [
     { label: "Fiche technique", status: "ok" },
@@ -125,6 +129,7 @@ export function buildReport(input: ReportInputs): ReportData {
     { label: "Rappels constructeur", status: "ok", detail: input.recalls.length ? `${input.recalls.length} rappel(s) trouvé(s)` : "Aucun rappel trouvé" },
     { label: "Pannes connues du modèle", status: knownIssues.length ? "ok" : "partial", detail: `${knownIssues.length} point(s)` },
     { label: "Cote du marché", status: "ok", detail: "estimation" },
+    { label: "Barèmes publics : carte grise, Crit'Air, prix de l'énergie", status: "ok", detail: input.energyPrices ? `Prix du ${fmtDate(input.energyPrices.date)}` : undefined },
     { label: "Prix de l'annonce", status: askingPrice ? "ok" : "none", detail: askingPrice ? `${askingPrice.toLocaleString("fr-FR")} € confrontés à la cote` : "Non renseigné" },
   ];
 
@@ -156,6 +161,7 @@ export function buildReport(input: ReportInputs): ReportData {
     listing: input.listing,
     questions,
     checklist,
+    ownership,
     sources,
     limits,
   };

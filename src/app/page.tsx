@@ -36,6 +36,8 @@ const COMPARE: { f: string; both: boolean }[] = [
   { f: "Entretien à prévoir, chiffré", both: false },
   { f: "Points à vérifier, côté vendeur et côté acheteur", both: false },
   { f: "Prix de l'annonce confronté à la cote", both: false },
+  { f: "Budget sur 3 ans : carte grise, carburant, revente", both: false },
+  { f: "Crit'Air, zones à faibles émissions et garanties restantes", both: false },
 ];
 
 export default function Home() {
@@ -129,7 +131,7 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto flex flex-col gap-12">
           <h2 className="m-0 text-[32px] sm:text-[42px] leading-[1.08] font-bold">Tarifs</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            <PriceCard offer="single" items={["Rapport complet", "Pannes connues et rappels constructeur", "Cote et entretien à prévoir", "PDF, lien de partage et espace pour mes rapports"]} />
+            <PriceCard offer="single" items={["Rapport complet", "Pannes connues et rappels constructeur", "Cote et entretien à prévoir", "Budget sur 3 ans et coût de la carte grise", "PDF, lien de partage et espace pour mes rapports"]} />
             <PriceCard offer="pack3" highlight items={["Tout le rapport unique, ×3", "Rapports rangés dans votre espace", "Crédits utilisés automatiquement", "Valable 12 mois"]} />
             <PriceCard offer="pack10" items={["Tout le pack 3, ×10", "Pour les gros acheteurs et les pros", "Valable 24 mois"]} />
           </div>
